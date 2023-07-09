@@ -73,8 +73,8 @@
       @apply font-extrabold text-transparent  bg-clip-text bg-gradient-to-r from-orange-400  via-highlight to-orange-400 
     }
 
-    .basic_input {
-      @apply bg-gray-800 border border-gray-300 text-gray-100 text-lg rounded-lg block w-full p-2.5 
+    .input_1 {
+      @apply bg-primary-bg border border-primary text-text-color   text-base rounded-lg block w-full p-2.5
     }
 
     .primary_gradient {

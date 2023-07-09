@@ -20,10 +20,14 @@ function UploadCredentails() {
         
     }
     return (
-        <div>
-            <form onSubmit={uploadCredentails}>
-                <input type="text" id="pass" name="pass" />
-                <button type='submit'>
+        <div className="w-[32rem] text-center">
+            <h1 className="text-3xl text_primary_gradient_2">Upload Credentials</h1>
+            <form onSubmit={uploadCredentails} className='flex_center flex-col gap-4 mt-4'>
+                <input type="text" id="website" name="website" className='input_1' placeholder='Enter website' />
+                <input type="text" id="pass" name="pass" className='input_1' placeholder='Enter Your Email/UserName/Phone' />
+                <input type="password" id="pass" name="pass" className='input_1' placeholder='Enter your password' />
+
+                <button className='btn_primary_1' type='submit'>
                     store crdentials
                 </button>
             </form>
