@@ -15,9 +15,11 @@ function AppNavigation() {
   if (pathname.startsWith("/match/")) {
     return <></>
   }
-  return ( <nav className="glassmorphism-bg bg-primary/20 h-[8vh] mt-6 rounded-xl flex justify-end py-2 mx-4 px-4">
+  return ( <nav className="flex justify-end mt-6 mr-8 h-[8vh]">
+    <span className="glassmorphism-bg bg-primary/20 rounded-xl flex py-1 px-2">
+        <ConnectWallet  />
+    </span>
  
-        <ConnectWallet />
       </nav>
   )
 }
