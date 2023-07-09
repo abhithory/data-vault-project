@@ -10,7 +10,7 @@ function Navigation() {
   const router = useRouter();
   const pathname = usePathname();
 
-  if (pathname.startsWith("/app/")) {
+  if (pathname.startsWith("/app")) {
     return <></>
   }
   return (

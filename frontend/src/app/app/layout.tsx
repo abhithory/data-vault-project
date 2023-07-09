@@ -10,15 +10,11 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className='body bg_primary text-text-color'>
         <ThirdWebProvider>
           <Web3ConnectionWrapper>
               <AppNavigation />
               {children}
           </Web3ConnectionWrapper>
         </ThirdWebProvider>
-      </body>
-    </html>
   )
 }
