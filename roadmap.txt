@@ -1,0 +1,6 @@
+- setup basic frontend
+- setup basic credentials encypting
+- try to do eveything on frontend or if not then try with nextjs backend or then create nodejs backend
+- run with basic smart contracts
+- enchance secuiry of smart contract with encrypting message and then get the user address in smart contract
+- style more
