@@ -15,31 +15,10 @@ function AppNavigation() {
   if (pathname.startsWith("/match/")) {
     return <></>
   }
-  return (
-    <nav className="glassmorphism-bg w-full flex justify-between px-20 py-4 h-[12vh]">
-      <span onClick={()=>router.push("/")} className=" cursor-pointer flex items-center justify-center gap-4">
-        <Image
-          src="/assests/logo.svg"
-          width={80}
-          height={80}
-          alt="Picture of the author"
-        />
-        <h1 className="text-2xl text-text-color ">Data Vault</h1>
-      </span>
-      <span className="flex items-center justify-center gap-4">
-        {/* <h1 className="basic_btn_4" onClick={()=>router.push("/profile")}>
-          <FaLandmark  className=''/>
-          Learn More
-          </h1>
-
-          <h1 className="basic_btn_4" onClick={()=>router.push("/marketplace")}>
-          <FaLandmark  className=''/>
-          Marketplace
-          </h1> */}
-
+  return ( <nav className="glassmorphism-bg bg-primary/20 h-[8vh] mt-6 rounded-xl flex justify-end py-2 mx-4 px-4">
+ 
         <ConnectWallet />
-      </span>
-    </nav>
+      </nav>
   )
 }
 

@@ -17,12 +17,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className='body bg_primary text-text-color'>
-        {/* <ThirdWebProvider> */}
-          {/* <Web3ConnectionWrapper> */}
               <Navigation />
               {children}
-          {/* </Web3ConnectionWrapper> */}
-        {/* </ThirdWebProvider> */}
       </body>
     </html>
   )
