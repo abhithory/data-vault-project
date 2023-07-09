@@ -32,6 +32,9 @@
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",
-    "@types/crypto-js": "^4.1.1"
+    "@types/crypto-js": "^4.1.1",
+        "encoding": "^0.1.13",
+    "lokijs": "^1.5.12",
+    "pino-pretty": "^10.0.0"
   }
 }

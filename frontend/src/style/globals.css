@@ -49,20 +49,30 @@
  
 
 
-    .btn_1 {
-      @apply text-text-color bg-primary hover:bg-secondary border border-primary rounded-xl text-xl px-8  py-3 text-center inline-flex items-center gap-2
+    .btn_primary_1 {
+      @apply text-text-color bg-primary hover:bg-primary-hover border border-primary rounded-xl text-xl px-8  py-3 text-center inline-flex items-center gap-2 transition-colors
     }
-    .btn_2 {
-      @apply  text-text-color bg-primary hover:bg-secondary border border-primary rounded-xl text-xl px-8  py-3 text-center inline-flex items-center gap-2
-    }
-
-    .btn_2 {
-      @apply text-text-color bg-primary-bg hover:bg-secondary border-2 border-primary rounded-xl text-xl px-8  py-3 text-center inline-flex items-center gap-2
+    .btn_primary_2 {
+      @apply text-text-color bg-transparent hover:border-primary-hover  border-2 border-primary rounded-xl text-xl px-8  py-3 text-center inline-flex items-center gap-2 transition-colors
     }
 
-    .text_gradient{
-      @apply font-extrabold text-transparent  bg-clip-text bg-gradient-to-r from-primary via-third to-secondary
+    .btn_secondary_1 {
+      @apply text-text-color bg-secondary hover:bg-secondary-hover border-secondary border-2  rounded-xl text-xl px-8  py-3 text-center inline-flex items-center gap-2
     }
+
+    .text_primary_gradient{
+      @apply font-extrabold text-transparent  bg-clip-text bg-gradient-to-r from-primary  via-primary to-secondary 
+    }
+    
+    .text_primary_gradient_2{
+      @apply font-extrabold text-transparent  bg-clip-text bg-gradient-to-r from-secondary  via-primary to-primary
+    }
+    
+
+    .text_highlight_gradient{
+      @apply font-extrabold text-transparent  bg-clip-text bg-gradient-to-r from-orange-400  via-highlight to-orange-400 
+    }
+
     .basic_input {
       @apply bg-gray-800 border border-gray-300 text-gray-100 text-lg rounded-lg block w-full p-2.5 
     }
