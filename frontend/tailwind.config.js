@@ -8,7 +8,7 @@ module.exports = {
   theme: {
     extend: {
       colors:{
-        'primary':"#4D92FF",
+        'primary':"#4D92FF", //pink-500
         'primary-bg':"#010220", //#09162e
         'secondary':"#BB65FF",
         'third':"#5E17EB",

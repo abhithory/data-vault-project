@@ -60,14 +60,9 @@
       @apply text-text-color bg-primary-bg hover:bg-secondary border-2 border-primary rounded-xl text-xl px-8  py-3 text-center inline-flex items-center gap-2
     }
 
-    .basic_btn_3{
-      @apply px-5 py-2.5 font-medium bg-blue-50 hover:bg-pink-200 hover:text-primary/90 text-primary rounded-lg text-sm
+    .text_gradient{
+      @apply font-extrabold text-transparent  bg-clip-text bg-gradient-to-r from-primary via-third to-secondary
     }
-
-    .basic_btn_4{
-      @apply text-white bg-gray-950 border-gray-950 hover:bg-gray-900 border-2 rounded-lg text-lg px-7  py-3 text-center inline-flex items-center gap-2 cursor-pointer
-    }
-
     .basic_input {
       @apply bg-gray-800 border border-gray-300 text-gray-100 text-lg rounded-lg block w-full p-2.5 
     }
