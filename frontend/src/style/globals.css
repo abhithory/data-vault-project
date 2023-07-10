@@ -36,7 +36,6 @@
   background-size:contain;
   z-index: -99;
   opacity: .6;
-  /* border-radius: 20rem; */
 }
 
 .bg_gradient_image_2{
@@ -47,9 +46,10 @@
   height: 50vh;
   /* background-position: 50% 10%; */
   background-repeat: no-repeat;
-  background-size:contain;
+  background-size:cover;
   z-index: -99;
-  opacity: .5;
+  opacity: .2;
+  /* border-radius: 40rem; */
 
 }
 
