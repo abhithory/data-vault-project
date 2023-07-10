@@ -9,7 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.1",
     "@headlessui/react": "^1.7.15",
+    "@mantine/core": "^6.0.16",
+    "@mantine/dropzone": "^6.0.16",
+    "@mantine/hooks": "^6.0.16",
     "@metamask/eth-sig-util": "^6.0.0",
     "@thirdweb-dev/react": "^3.14.8",
     "@thirdweb-dev/sdk": "^3.10.28",
@@ -33,7 +37,7 @@
   "devDependencies": {
     "@types/axios": "^0.14.0",
     "@types/crypto-js": "^4.1.1",
-        "encoding": "^0.1.13",
+    "encoding": "^0.1.13",
     "lokijs": "^1.5.12",
     "pino-pretty": "^10.0.0"
   }
