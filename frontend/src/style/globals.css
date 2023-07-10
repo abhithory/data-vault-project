@@ -56,6 +56,15 @@
       @apply text-text-color bg-transparent hover:border-primary-hover  border-2 border-primary rounded-xl text-xl px-8  py-3 text-center inline-flex items-center gap-2 transition-colors
     }
 
+    .btn_sidebar {
+      @apply text-text-color bg-transparent hover:bg-primary-hover  rounded-md text-sm px-6  py-2 text-center inline-flex items-center gap-2 transition-colors w-full
+    }
+
+    .btn_sidebar_active {
+      @apply text-text-color bg-primary-hover  rounded-md text-sm px-6  py-2 text-center inline-flex items-center gap-2 transition-colors w-full
+    }
+
+
     .btn_secondary_1 {
       @apply text-text-color bg-secondary hover:bg-secondary-hover border-secondary border-2  rounded-xl text-xl px-8  py-3 text-center inline-flex items-center gap-2
     }

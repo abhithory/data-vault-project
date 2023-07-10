@@ -12,7 +12,7 @@ interface CredentialWithFunctionInterface {
 }
 function CredentialListItem(credential: CredentialWithFunctionInterface) {
     return (
-        <div className="relative group w-[16rem]">
+        <div className="relative group w-[14rem]">
             <div className="absolute -inset-0 bg-gradient-to-r from-primary via-third to-secondary rounded-lg blur opacity-25 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
             <div className='flex_center flex-col border border-primary rounded-lg py-6 gap-2 glassmorphism-bg bg-primary-bg/90 cursor-pointer'>
                 <FaCreditCard className='w-12' />
