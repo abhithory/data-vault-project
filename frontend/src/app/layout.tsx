@@ -17,8 +17,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className='body bg_primary text-text-color'>
+              <img src="/assests/bg_gradient.png" alt="" className='bg_gradient_image'/>
               <Navigation />
               {children}
+              <img src="/assests/bg_gradient.png" alt="" className='bg_gradient_image_2'/>
       </body>
     </html>
   )

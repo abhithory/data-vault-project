@@ -12,6 +12,7 @@
   width: 100vw;
   min-height: 100vh;
   overflow:"hidden";
+  
 }
 
 .full-h-w {
@@ -21,6 +22,34 @@
 
 .wallet-connect-btn{
   padding: 20px 40px !important;
+
+}
+
+.bg_gradient_image{
+  position:absolute;
+  top: 10%;
+  left: 0%;
+  width: 50vw;
+  height: 50vh;
+  /* background-position: 50% 10%; */
+  background-repeat: no-repeat;
+  background-size:contain;
+  z-index: -99;
+  opacity: .5;
+  border-radius: 20rem;
+}
+
+.bg_gradient_image_2{
+  position:absolute;
+  bottom: 0%;
+  right: 0%;
+  width: 50vw;
+  height: 50vh;
+  /* background-position: 50% 10%; */
+  background-repeat: no-repeat;
+  background-size:contain;
+  z-index: -99;
+  opacity: .5;
 
 }
 
