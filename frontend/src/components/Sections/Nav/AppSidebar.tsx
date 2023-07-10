@@ -8,7 +8,7 @@ function AppSidebar() {
     const  router = useRouter();
 
   return (
-    <div className="h-[100vh] w-52 py-6 px-4">
+    <div className="h-[100vh] w-52 py-6 px-4 ">
         <div className="glassmorphism-bg bg-primary/20 h-full rounded-lg">
         <span onClick={() => router.push("/")} className="flex_center cursor-pointer pt-4">
           <Image

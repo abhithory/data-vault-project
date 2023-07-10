@@ -9,7 +9,8 @@ function page() {
             <section>
                 <UploadCredentails />
             </section>
-            <section>
+            <section className='mt-8'>
+                <h1 className='text_primary_gradient text-2xl mb-4 text-center'>All your Credentials</h1>
                 <AllCredentialsList />
             </section>
         </main>
