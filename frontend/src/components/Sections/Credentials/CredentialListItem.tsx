@@ -27,7 +27,8 @@ function CredentialListItem(credential: CredentialWithFunctionInterface) {
                     </button>
                 }
             </div>
-        </div>)
+        </div>
+        )
 }
 
 export default CredentialListItem
