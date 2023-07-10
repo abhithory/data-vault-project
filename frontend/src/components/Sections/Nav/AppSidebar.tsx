@@ -11,6 +11,8 @@ import { ConnectWallet } from '@thirdweb-dev/react';
 
 function AppSidebar() {
     const  router = useRouter();
+    const pathname = usePathname();
+
 
   return (
     <div className="h-[100vh] w-80 py-6 px-4 ">
@@ -19,19 +21,18 @@ function AppSidebar() {
         <span onClick={() => router.push("/app")} className="flex_center cursor-pointer pt-2 mb-4">
           <Image
             src="/assests/logo.svg"
-            width={80}
-            height={80}
+            width={120}
+            height={120}
             alt="Picture of the author"
           />
           {/* <h1 className="text-2xl text-text-color ">Data Vault</h1> */}
         </span>
-
-        <button onClick={() => router.push("/app")} className="btn_sidebar_active">
+        <button onClick={() => router.push("/app")} className={pathname === "/app" ? "btn_sidebar_active":"btn_sidebar"}>
           <RiLockPasswordLine />
           Credentials
         </button>
 
-        <button onClick={() => router.push("/app/files")} className="btn_sidebar">
+        <button onClick={() => router.push("/app/files")} className={pathname === "/app/files" ? "btn_sidebar_active":"btn_sidebar"}>
           <PiFiles />
           Files
         </button>
