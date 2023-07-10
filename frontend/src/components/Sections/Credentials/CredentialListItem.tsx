@@ -16,13 +16,13 @@ function CredentialListItem(credential: CredentialWithFunctionInterface) {
             <div className="absolute -inset-0 bg-gradient-to-r from-primary via-third to-secondary rounded-lg blur opacity-25 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
             <div className='flex_center flex-col border border-primary rounded-lg py-6 gap-2 glassmorphism-bg bg-primary-bg/90 cursor-pointer'>
                 <FaCreditCard className='w-12' />
-                <h1>{credential.website}</h1>
+                <h1 className='text-lg'>{credential.website}</h1>
                 {credential.decryptedStatus ?
                     <button onClick={() => credential.openCredentialModel(credential.index)} className="btn_primary_1 text-sm px-3 py-1">
                         Show Credentials
                     </button>
                     :
-                    <button onClick={() => credential.DecryptCredentials(credential.index)} className="btn_primary_2 text-sm px-3 py-1">
+                    <button onClick={() => credential.DecryptCredentials(credential.index)} className="btn_primary_2 text-sm px-4 py-2">
                         Decrypt Credentials
                     </button>
                 }

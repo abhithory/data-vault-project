@@ -9,7 +9,7 @@ function AppSidebar() {
 
   return (
     <div className="h-[100vh] w-52 py-6 px-4 ">
-        <div className="glassmorphism-bg bg-primary/20 h-full rounded-lg">
+        <div className="glassmorphism-bg bg-primary/20 h-full rounded-lg border border-primary">
         <span onClick={() => router.push("/")} className="flex_center cursor-pointer pt-4">
           <Image
             src="/assests/logo.svg"
