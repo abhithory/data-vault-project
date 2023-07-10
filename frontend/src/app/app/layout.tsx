@@ -16,10 +16,10 @@ export default function RootLayout({
               {/* <AppNavigation /> */}
               <div className="flex">
                 <AppSidebar />
-                <div className="w-full">
-                    <AppNavigation />
-              {children}
-                </div>
+                {/* <div className="w-full"> */}
+                    {/* <AppNavigation /> */}
+              {children} 
+                {/* </div> */}
               </div>
           </Web3ConnectionWrapper>
         </ThirdWebProvider>

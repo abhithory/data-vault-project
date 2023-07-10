@@ -12,9 +12,7 @@ function AppNavigation() {
   const  router = useRouter();
   const pathname = usePathname();
 
-  if (pathname.startsWith("/match/")) {
-    return <></>
-  }
+
   return ( <nav className="flex justify-end mt-6 mr-8 h-[8vh]">
     <span className="glassmorphism-bg bg-primary/20 rounded-xl flex py-1 px-2">
         <ConnectWallet  />

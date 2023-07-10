@@ -57,11 +57,11 @@
     }
 
     .btn_sidebar {
-      @apply text-text-color bg-transparent hover:bg-primary-hover  rounded-md text-sm px-6  py-2 text-center inline-flex items-center gap-2 transition-colors w-full
+      @apply text-text-color bg-transparent hover:bg-primary-hover  rounded-md text-base px-6  py-2 text-center inline-flex items-center gap-2 transition-colors w-full
     }
 
     .btn_sidebar_active {
-      @apply text-text-color bg-primary-hover  rounded-md text-sm px-6  py-2 text-center inline-flex items-center gap-2 transition-colors w-full
+      @apply text-text-color bg-primary-hover  rounded-md text-base px-6  py-2 text-center inline-flex items-center gap-2 transition-colors w-full
     }
 
 

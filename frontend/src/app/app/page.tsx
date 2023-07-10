@@ -5,8 +5,8 @@ import React,{useState} from 'react'
 
 function page() {
     return (
-        <main>
-            <section>
+        <main className='w-full'>
+            <section className='flex justify-end mt-6 mr-8'>
                 <UploadCredentails />
             </section>
             <section className='mt-8'>

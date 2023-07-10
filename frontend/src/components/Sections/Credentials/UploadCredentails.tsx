@@ -5,6 +5,8 @@ import { getEncryptionPublicKey, getEncryptedMessage } from '@/utils/Utils';
 import { Web3ConnectionContext } from '@/web3Connection/Web3ConnectionContext'
 import React, { useContext, useState } from 'react'
 import CredentialsUploadStepper from './CredentialsUploadStepper';
+import { CredentialsFormData } from '@/interfaces/Credentials';
+import CredentialsForm from './CredentialsForm';
 
 
 function UploadCredentails() {
@@ -13,14 +15,17 @@ function UploadCredentails() {
     const [isOpen, setIsOpen] = useState(false);
 
     // credentials upload
+    const [credentialsData, setCredentialsData] = useState<CredentialsFormData>({
+        website:"",
+        email:"",
+        password:""
+    })
     const [uploadingCredential, setUploadingCredential] = useState<boolean>(false);
     const [uploadingProcessCount, setUploadingProcessCount] = useState<number>(0);
 
 
-    async function uploadCredentails(e: React.ChangeEvent<HTMLFormElement>) {
-        e.preventDefault();
+    async function uploadCredentails() {
     
-
     }
     return (
         <>
@@ -32,20 +37,12 @@ function UploadCredentails() {
             <PopUpModel isOpen={isOpen} closeModal={() => setIsOpen(false)}>
                 <div className="text-center">
                     <h1 className="text-3xl text_primary_gradient_2">Upload Credentials</h1>
-                    <form onSubmit={uploadCredentails} className='flex_center flex-col gap-4 mt-4'>
-                        <input type="text" id="website" name="website" className='input_1' placeholder='Enter website' />
-                        <input type="text" id="pass" name="pass" className='input_1' placeholder='Enter Your Email/UserName/Phone' />
-                        <input type="password" id="pass" name="pass" className='input_1' placeholder='Enter your password' />
-
-                        <button className='btn_primary_1' type='submit'>
-                            store crdentials
-                        </button>
-                    </form>
-                </div>
-                <div className="mt-4">
-                    {uploadingCredential &&
-                        <CredentialsUploadStepper uploadingProcessCount={uploadingProcessCount} />
-                    }
+                    <CredentialsForm type="create" setCredentialsData={setCredentialsData} submitForm={uploadCredentails} credentialsData={credentialsData} />
+                    <div className="mt-4"> 
+                {uploadingCredential &&
+                    <CredentialsUploadStepper uploadingProcessCount={uploadingProcessCount} />
+                }
+            </div>
                 </div>
             </PopUpModel>
         </>
