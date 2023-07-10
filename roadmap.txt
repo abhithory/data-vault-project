@@ -6,3 +6,7 @@
 - enchance secuiry of smart contract with encrypting message and then get the user address in smart contract
 - style more
     -lauch dapp only button. style like glow (portfolio website)
+
+
+
+- add fee of 0.01 MAtic for every upload and change
