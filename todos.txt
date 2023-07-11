@@ -1,0 +1,2 @@
+- create custome input (with copy button in it)
+- custome button

@@ -57,7 +57,7 @@ function UploadCredentails() {
             <PopUpModel isOpen={isOpen} closeModal={() => setIsOpen(false)}>
                 <div className="text-center">
                     <h1 className="text-3xl text_primary_gradient_2">Upload Credentials</h1>
-                    <CredentialsForm type="create" setCredentialsData={setCredentialsData} submitForm={uploadCredentails} credentialsData={credentialsData} />
+                    <CredentialsForm type="create" setCredentialsData={setCredentialsData} submitForm={uploadCredentails} credentialsData={credentialsData} uploadingCredential={uploadingCredential} />
                     <div className="mt-4">
                             <CredentialsUploadStepper uploadingProcessCount={uploadingProcessCount} />
                     </div>
