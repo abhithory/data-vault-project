@@ -4,7 +4,7 @@ import React, { createContext, useMemo, useState } from 'react';
 import {
     useAddress, useSDK, useSigner, useStorage
 } from '@thirdweb-dev/react';
-import { ethers } from 'ethers';
+import { Contract, Signer, ethers } from 'ethers';
 import { CredentialStruct, FileStructInterface } from '@/interfaces/SmartContract';
 import { DataVaultContractAddress } from './networkDetails';
 
@@ -13,6 +13,7 @@ import DataVaultJson from './DataVault.json'
 interface ContextProps {
     address: string | undefined,
     storage: any,
+    signer: any,
     addFileOfUser: (file: FileStructInterface) => Promise<boolean>,
     addScreatInfoOfUser: (info: FileStructInterface) => Promise<boolean>,
     addCredentialOfUser: (credentials: CredentialStruct) => Promise<boolean>,
@@ -24,6 +25,7 @@ interface ContextProps {
 export const Web3ConnectionContext = createContext<ContextProps>({
     address: '',
     storage: '',
+    signer: "",
     addFileOfUser: async () => false,
     addScreatInfoOfUser: async () => false,
     addCredentialOfUser: async () => false,
@@ -37,7 +39,7 @@ const Web3ConnectionWrapper = ({ children }: any) => {
     const storage = useStorage();
     const signer = useSigner();
 
-    function getContract() {
+    function getContract(): Contract {
         const DataVaultContract = new ethers.Contract(DataVaultContractAddress, DataVaultJson.abi, signer);
         return DataVaultContract;
     }
@@ -69,6 +71,7 @@ const Web3ConnectionWrapper = ({ children }: any) => {
     async function addCredentialOfUser(credentials: CredentialStruct): Promise<boolean> {
         try {
             const _contract = getContract();
+
             const _tx = await _contract.addCredentialOfUser(credentials);
             _tx.wait();
             return true;
@@ -81,7 +84,7 @@ const Web3ConnectionWrapper = ({ children }: any) => {
     async function getAllFilesOfUser(): Promise<FileStructInterface[] | null> {
         try {
             const _contract = getContract();
-            const _data = await _contract.getAllFilesOfUser({ from: address });
+            const _data = await _contract.getAllFilesOfUser();
             return _data;
         } catch (error) {
             console.log("getAllFilesOfUser error", error);
@@ -103,8 +106,8 @@ const Web3ConnectionWrapper = ({ children }: any) => {
 
     async function getAllCredentialsOfUser(): Promise<CredentialStruct[] | null> {
         try {
-            const _contract = getContract();
-            const _data = await _contract.getAllCredentialsOfUser({ from: address });
+            const _contract = getContract();             
+            const _data = await _contract?.getAllCredentialsOfUser();            
             return _data;
         } catch (error) {
             console.log("getAllCredentialsOfUser error", error);
@@ -116,6 +119,7 @@ const Web3ConnectionWrapper = ({ children }: any) => {
         <Web3ConnectionContext.Provider value={{
             address,
             storage,
+            signer,
             addFileOfUser,
             addScreatInfoOfUser,
             addCredentialOfUser,

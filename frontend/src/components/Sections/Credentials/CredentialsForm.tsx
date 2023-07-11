@@ -14,9 +14,11 @@ function CredentialsForm({type,setCredentialsData, submitForm, credentialsData}:
                 <input type="text" id="email" name="email" className='input_1' placeholder='Enter Your Email/UserName/Phone' value={credentialsData.usernameOrEmailOrPhone} onChange={(e)=>setCredentialsData({...credentialsData,usernameOrEmailOrPhone: e.target.value})} required/>
                 <input type="password" id="pass" name="pass" className='input_1' placeholder='Enter your password' value={credentialsData.password} onChange={(e)=>setCredentialsData({...credentialsData,password: e.target.value})} required/>
 
+                {type === "create" &&
                 <button className='btn_primary_1' type='submit'>
                     {type.toLocaleUpperCase()} crdentials
                 </button>
+                }
             </form>
     )
 }

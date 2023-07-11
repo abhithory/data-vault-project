@@ -1,86 +1,91 @@
 "use client"
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import CredentialListItem from './CredentialListItem';
 import PopUpModel from '@/components/PopupModel/PopUpModel';
 import CredentialsForm from './CredentialsForm';
-import { CredentialsFormData } from '@/interfaces/Credentials';
+import { CredentialsExtendedDataInterface, CredentialsFormData } from '@/interfaces/Credentials';
 import CredentialsUploadStepper from './CredentialsUploadStepper';
+import { Web3ConnectionContext } from '@/web3Connection/Web3ConnectionContext';
+import { CredentialStruct } from '@/interfaces/SmartContract';
+import { decryptMessage } from '@/utils/MessageEncryption';
 
 
 
 function AllCredentialsList() {
-  const [allCredentials, setAllCredentials] = useState<[]>([]);
+  const { address, getAllCredentialsOfUser } = useContext(Web3ConnectionContext);
+
+  const [allCredentials, setAllCredentials] = useState<CredentialsExtendedDataInterface[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
 
-  const [showCredentialsModel, setShowCredentialsModel] = useState(false);
+  const [showCredentialsModel, setShowCredentialsModel] = useState<boolean>(false);
   const [modelIndex, setModelIndex] = useState<number>(0);
 
 
-  async function loadAllCredentials() {
-    setIsLoading(true)
+  const [credentialsData, setCredentialsData] = useState<CredentialsFormData>({
+    website: "",
+    usernameOrEmailOrPhone: "",
+    password: ""
+  });
 
-    try {
-      // const dataVault = getDataVaultContract();
-      // const allCredentials:CredentialInterface[] = await dataVault.getAllCredentialsOfUser();
-      // const extendedFiles:ExtendedCredentialInterface[] = allCredentials.map(((item:CredentialInterface)=>{
-      //     return {...item,decryptedStatus:false}
-      // }))
-      // setAllCredentials(extendedFiles);
-    } catch (error: any) {
-      console.log("error", error?.message);
-    } finally {
+  const [uploadingCredential, setUploadingCredential] = useState<boolean>(false);
+  const [uploadingProcessCount, setUploadingProcessCount] = useState<number>(0);
+
+  useEffect(() => {
+    async function loadAllCredentials() {
+      if (!address) return
+      setIsLoading(true)
+      const _allCredentials: CredentialStruct[] | null = await getAllCredentialsOfUser();
+
+      if (_allCredentials) {
+        const extendedFiles: CredentialsExtendedDataInterface[] = _allCredentials.map(((item: CredentialStruct) => {
+          return { ...item, decryptedStatus: false }
+        }))
+        setAllCredentials(extendedFiles)
+      }
       setIsLoading(false)
     }
-  }
+
+    loadAllCredentials()
+  }, [address])
+
 
   function openCredentialModel(n: number) {
-
     setModelIndex(n)
     setShowCredentialsModel(true)
   }
 
   async function DecryptCredentials(n: number) {
-    setShowCredentialsModel(true)
-
+    if (!address) return
     try {
-      // const _decryptedMsg = await decryptMessage(allCredentials[n].password,web3ConnectionData.walletAddress);
-      // setAllCredentials(allCredentials.map((file:ExtendedCredentialInterface,i:number)=>{
-      //     if (i === n) {
-      //         return {...file,password:_decryptedMsg,decryptedStatus:true}
-      //     }
-      //     return file
-      // }))
+      const _decryptedMsg = await decryptMessage(allCredentials[n].password, address);
+      setAllCredentials((prev)=>{
+        prev[n] = {...prev[n],password:_decryptedMsg,decryptedStatus:true}
+        return [...prev]
+      })
     } catch (error) {
 
     }
   }
 
-  const [credentialsData, setCredentialsData] = useState<CredentialsFormData>({
-    website:"google.com",
-    email:"email@gmail.com",
-    password:"12341234"
-})
-const [uploadingCredential, setUploadingCredential] = useState<boolean>(false);
-const [uploadingProcessCount, setUploadingProcessCount] = useState<number>(0);
 
-
-async function updateCredentails() {
-    
-}
-
-
+  async function updateCredentails() {
+  }
   return (
     <div className="flex flex-wrap gap-4">
-      {/* <CredentialListItem index={key} openCredentialModel={openCredentialModel} website={file.website} usernameOrEmailOrPhone={file.usernameOrEmailOrPhone} password={file.password} decryptedStatus={file.decryptedStatus} DecryptCredentials={DecryptCredentials} /> */}
-      <CredentialListItem index={0} openCredentialModel={openCredentialModel} website={"website"} usernameOrEmailOrPhone={"usernameOrEmailOrPhone"} password={"password"} decryptedStatus={false} DecryptCredentials={DecryptCredentials} />
-      <CredentialListItem index={0} openCredentialModel={openCredentialModel} website={"website"} usernameOrEmailOrPhone={"usernameOrEmailOrPhone"} password={"password"} decryptedStatus={false} DecryptCredentials={DecryptCredentials} />
- 
+
+      {allCredentials &&
+        allCredentials.map((file: CredentialsExtendedDataInterface, key: number) => {
+          return (
+
+            <CredentialListItem index={key} openCredentialModel={openCredentialModel} website={file.website} usernameOrEmailOrPhone={file.usernameOrEmailOrPhone} password={file.password} decryptedStatus={file.decryptedStatus} DecryptCredentials={DecryptCredentials} />
+          )
+        })}
 
       <PopUpModel isOpen={showCredentialsModel} closeModal={() => setShowCredentialsModel(false)}>
         <div className="text-center">
           <h1 className="text-3xl text_primary_gradient_2">Credentials</h1>
-          <CredentialsForm type="update" setCredentialsData={setCredentialsData} submitForm={updateCredentails} credentialsData={credentialsData} />
+          <CredentialsForm type="update" setCredentialsData={setCredentialsData} submitForm={updateCredentails} credentialsData={allCredentials[modelIndex]} />
           <div className="mt-4">
             {uploadingCredential &&
               <CredentialsUploadStepper uploadingProcessCount={uploadingProcessCount} />
