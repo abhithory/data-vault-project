@@ -5,6 +5,14 @@ pragma solidity ^0.8.9;
 
 contract DataVault {
     // structure of file data
+
+    // struct ScreatItemStruct {
+    //     string name;
+    //     string fileHash;
+    //     string decryptKey;
+    //     uint256 uploadTime;
+    // }
+
     struct FileStruct {
         string fileName;
         string fileHash;
@@ -35,9 +43,7 @@ contract DataVault {
     }
 
     // add credential of user
-    function addScreatInfoOfUser(
-        FileStruct memory _scretInfo
-    ) external {
+    function addScreatInfoOfUser(FileStruct memory _scretInfo) external {
         _allSecretInfo[msg.sender].push(_scretInfo);
     }
 
