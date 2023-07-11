@@ -1,5 +1,5 @@
 export interface CredentialsFormData{
     website:string;
-    email: string;
+    usernameOrEmailOrPhone: string;
     password: string;
 }

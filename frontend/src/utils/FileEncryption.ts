@@ -1,37 +1,9 @@
 import CryptoJS from "crypto-js"
 import JSZip from "jszip"
-import {encrypt} from '@metamask/eth-sig-util'
-
-
-export async function getEncryptionPublicKey(publicWalletAdr:string): Promise<string> {
-        const _key: string = await (window.ethereum as any).request({
-            method: 'eth_getEncryptionPublicKey',
-            params: [publicWalletAdr],
-        });
-        return _key
-}
-
-export function getEncryptedMessage(msg:string,key:string){
-    const encryptedObj = encrypt({
-        publicKey: key,
-        data: msg,
-        version: 'x25519-xsalsa20-poly1305'
-    })
-    return encryptedObj
-}
-
-export async function decryptMessage(encryptedMsg: string, publicWalletAdr:string): Promise<string> {
-    const data = await (window.ethereum as any).request({
-        method: 'eth_decrypt',
-        params: [encryptedMsg, publicWalletAdr],
-    });
-    return data
-}
 
 function generateRandomKey(): string {
     return CryptoJS.lib.WordArray.random(24).toString(CryptoJS.enc.Base64)
 }
-
 
 
 // For Encrypting & Decrypting file 

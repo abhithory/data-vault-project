@@ -1,6 +1,6 @@
 import AllCredentialsList from '@/components/Sections/Credentials/AllCredentialsList'
 import UploadCredentails from '@/components/Sections/Credentials/UploadCredentails'
-import React,{useState} from 'react'
+import React from 'react'
 
 
 function page() {
