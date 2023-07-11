@@ -6,7 +6,7 @@ import React, { useContext, useState } from 'react'
 import CredentialsUploadStepper from './CredentialsUploadStepper';
 import { CredentialsFormData } from '@/interfaces/Credentials';
 import CredentialsForm from './CredentialsForm';
-import { decryptMessage, getEncryptedMessage, getEncryptionPublicKey } from '@/utils/MessageEncryption';
+import { getEncryptedMessage, getEncryptionPublicKey } from '@/utils/MessageEncryption';
 
 
 function UploadCredentails() {
@@ -14,7 +14,6 @@ function UploadCredentails() {
     const { address, addCredentialOfUser } = useContext(Web3ConnectionContext);
     const [isOpen, setIsOpen] = useState(false);
 
-    // credentials upload
     const [credentialsData, setCredentialsData] = useState<CredentialsFormData>({
         website: "",
         usernameOrEmailOrPhone: "",
@@ -29,22 +28,15 @@ function UploadCredentails() {
 
         if (!address) return;
         setUploadingCredential(true);
-        setUploadingProcessCount(0);
+        setUploadingProcessCount(1);
 
         if (credentialsData.website && credentialsData.password && credentialsData.usernameOrEmailOrPhone) {
-            const _pEK: string = await getEncryptionPublicKey(address);
-            console.log("_pEK",_pEK);
-            
-            const _eP: string = getEncryptedMessage(JSON.stringify(credentialsData), _pEK);
-            console.log("string", _eP.length);
-
-            setUploadingProcessCount(1);
+            const _pEK: string = await getEncryptionPublicKey(address);            
+            const _eP: string = getEncryptedMessage(credentialsData.password, _pEK);
+            setUploadingProcessCount(2);
             const added = await addCredentialOfUser({ ...credentialsData, password: _eP });
-
-            console.log({ ...credentialsData, password: _eP });
             if (added) {
-                setUploadingProcessCount(2);
-
+                setUploadingProcessCount(3);
             } else {
                 // show error
             }
@@ -67,7 +59,7 @@ function UploadCredentails() {
                     <h1 className="text-3xl text_primary_gradient_2">Upload Credentials</h1>
                     <CredentialsForm type="create" setCredentialsData={setCredentialsData} submitForm={uploadCredentails} credentialsData={credentialsData} />
                     <div className="mt-4">
-                        {uploadingCredential &&
+                        {uploadingProcessCount &&
                             <CredentialsUploadStepper uploadingProcessCount={uploadingProcessCount} />
                         }
                     </div>
