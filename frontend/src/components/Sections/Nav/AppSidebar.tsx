@@ -4,8 +4,9 @@ import Image from 'next/image'
 import { usePathname, useRouter } from 'next/navigation';
 
 import { RiLockPasswordLine } from "react-icons/ri";
-import { PiFiles } from "react-icons/pi";
+import { PiFiles, PiInfinityThin, PiInfo, PiInfoBold } from "react-icons/pi";
 import { ConnectWallet } from '@thirdweb-dev/react';
+import { FaInfo } from 'react-icons/fa';
 
 
 
@@ -35,6 +36,10 @@ function AppSidebar() {
         <button onClick={() => router.push("/app/files")} className={pathname === "/app/files" ? "btn_sidebar_active":"btn_sidebar"}>
           <PiFiles />
           Files
+        </button>
+        <button onClick={() => router.push("/app/screatinfo")} className={pathname === "/app/screatinfo" ? "btn_sidebar_active":"btn_sidebar"}>
+          <PiInfoBold />
+          Screat Info
         </button>
         </div>
 
