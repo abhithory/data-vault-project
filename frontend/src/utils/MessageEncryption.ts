@@ -19,10 +19,15 @@ export function getEncryptedMessage(msg:string,key:string): string{
     return JSON.stringify(encryptedObj)
 }
 
-export async function decryptMessage(encryptedMsg: string, publicWalletAdr:string): Promise<string> {
-    const data = await (window.ethereum as any).request({
-        method: 'eth_decrypt',
-        params: [encryptedMsg, publicWalletAdr],
-    });
-    return data
+export async function decryptMessage(encryptedMsg: string, publicWalletAdr:string): Promise<string | null> {
+    try {
+        
+        const data = await (window.ethereum as any).request({
+            method: 'eth_decrypt',
+            params: [encryptedMsg, publicWalletAdr],
+        });
+        return data
+    } catch (error) {
+     return null   
+    }
 }

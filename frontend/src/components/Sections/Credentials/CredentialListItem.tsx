@@ -18,7 +18,7 @@ function CredentialListItem(credential: CredentialWithFunctionInterface) {
                 <FaCreditCard className="text-2xl" />
                 <h1 className='text-lg'>{credential.website}</h1>
                 {credential.decryptedStatus ?
-                    <button onClick={() => credential.openCredentialModel(credential.index)} className="btn_primary_1 text-sm px-3 py-1">
+                    <button onClick={() => credential.openCredentialModel(credential.index)} className="btn_primary_1 text-sm px-4 py-2">
                         Show Credentials
                     </button>
                     :

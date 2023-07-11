@@ -59,9 +59,7 @@ function UploadCredentails() {
                     <h1 className="text-3xl text_primary_gradient_2">Upload Credentials</h1>
                     <CredentialsForm type="create" setCredentialsData={setCredentialsData} submitForm={uploadCredentails} credentialsData={credentialsData} />
                     <div className="mt-4">
-                        {uploadingProcessCount &&
                             <CredentialsUploadStepper uploadingProcessCount={uploadingProcessCount} />
-                        }
                     </div>
                 </div>
             </PopUpModel>
