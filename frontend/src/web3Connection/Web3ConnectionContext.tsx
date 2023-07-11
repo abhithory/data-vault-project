@@ -2,71 +2,126 @@
 
 import React, { createContext, useMemo, useState } from 'react';
 import {
-    useAddress, useSDK, useStorage
+    useAddress, useSDK, useSigner, useStorage
 } from '@thirdweb-dev/react';
-// import { ChessChainGameplayContract, MatchResultEnum } from '@/smartContract/networkDetails';
-// import ChessChainGameplay from '@/smartContract/ChessChainGameplay.json';
 import { ethers } from 'ethers';
+import { CredentialStruct, FileStructInterface } from '@/interfaces/SmartContract';
+import { DataVaultContractAddress } from './networkDetails';
+
+import DataVaultJson from './DataVault.json'
 
 interface ContextProps {
     address: string | undefined,
-    sdk: any,
     storage: any,
-    // createMatch: (matchId: string, stakeAmount: number) => Promise<boolean>,
-    // joinMatch: (matchId: string, stakeAmount: number) => Promise<boolean>,
-    // endMatch: (matchId: string, matchDataURI: string, matchNftURI: string, gameResult: MatchResultEnum) => Promise<boolean>,
-    // getMatchDetailOf: (matchId: string) => any,
-    // getUserNftBalance: () => any
+    addFileOfUser: (file: FileStructInterface) => Promise<boolean>,
+    addScreatInfoOfUser: (info: FileStructInterface) => Promise<boolean>,
+    addCredentialOfUser: (credentials: CredentialStruct) => Promise<boolean>,
+    getAllFilesOfUser: () => Promise<FileStructInterface[] | null>,
+    getAllScreatInfoOfUser: () => Promise<FileStructInterface[] | null>,
+    getAllCredentialsOfUser: () => Promise<CredentialStruct[] | null>,
 }
 
 export const Web3ConnectionContext = createContext<ContextProps>({
     address: '',
-    sdk: '',
     storage: '',
-    // createMatch: async (matchId: string, stakeAmount: number) => false,
-    // joinMatch: async (matchId: string, stakeAmount: number) => false,
-    // endMatch: async (matchId: string, matchDataURI: string, matchNftURI: string, gameResult: MatchResultEnum) => false,
-    // getMatchDetailOf: (matchId: string) => { },
-    // getUserNftBalance: () => { },
+    addFileOfUser: async () => false,
+    addScreatInfoOfUser: async () => false,
+    addCredentialOfUser: async () => false,
+    getAllFilesOfUser: async () => [],
+    getAllScreatInfoOfUser: async () => [],
+    getAllCredentialsOfUser: async () => [],
 });
 
 const Web3ConnectionWrapper = ({ children }: any) => {
     const address = useAddress();
     const storage = useStorage();
-    const sdk = useSDK();
+    const signer = useSigner();
 
-    // async function getContract() {
-    //     const OrchidzBuildCreatorContract = await sdk?.getContract(
-    //         ChessChainGameplayContract,
-    //         ChessChainGameplay.abi
-    //     );
-    //     return OrchidzBuildCreatorContract;
-    // }
+    function getContract() {
+        const DataVaultContract = new ethers.Contract(DataVaultContractAddress, DataVaultJson.abi, signer);
+        return DataVaultContract;
+    }
 
-    // async function createMatch(matchId: string, stakeAmount: number): Promise<boolean> {
-    //     try {
-    //         const _contract = await getContract();
-    //         const tx = await _contract?.call(
-    //             'createMatch', // Name of your function as it is on the smart contract
-    //             [
-    //                 matchId,
-    //                 address,
-    //                 ethers.utils.parseUnits(String(stakeAmount), "ether")
-    //             ],
-    //             {
-    //                 value: ethers.utils.parseUnits(String(stakeAmount), "ether")
-    //             }
-    //         );
-    //         return true;
-    //     } catch (error) {
-    //         console.log("createMatch error", error);
-    //         return false
-    //     }
-    // }
+    async function addFileOfUser(file: FileStructInterface): Promise<boolean> {
+        try {
+            const _contract = getContract();
+            const _tx = await _contract.addFileOfUser(file);
+            _tx.wait();
+            return true;
+        } catch (error) {
+            console.log("addFileOfUser error", error);
+            return false
+        }
+    }
+
+    async function addScreatInfoOfUser(info: FileStructInterface): Promise<boolean> {
+        try {
+            const _contract = getContract();
+            const _tx = await _contract.addScreatInfoOfUser(info);
+            _tx.wait();
+            return true;
+        } catch (error) {
+            console.log("addScreatInfoOfUser error", error);
+            return false
+        }
+    }
+
+    async function addCredentialOfUser(credentials: CredentialStruct): Promise<boolean> {
+        try {
+            const _contract = getContract();
+            const _tx = await _contract.addCredentialOfUser(credentials);
+            _tx.wait();
+            return true;
+        } catch (error) {
+            console.log("addCredentialOfUser error", error);
+            return false
+        }
+    }
+
+    async function getAllFilesOfUser(): Promise<FileStructInterface[] | null> {
+        try {
+            const _contract = getContract();
+            const _data = await _contract.getAllFilesOfUser({ from: address });
+            return _data;
+        } catch (error) {
+            console.log("getAllFilesOfUser error", error);
+            return null
+        }
+    }
+
+    async function getAllScreatInfoOfUser(): Promise<FileStructInterface[] | null> {
+        try {
+            const _contract = getContract();
+            const _data = await _contract.getAllScreatInfoOfUser({ from: address });
+            return _data;
+        } catch (error) {
+            console.log("getAllScreatInfoOfUser error", error);
+            return null
+        }
+    }
+
+
+    async function getAllCredentialsOfUser(): Promise<CredentialStruct[] | null> {
+        try {
+            const _contract = getContract();
+            const _data = await _contract.getAllCredentialsOfUser({ from: address });
+            return _data;
+        } catch (error) {
+            console.log("getAllCredentialsOfUser error", error);
+            return null
+        }
+    }
 
     return (
         <Web3ConnectionContext.Provider value={{
-            address, sdk, storage
+            address,
+            storage,
+            addFileOfUser,
+            addScreatInfoOfUser,
+            addCredentialOfUser,
+            getAllFilesOfUser,
+            getAllScreatInfoOfUser,
+            getAllCredentialsOfUser
         }}
         >
             {children}
