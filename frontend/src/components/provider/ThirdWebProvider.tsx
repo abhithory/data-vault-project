@@ -24,8 +24,8 @@ const Ganache = {
 function ThirdWebProvider({ children }: any) {
     return (
         <ThirdwebProvider
-            activeChain="polygon"
-            supportedChains={[ Polygon, Mumbai]}
+            activeChain="ganache"
+            supportedChains={[ Polygon, Mumbai, Ganache]}
             dAppMeta={{
                 name: "Data Vault",
                 description: "data vault",

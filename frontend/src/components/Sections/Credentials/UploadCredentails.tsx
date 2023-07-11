@@ -39,16 +39,16 @@ function UploadCredentails() {
             console.log("string", _eP.length);
 
             setUploadingProcessCount(1);
-            // const added = await addCredentialOfUser({ ...credentialsData, password: _eP });
+            const added = await addCredentialOfUser({ ...credentialsData, password: _eP });
 
             console.log({ ...credentialsData, password: _eP });
-            
-            setUploadingProcessCount(2);
-            // if (added) {
+            if (added) {
+                setUploadingProcessCount(2);
 
-            // } else {
-            //     // show error
-            // }
+            } else {
+                // show error
+            }
+            
         } else {
             // show error
         }
