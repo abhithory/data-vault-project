@@ -9,4 +9,5 @@
 
 
 
+- improve struct
 - add fee of 0.01 MAtic for every upload and change
