@@ -10,7 +10,7 @@ import { advanceEncryptFile, downloadFile } from '@/utils/FileEncryption';
 import UploadingStepper from '@/components/Stepper/UploadingStepper';
 
 export default function UploadFiles() {
-    
+
     const { address, getFileUrlFromIpfsHash, uploadFileOnIPFS, addFileOfUser } = useContext(Web3ConnectionContext);
     const [isOpen, setIsOpen] = useState(false);
 
@@ -51,21 +51,15 @@ export default function UploadFiles() {
             const { key, encryptedFile } = await advanceEncryptFile(_file as Blob);
             const decryptKey: string = getEncryptedMessage(key, _pEK);
             setUploadingProcessCount(2)
-            const fileIPFSHash:string | null = await uploadFileOnIPFS(encryptedFile);
+            const fileIPFSHash: string | null = await uploadFileOnIPFS(encryptedFile);
             if (!fileIPFSHash) return;
-            console.log("ipfs hash: ", fileIPFSHash);
-            const url: string | null = await getFileUrlFromIpfsHash(fileIPFSHash);
-            console.log("ipfs url: ", url);
-            
-            
             setUploadingProcessCount(3)
-            
-            const added = await addFileOfUser({fileName:fileUploadName, fileHash: fileIPFSHash, decryptKey: decryptKey});
-            
+            const added = await addFileOfUser({ fileName: fileUploadName, fileHash: fileIPFSHash, decryptKey: decryptKey });
+
             if (added) {
                 setUploadingProcessCount(4)
             } else {
-                setUploadingProcessCount(-1)                
+                setUploadingProcessCount(-1)
                 return; //show error
             }
 
@@ -97,7 +91,7 @@ export default function UploadFiles() {
                                 <span>Extension: {fileExtension}</span>
                                 <span>Size: {convertInMb(fileUploaded?.size)}</span>
 
-                                <NormalButton loading={uploadingFile} disabled={uploadingFile} text={uploadingFile? 'Uploading File' :'Upload File'} onClick={handleUploadFile} />
+                                <NormalButton loading={uploadingFile} disabled={uploadingFile} text={uploadingFile ? 'Uploading File' : 'Upload File'} onClick={handleUploadFile} />
                             </div>
 
                             <div className="mt-4">

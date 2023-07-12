@@ -1,4 +1,5 @@
 
+import NormalButton from '@/components/Buttons/NormalButton'
 import React from 'react'
 import { FaCreditCard } from 'react-icons/fa'
 
@@ -22,15 +23,11 @@ export default function FileListItem(file: OneFileInterface) {
         {file.time&&
         <h1 className='text-lg'>time: {file.time}</h1>
         }
-        <h1>{file.decryptedStatus ? "t" : "f"}</h1>
+        
         {file.decryptedStatus ?
-            <button onClick={() => file.downloadEncryptedFile(file.index)} className="btn_primary_1 text-sm px-4 py-2">
-                Download File
-            </button>
+            <NormalButton loading={file.isDownloading} disabled={file.isDownloading} onClick={() => file.downloadEncryptedFile(file.index)} className="btn_primary_1 text-sm px-4 py-2" text={file.isDownloading?"Downloading":"Download File"} />
             :
-            <button onClick={() => file.DecryptFile(file.index)} className="btn_primary_2 text-sm px-4 py-2">
-                Decrypt File
-            </button>
+            <NormalButton onClick={() => file.DecryptFile(file.index)} className="btn_primary_2 text-sm px-4 py-2" text='Decrypt File' />
         }
     </div>
 </div>

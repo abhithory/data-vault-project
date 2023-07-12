@@ -52,11 +52,8 @@ function AllFilesList() {
     setIsDownloading(true)
     try {
       const _fullLink: string | null = await getFileUrlFromIpfsHash(allFiles[n].fileHash);
-      if (!_fullLink) return;
-      console.log(_fullLink);
-      
+      if (!_fullLink) return;      
       const _res = await fetch(_fullLink);
-      console.log("_res",_res);
       const encryptedFile = await _res.blob();
       const decryptedFile = await decryptFile(encryptedFile, allFiles[n].decryptKey);
       downloadFile(decryptedFile, allFiles[n].fileName + ".zip")
