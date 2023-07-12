@@ -66,13 +66,11 @@ function AllFilesList() {
 
   return (
     <>
-    <div className="flex flex-wrap gap-4">
+    <div className="flex flex-wrap gap-4 justify-center">
       {allFiles &&
       allFiles.map((file:FileExtendedDataInterface, key:number ) => {
         return (
-          <>
           <FileListItem key={key} index={key} fileName={file.fileName} fileHash={file.fileHash} decryptedStatus={file.decryptedStatus} DecryptFile={DecryptFile} downloadEncryptedFile={downloadEncryptedFile} isDownloading={isDownloading}  />         
-      </>
         )
       })}
     </div>

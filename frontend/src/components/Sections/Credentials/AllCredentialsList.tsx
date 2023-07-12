@@ -68,11 +68,11 @@ function AllCredentialsList() {
   }
   return (
     <>
-      <div className="flex flex-wrap gap-4">
+      <div className="flex flex-wrap gap-4 justify-center">
         {allCredentials &&
           allCredentials.map((file: CredentialsExtendedDataInterface, key: number) => {
             return (
-              <CredentialListItem index={key} openCredentialModel={openCredentialModel} website={file.website} usernameOrEmailOrPhone={file.usernameOrEmailOrPhone} password={file.password} decryptedStatus={file.decryptedStatus} DecryptCredentials={DecryptCredentials} />
+              <CredentialListItem key={key} index={key} openCredentialModel={openCredentialModel} website={file.website} usernameOrEmailOrPhone={file.usernameOrEmailOrPhone} password={file.password} decryptedStatus={file.decryptedStatus} DecryptCredentials={DecryptCredentials} />
             )
           })}
       </div>
