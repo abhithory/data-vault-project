@@ -6,12 +6,12 @@ import NormalButton from '@/components/Buttons/NormalButton';
 import NormalInput from '@/components/Inputs/NormalInput';
 import { getEncryptedMessage, getEncryptionPublicKey } from '@/utils/MessageEncryption';
 import { Web3ConnectionContext } from '@/web3Connection/Web3ConnectionContext';
-import { advanceEncryptFile, downloadFile } from '@/utils/FileEncryption';
+import { advanceEncryptFile } from '@/utils/FileEncryption';
 import UploadingStepper from '@/components/Stepper/UploadingStepper';
 
 export default function UploadFiles() {
 
-    const { address, getFileUrlFromIpfsHash, uploadFileOnIPFS, addFileOfUser } = useContext(Web3ConnectionContext);
+    const { address, uploadFileOnIPFS, addFileOfUser } = useContext(Web3ConnectionContext);
     const [isOpen, setIsOpen] = useState(false);
 
     const [uploadingFile, setUploadingFile] = useState<boolean>(false);

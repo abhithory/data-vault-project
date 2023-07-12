@@ -70,7 +70,9 @@ function AllFilesList() {
       {allFiles &&
       allFiles.map((file:FileExtendedDataInterface, key:number ) => {
         return (
-          <FileListItem key={key} index={key} fileName={file.fileName} fileHash={file.fileHash} decryptedStatus={file.decryptedStatus} DecryptFile={DecryptFile} downloadEncryptedFile={downloadEncryptedFile} isDownloading={isDownloading}  />      
+          <>
+          <FileListItem key={key} index={key} fileName={file.fileName} fileHash={file.fileHash} decryptedStatus={file.decryptedStatus} DecryptFile={DecryptFile} downloadEncryptedFile={downloadEncryptedFile} isDownloading={isDownloading}  />         
+      </>
         )
       })}
     </div>
