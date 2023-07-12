@@ -8,6 +8,7 @@ import { Web3ConnectionContext } from '@/web3Connection/Web3ConnectionContext';
 import { CredentialStruct } from '@/interfaces/SmartContract';
 import { decryptMessage } from '@/utils/MessageEncryption';
 import SimpleLoader from '@/components/Loader/loader';
+import { useDataRefreshStore } from '@/store/dataRefresh';
 
 
 
@@ -26,13 +27,18 @@ function AllCredentialsList() {
     password: ""
   });
 
+  const refreshCredentials = useDataRefreshStore((store)=>store.refreshCredentials);
+  const changeCredentialsState = useDataRefreshStore((store)=>store.changeCredentialsState);
+
   // const [uploadingCredential, setUploadingCredential] = useState<boolean>(false);
   // const [uploadingProcessCount, setUploadingProcessCount] = useState<number>(0);
 
   async function loadAllCredentials() {
     if (!address) return
     setIsLoading(true)
+    
     const _allCredentials: CredentialStruct[] | null = await getAllCredentialsOfUser();
+    console.log("loading",_allCredentials?.length);
     if (_allCredentials) {
       const extendedFiles: CredentialsExtendedDataInterface[] = _allCredentials.map(((item: CredentialStruct) => {
         return { ...item, decryptedStatus: false }
@@ -40,11 +46,22 @@ function AllCredentialsList() {
       setAllCredentials(extendedFiles)
     }
     setIsLoading(false)
+    // changeCredentialsState(false);
   }
 
   useEffect(() => {
     loadAllCredentials()
   }, [address])
+  
+  useEffect(() => {
+    console.log("refreshCredentials",refreshCredentials);
+    
+    if (refreshCredentials) {        
+        loadAllCredentials();
+    }
+  }, [refreshCredentials])
+  
+
 
 
   function openCredentialModel(n: number) {

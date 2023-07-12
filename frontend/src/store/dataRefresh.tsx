@@ -1,23 +1,27 @@
-import { create } from 'zustand';
+import { StateCreator, create } from 'zustand';
 
 
-interface storeInterface{
+interface StoreInterface {
     refreshCredentials: boolean;
     refreshFiles: boolean;
+    changeCredentialsState: (newState: boolean) => void;
+    changeFilesState: (newState: boolean) => void;
 }
 
-const store = (set) => ({
+const store: StateCreator<StoreInterface> = (set) => ({
     refreshCredentials: false,
     refreshFiles: false,
     changeCredentialsState: (newState: boolean) => {
-        set((store: storeInterface) => {
-            store.refreshCredentials = newState;
-        })
+        set((store: StoreInterface) => ({
+            ...store,
+            refreshCredentials: newState,
+        }))
     },
-    changeFilessState: (newState: boolean) => {
-        set((store: storeInterface) => {
-            store.refreshCredentials = newState;
-        })
+    changeFilesState: (newState: boolean) => {
+        set((store: StoreInterface) => ({
+            ...store,
+            refreshFiles: newState,
+        }))
     },
 })
 

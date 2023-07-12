@@ -7,6 +7,7 @@ import { CredentialsFormData } from '@/interfaces/Credentials';
 import CredentialsForm from './CredentialsForm';
 import { getEncryptedMessage, getEncryptionPublicKey } from '@/utils/MessageEncryption';
 import UploadingStepper from '@/components/Stepper/UploadingStepper';
+import { useDataRefreshStore } from '@/store/dataRefresh';
 
 
 function UploadCredentails() {
@@ -22,6 +23,8 @@ function UploadCredentails() {
     const [uploadingCredential, setUploadingCredential] = useState<boolean>(false);
     const [uploadingProcessCount, setUploadingProcessCount] = useState<number>(0);
 
+    const changeCredentialsState = useDataRefreshStore((store) => store.changeCredentialsState);
+
 
     async function uploadCredentails(e: React.ChangeEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -31,17 +34,18 @@ function UploadCredentails() {
         setUploadingProcessCount(1);
 
         if (credentialsData.website && credentialsData.password && credentialsData.usernameOrEmailOrPhone) {
-            const _pEK: string | null = await getEncryptionPublicKey(address);    
-            if (!_pEK) return    
+            const _pEK: string | null = await getEncryptionPublicKey(address);
+            if (!_pEK) return
             const _eP: string = getEncryptedMessage(credentialsData.password, _pEK);
             setUploadingProcessCount(2);
             const added = await addCredentialOfUser({ ...credentialsData, password: _eP });
             if (added) {
                 setUploadingProcessCount(3);
+                changeCredentialsState(true);
             } else {
                 // show error
             }
-            
+
         } else {
             // show error
         }
@@ -60,7 +64,7 @@ function UploadCredentails() {
                     <h1 className="text-3xl text_primary_gradient_2">Upload Credentials</h1>
                     <CredentialsForm type="create" setCredentialsData={setCredentialsData} submitForm={uploadCredentails} credentialsData={credentialsData} uploadingCredential={uploadingCredential} />
                     <div className="mt-4">
-                            <UploadingStepper type='credentials' uploadingProcessCount={uploadingProcessCount} />
+                        <UploadingStepper type='credentials' uploadingProcessCount={uploadingProcessCount} />
                     </div>
                 </div>
             </PopUpModel>
