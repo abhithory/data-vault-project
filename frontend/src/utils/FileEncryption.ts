@@ -1,6 +1,9 @@
 import CryptoJS from "crypto-js"
 import JSZip from "jszip"
 
+import saveAs from "file-saver"
+
+
 function generateRandomKey(): string {
     return CryptoJS.lib.WordArray.random(24).toString(CryptoJS.enc.Base64)
 }
@@ -61,4 +64,16 @@ export function zipFile(files: File[],folderName: string) {
       folder.file(folderName, file as any)
     })
     return zip.generateAsync({ type: "blob" })
-  }
+}
+
+export function downloadFile(file: File | Blob, fileName: string): boolean {
+    
+    try {
+        saveAs(file, fileName);
+        return true
+    } catch (error) {
+        return false
+    }
+
+}
+

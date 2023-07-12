@@ -5,6 +5,9 @@ import { Web3ConnectionContext } from '@/web3Connection/Web3ConnectionContext';
 import { FileStructInterface } from '@/interfaces/SmartContract';
 import { FileExtendedDataInterface } from '@/interfaces/Files';
 import { decryptMessage } from '@/utils/MessageEncryption';
+import { decryptFile, downloadFile } from '@/utils/FileEncryption';
+import SimpleLoader from '@/components/Loader/loader';
+
 
 function AllFilesList() {
   const { address, getAllFilesOfUser } = useContext(Web3ConnectionContext);
@@ -48,12 +51,11 @@ function AllFilesList() {
   async function downloadEncryptedFile(n: number) {
     setIsDownloading(true)
     try {
-      // const _fullLink = allFiles[n].fileHash + "/" + allFiles[n].fileName;
-      // const _res = await fetch(_fullLink);
-      // const encryptedFile = await _res.blob();
-      // const decryptedFile = await decryptFile(encryptedFile, allFiles[n].decryptKey);
-      // saveAs(decryptedFile, allFiles[n].fileName + ".zip")
-
+      const _fullLink = allFiles[n].fileHash;
+      const _res = await fetch(_fullLink);
+      const encryptedFile = await _res.blob();
+      const decryptedFile = await decryptFile(encryptedFile, allFiles[n].decryptKey);
+      downloadFile(decryptedFile, allFiles[n].fileName + ".zip")
     } catch (error) {
 
     } finally {
@@ -62,11 +64,21 @@ function AllFilesList() {
   }
 
   return (
+    <>
     <div className="flex flex-wrap gap-4">
-      {/* <FileListItem key={key} index={key} fileName={file.fileName} fileHash={file.fileHash} decryptedStatus={file.decryptedStatus} DecryptFile={DecryptFile} advanceEncryptionStatus={file.advanceEncryptionStatus} downloadEncryptedFile={downloadEncryptedFile} isDownloading={isDownloading}  />       */}
-      <FileListItem key={0} index={0} fileName={"fileName"} fileHash={"fileHash"} decryptedStatus={false} DecryptFile={DecryptFile} downloadEncryptedFile={downloadEncryptedFile} isDownloading={isDownloading} fileSize={55} />
-      <FileListItem key={0} index={0} fileName={"fileName"} fileHash={"fileHash"} decryptedStatus={true} DecryptFile={DecryptFile} downloadEncryptedFile={downloadEncryptedFile} isDownloading={isDownloading} fileSize={55} />
+      {allFiles &&
+      allFiles.map((file:FileExtendedDataInterface, key:number ) => {
+        return (
+          <FileListItem key={key} index={key} fileName={file.fileName} fileHash={file.fileHash} decryptedStatus={file.decryptedStatus} DecryptFile={DecryptFile} downloadEncryptedFile={downloadEncryptedFile} isDownloading={isDownloading}  />      
+        )
+      })}
     </div>
+    {isLoading &&
+        <div className="flex_center w-full">
+          <SimpleLoader className='w-12 ' />
+        </div>
+      }
+    </>
   )
 }
 

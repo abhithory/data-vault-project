@@ -24,6 +24,7 @@
     "axios": "^1.4.0",
     "crypto-js": "^4.1.1",
     "ethers": "^5.7.2",
+    "file-saver": "^2.0.5",
     "jszip": "^3.10.1",
     "next": "13.4.9",
     "postcss": "8.4.25",
@@ -37,6 +38,7 @@
   "devDependencies": {
     "@types/axios": "^0.14.0",
     "@types/crypto-js": "^4.1.1",
+    "@types/file-saver": "^2.0.5",
     "encoding": "^0.1.13",
     "lokijs": "^1.5.12",
     "pino-pretty": "^10.0.0"
