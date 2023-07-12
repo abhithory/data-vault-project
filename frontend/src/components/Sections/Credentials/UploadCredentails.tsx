@@ -3,10 +3,10 @@
 import PopUpModel from '@/components/PopupModel/PopUpModel';
 import { Web3ConnectionContext } from '@/web3Connection/Web3ConnectionContext'
 import React, { useContext, useState } from 'react'
-import CredentialsUploadStepper from './CredentialsUploadStepper';
 import { CredentialsFormData } from '@/interfaces/Credentials';
 import CredentialsForm from './CredentialsForm';
 import { getEncryptedMessage, getEncryptionPublicKey } from '@/utils/MessageEncryption';
+import UploadingStepper from '@/components/Stepper/UploadingStepper';
 
 
 function UploadCredentails() {
@@ -31,7 +31,8 @@ function UploadCredentails() {
         setUploadingProcessCount(1);
 
         if (credentialsData.website && credentialsData.password && credentialsData.usernameOrEmailOrPhone) {
-            const _pEK: string = await getEncryptionPublicKey(address);            
+            const _pEK: string | null = await getEncryptionPublicKey(address);    
+            if (!_pEK) return    
             const _eP: string = getEncryptedMessage(credentialsData.password, _pEK);
             setUploadingProcessCount(2);
             const added = await addCredentialOfUser({ ...credentialsData, password: _eP });
@@ -59,7 +60,7 @@ function UploadCredentails() {
                     <h1 className="text-3xl text_primary_gradient_2">Upload Credentials</h1>
                     <CredentialsForm type="create" setCredentialsData={setCredentialsData} submitForm={uploadCredentails} credentialsData={credentialsData} uploadingCredential={uploadingCredential} />
                     <div className="mt-4">
-                            <CredentialsUploadStepper uploadingProcessCount={uploadingProcessCount} />
+                            <UploadingStepper type='credentials' uploadingProcessCount={uploadingProcessCount} />
                     </div>
                 </div>
             </PopUpModel>

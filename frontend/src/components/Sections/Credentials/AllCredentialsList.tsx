@@ -4,7 +4,6 @@ import CredentialListItem from './CredentialListItem';
 import PopUpModel from '@/components/PopupModel/PopUpModel';
 import CredentialsForm from './CredentialsForm';
 import { CredentialsExtendedDataInterface, CredentialsFormData } from '@/interfaces/Credentials';
-import CredentialsUploadStepper from './CredentialsUploadStepper';
 import { Web3ConnectionContext } from '@/web3Connection/Web3ConnectionContext';
 import { CredentialStruct } from '@/interfaces/SmartContract';
 import { decryptMessage } from '@/utils/MessageEncryption';
