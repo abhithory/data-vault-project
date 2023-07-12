@@ -2,7 +2,9 @@
 import React, { useState } from 'react'
 import FileUploadStepper from './FileUploadStepper';
 import PopUpModel from '@/components/PopupModel/PopUpModel';
-import { FileInputDropZone } from '@/components/Inputs/FileInputDropZone';
+import { FileInput } from '@/components/Inputs/FileInputDropZone';
+import NormalButton from '@/components/Buttons/NormalButton';
+import NormalInput from '@/components/Inputs/NormalInput';
 
 export default function UploadFiles() {
 
@@ -24,25 +26,21 @@ export default function UploadFiles() {
     }
 
     function convertInMb(inByte: number): string {
-        return (inByte / 1000).toFixed(3) + " KB"
+        return (inByte / 1000000).toFixed(3) + " MB"
     }
 
     return (
         <>
-            <span onClick={() => setIsOpen(true)}>
-                <button className="btn_primary_1">
-                    Upload Files
-                </button>
-            </span>
+            <NormalButton onClick={() => setIsOpen(true)} text='Upload Files' />
             <PopUpModel isOpen={isOpen} closeModal={() => setIsOpen(false)}>
-                <div className="text-center">
-                    <h1 className="text-3xl text_primary_gradient_2">Upload Files</h1>
+                <div className="text-center gap-4 flex_center w-full flex-col">
+                    <h1 className="text-3xl text_primary_gradient_2 mb-6">Upload Files</h1>
 
-                    <FileInputDropZone handleFileUpload={handleFileUpload} />
+                    <FileInput handleFileUpload={handleFileUpload} text={fileUploaded ? fileUploaded.name.substring(0,16)+"..."+fileUploaded.type: 'Select Your File'} className='mx-4 border-primary bg-primary-bg w-full' />
                     {fileUploaded &&
                         <>
-                            <input type="text" className='input_1' value={fileName} />
-                            <span>ize: {convertInMb(fileUploaded?.size)}</span>
+                            <NormalInput type="text" className='' value={fileName} onChange={()=>{}} />
+                            <span>Size: {convertInMb(fileUploaded?.size)}</span>
                         </>
                     }
 

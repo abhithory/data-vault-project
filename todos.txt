@@ -1,2 +1,3 @@
-- create custome input (with copy button in it)
-- custome button
+- add file upload, encrypt and decrypt show download
+- upload entrie system of storing the data
+(use new struct. for everything just store ipfs hash)
