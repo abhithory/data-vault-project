@@ -46,18 +46,19 @@ export default function UploadFiles() {
 
             const _pEK = await getEncryptionPublicKey(address);
             if (!_pEK) return;
+            setUploadingProcessCount(1);
 
             const { key, encryptedFile } = await advanceEncryptFile(_file as Blob);
-            setUploadingProcessCount(1);
             const decryptKey: string = getEncryptedMessage(key, _pEK);
+            setUploadingProcessCount(2)
             const fileIPFSHash:string | null = await uploadFileOnIPFS(encryptedFile as File);
             if (!fileIPFSHash) return;
-            setUploadingProcessCount(2)
+            setUploadingProcessCount(3)
             
             const added = await addFileOfUser({fileName:fileUploadName, fileHash: fileIPFSHash, decryptKey: decryptKey});
             
             if (added) {
-                setUploadingProcessCount(3)                
+                setUploadingProcessCount(4)
             } else {
                 setUploadingProcessCount(-1)                
                 return; //show error
