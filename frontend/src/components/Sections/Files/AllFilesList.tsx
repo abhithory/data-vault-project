@@ -58,8 +58,8 @@ function AllFilesList() {
       const _res = await fetch(_fullLink);
       console.log("_res",_res);
       const encryptedFile = await _res.blob();
-      // const decryptedFile = await decryptFile(encryptedFile, allFiles[n].decryptKey);
-      downloadFile(encryptedFile, allFiles[n].fileName + ".zip")
+      const decryptedFile = await decryptFile(encryptedFile, allFiles[n].decryptKey);
+      downloadFile(decryptedFile, allFiles[n].fileName + ".zip")
     } catch (error) {
 
     } finally {

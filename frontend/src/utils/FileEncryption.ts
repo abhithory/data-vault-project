@@ -19,9 +19,10 @@ export async function advanceEncryptFile(file: Blob):Promise<{key:string,encrypt
             const key = generateRandomKey();
             const _wArray = CryptoJS.lib.WordArray.create(reader.result as any);
             const encryptedFile = CryptoJS.AES.encrypt(_wArray, key).toString();
+            // const file = new File([encryptedFile],"newfile.zip");
             resolve({
                 key:key,
-                encryptedFile: new Blob([encryptedFile])
+                encryptedFile: new File([encryptedFile],"encryptedfile")
             })
         }
         reader.readAsArrayBuffer(zipedFile);

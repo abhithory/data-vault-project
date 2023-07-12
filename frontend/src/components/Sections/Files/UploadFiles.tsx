@@ -6,7 +6,7 @@ import NormalButton from '@/components/Buttons/NormalButton';
 import NormalInput from '@/components/Inputs/NormalInput';
 import { getEncryptedMessage, getEncryptionPublicKey } from '@/utils/MessageEncryption';
 import { Web3ConnectionContext } from '@/web3Connection/Web3ConnectionContext';
-import { advanceEncryptFile } from '@/utils/FileEncryption';
+import { advanceEncryptFile, downloadFile } from '@/utils/FileEncryption';
 import UploadingStepper from '@/components/Stepper/UploadingStepper';
 
 export default function UploadFiles() {
@@ -51,8 +51,13 @@ export default function UploadFiles() {
             const { key, encryptedFile } = await advanceEncryptFile(_file as Blob);
             const decryptKey: string = getEncryptedMessage(key, _pEK);
             setUploadingProcessCount(2)
-            const fileIPFSHash:string | null = await uploadFileOnIPFS(encryptedFile as File);
+            const fileIPFSHash:string | null = await uploadFileOnIPFS(encryptedFile);
             if (!fileIPFSHash) return;
+            console.log("ipfs hash: ", fileIPFSHash);
+            const url: string | null = await getFileUrlFromIpfsHash(fileIPFSHash);
+            console.log("ipfs url: ", url);
+            
+            
             setUploadingProcessCount(3)
             
             const added = await addFileOfUser({fileName:fileUploadName, fileHash: fileIPFSHash, decryptKey: decryptKey});
