@@ -21,12 +21,10 @@ const store: StateCreator<dataStoreInterface> = (set) => ({
         set((store) => {
             const extendedData: DataExtendedInterface[] = dataArray.map(((item: DataStructInterface) => {
                 return { ...item, decryptedStatus: false, id: uuidv4() }
-            }))
-
+            }))            
             return {
                 ...store,
-                allData: extendedData,
-                loadingStatus: false,
+                allData: extendedData
             }
         })
     },

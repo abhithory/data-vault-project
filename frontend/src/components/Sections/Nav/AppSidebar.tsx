@@ -25,14 +25,11 @@ function AppSidebar() {
     async function loadAllData() {
       if (!address) return
       setLoadingStatus(true)
-
+      console.log("============================");
       console.log("loading data form smart contract");
       
-      const _allCredentials: DataStructInterface[] | null = await getAllDataOfUser();
-      console.log("loading",_allCredentials?.length);
-      if (_allCredentials) {
-        setDataToStore(_allCredentials)
-      }
+      // const _allCredentials: DataStructInterface[] = await getAllDataOfUser();
+      await getAllDataOfUser();
       setLoadingStatus(false)
     }
   

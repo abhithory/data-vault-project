@@ -1,6 +1,6 @@
 import NormalButton from '@/components/Buttons/NormalButton'
 import { DataExtendedInterface, DataTypeEnum } from '@/interfaces/DataInterface'
-import { formatTimeSecToString } from '@/utils/Helper'
+import { getDateToStringFromSec, getDayTimeToStringFromSec } from '@/utils/Helper'
 import React from 'react'
 import { FaCreditCard } from 'react-icons/fa'
 
@@ -26,7 +26,10 @@ function DataItem({
             <div className='flex_center flex-col border border-primary rounded-lg py-12 gap-2 glassmorphism-bg bg-primary-bg/90 cursor-pointer'>
                 <FaCreditCard className="text-2xl" />
                 <h1 className='text-lg'>{file.dataName}</h1>
-                <h1 className='text-sm'>{formatTimeSecToString(file.uploadTime)}</h1>
+                <div className="text-center">
+                <h1 className='text-sm'>{getDayTimeToStringFromSec(file.uploadTime)}</h1>
+                <h1 className='text-sm'>{getDateToStringFromSec(file.uploadTime)}</h1>
+                </div>
                 {file.decryptedStatus ?
                     <NormalButton 
                     onClick={() => showDecryptedData(index)}  

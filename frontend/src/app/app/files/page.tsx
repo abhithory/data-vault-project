@@ -11,7 +11,7 @@ function page() {
       </section>
       <section className='mt-8'>
         <h1 className='text_primary_gradient text-2xl mb-4 text-center'>All your Files</h1>
-        <UserAllData type={DataTypeEnum.CREDENTIALS} />
+        <UserAllData type={DataTypeEnum.FILE} />
       </section>
     </main>
   )

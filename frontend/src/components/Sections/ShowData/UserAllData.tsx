@@ -20,15 +20,11 @@ function UserAllData(props: UploadDataInterface) {
 
   const { address, getFileUrlFromIpfsHash } = useContext(Web3ConnectionContext);
 
-  const [allData, setDataToStore, setDecryptKey, loadingStatus] = useDataStore((store) => [store.allData, store.setData, store.setDecryptKey, store.loadingStatus]);
-
-  const [dataArray,] = useState<DataExtendedInterface[]>(allData.filter(data => data.dataType === props.type));
-
+  const [allData, setDecryptKey, loadingStatus] = useDataStore((store) => [store.allData, store.setDecryptKey, store.loadingStatus]);
+  const [dataArray, setDataArray] = useState<DataExtendedInterface[]>([]);
 
   const [showDataModel, setShowDataModel] = useState<boolean>(false);
-
   const [isDownloading, setIsDownloading] = useState<boolean>(false);
-
 
   // for crednetials
   const [credentialsData, setCredentialsData] = useState<CredentialsFormData>({
@@ -67,6 +63,15 @@ function UserAllData(props: UploadDataInterface) {
       setDecryptKey(dataArray[n].id, _decryptedKey)
     }
   }
+
+
+  useEffect(() => {
+  const specificData = allData.filter(data => data.dataType === props.type);
+  if (specificData) {
+    setDataArray(specificData);
+  }
+  }, [allData])
+  
 
 
   return (
