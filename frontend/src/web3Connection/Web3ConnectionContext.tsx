@@ -36,7 +36,7 @@ const Web3ConnectionWrapper = ({ children }: any) => {
     const storage = useStorage();
     const signer = useSigner();
 
-    const [setData,addData] = useDataStore((store)=> [store.setData,store.addData])
+    const [setData, addData] = useDataStore((store) => [store.setData, store.addData])
 
     function getContract(): Contract {
         const DataVaultContract = new ethers.Contract(DataVaultContractAddress, DataVaultJson.abi, signer);
@@ -79,10 +79,13 @@ const Web3ConnectionWrapper = ({ children }: any) => {
         try {
             const _contract = getContract();
             const _tx = await _contract.addData(
-                {dataType: file.dataType,
-                name: file.name,
-                fileHash: file.fileHash,
-                decryptKey: file.decryptKey}
+                {
+                    dataType: file.dataType,
+                    dataName: file.dataName,
+                    dataHash: file.dataHash,
+                    decryptKey: file.decryptKey,
+                    uploadTime: 0
+                }
             );
             _tx.wait();
             addData(file);
@@ -94,7 +97,7 @@ const Web3ConnectionWrapper = ({ children }: any) => {
     }
 
 
-    async function  getAllDataOfUser(): Promise<DataStructInterface[]> {
+    async function getAllDataOfUser(): Promise<DataStructInterface[]> {
         try {
             const _contract = getContract();
             const _data = await _contract.getAllData();
@@ -117,7 +120,7 @@ const Web3ConnectionWrapper = ({ children }: any) => {
             getFileUrlFromIpfsHash,
             addDataOfUser,
             getAllDataOfUser
-                           
+
         }}
         >
             {children}

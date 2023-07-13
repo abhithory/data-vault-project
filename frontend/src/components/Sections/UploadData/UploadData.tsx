@@ -93,8 +93,8 @@ function UploadData(props: UploadDataInterface) {
             setUploadingProcessCount(3);
             await addDataOfUser({
                 dataType,
-                name: dataName,
-                fileHash: ipfsHash,
+                dataName,
+                dataHash: ipfsHash,
                 decryptKey: _eK,
                 uploadTime: (new Date()).getTime() / 1000
             });

@@ -43,7 +43,7 @@ function UserAllData(props: UploadDataInterface) {
     try {
       
       setIsDownloading(true);
-      const _fullURL: string = await getFileUrlFromIpfsHash(dataArray[n].fileHash);
+      const _fullURL: string = await getFileUrlFromIpfsHash(dataArray[n].dataHash);
       const _res = await fetch(_fullURL);
       const encryptedFile = await _res.blob();
       const decryptedFile: Blob = await decryptFile(encryptedFile, dataArray[n].decryptKey);
@@ -52,7 +52,7 @@ function UserAllData(props: UploadDataInterface) {
         setCredentialsData(formData)
         setShowDataModel(true)
       } else if (props.type === DataTypeEnum.FILE) {
-        downloadFile(decryptedFile, dataArray[n].name + ".zip")
+        downloadFile(decryptedFile, dataArray[n].dataName + ".zip")
       }
     } catch (error) {
       
@@ -68,9 +68,7 @@ function UserAllData(props: UploadDataInterface) {
     }
   }
 
-  function formatTime(secs: number) {
-    return (new Date(secs * 1000)).toString();
-  }
+
   return (
     <>
       <div className="flex flex-wrap gap-4 justify-center">
@@ -81,12 +79,9 @@ function UserAllData(props: UploadDataInterface) {
                 key={key}
                 index={key}
                 type={props.type}
-                id={file.id}
+                file={file}
                 showDecryptedData={showDecryptedData}
-                name={file.name}
-                decryptedStatus={file.decryptedStatus}
                 handleDecryptData={handleDecryptData}
-                time={formatTime(file.uploadTime)}
                 isDownloading={isDownloading} />
             )
           })}
