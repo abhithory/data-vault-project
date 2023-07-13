@@ -33,29 +33,27 @@ function AllCredentialsList() {
   // const [uploadingCredential, setUploadingCredential] = useState<boolean>(false);
   // const [uploadingProcessCount, setUploadingProcessCount] = useState<number>(0);
 
-  async function loadAllCredentials() {
+  async function loadAllData() {
     if (!address) return
     setIsLoading(true)
     
     const _allCredentials: DataStructInterface[] | null = await getAllDataOfUser();
     console.log("loading",_allCredentials?.length);
     if (_allCredentials) {
-      const extendedFiles: DataExtendedInterface[] = _allCredentials.map(((item: DataStructInterface) => {
-        return { ...item, decryptedStatus: false, id: "a" }
-      }))
-      setDataToStore(extendedFiles)
+      setDataToStore(_allCredentials)
     }
     setIsLoading(false)
   }
 
   useEffect(() => {
-    loadAllCredentials()
+    loadAllData()
   }, [address])
  
 
 
   function openCredentialModel(n: number) {
     setModelIndex(n)
+    // setCredentialsData
     setShowCredentialsModel(true)
   }
 
@@ -95,7 +93,7 @@ function AllCredentialsList() {
       <PopUpModel isOpen={showCredentialsModel} closeModal={() => setShowCredentialsModel(false)}>
         <div className="text-center">
           <h1 className="text-3xl text_primary_gradient_2">Your Credentials</h1>
-          <CredentialsForm type="update" setCredentialsData={setCredentialsData} submitForm={updateCredentails} credentialsData={allCredentials[modelIndex]} />
+          <CredentialsForm type="update" setCredentialsData={setCredentialsData} submitForm={updateCredentails} credentialsData={credentialsData} />
           {/* <div className="mt-4">
             {uploadingCredential &&
               <CredentialsUploadStepper uploadingProcessCount={uploadingProcessCount} />
