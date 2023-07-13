@@ -10,6 +10,7 @@ import UploadingStepper from '@/components/Stepper/UploadingStepper';
 import { useKeyDataStore } from '@/store/keyDataStore';
 import { advanceEncryptFile } from '@/utils/FileEncryption';
 import { DataTypeEnum } from '@/interfaces/DataInterface';
+import FileUploadForm from '../Files/FileUploadForm';
 
 
 
@@ -84,13 +85,24 @@ function UploadData(props: UploadDataInterface) {
         <>
             <span onClick={() => setIsOpen(true)}>
                 <button className="btn_primary_1">
-                    Upload Credentials
+                    Upload 
+                    {props.type === DataTypeEnum.CREDENTIALS ?
+                    "Credentials"
+                    : props.type === DataTypeEnum.FILE &&
+                    "File"
+                    }
                 </button>
             </span>
             <PopUpModel isOpen={isOpen} closeModal={() => setIsOpen(false)}>
                 <div className="text-center">
                     <h1 className="text-3xl text_primary_gradient_2">Upload Credentials</h1>
+                    {props.type === DataTypeEnum.CREDENTIALS ?
                     <CredentialsForm type="create" setCredentialsData={setCredentialsData} submitForm={uploadCredentails} credentialsData={credentialsData} uploadingCredential={uploadingCredential} />
+                    : props.type === DataTypeEnum.FILE &&
+                        <FileUploadForm />
+                    }
+
+
                     <div className="mt-4">
                         <UploadingStepper type={props.type} uploadingProcessCount={uploadingProcessCount} error={error} />
                     </div>
