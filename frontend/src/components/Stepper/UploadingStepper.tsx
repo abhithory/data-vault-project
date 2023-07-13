@@ -1,9 +1,10 @@
+import { DataTypeEnum } from '@/interfaces/DataInterface'
 import React from 'react'
 
 
 interface UploadStepperInterface{
     uploadingProcessCount: number,
-    type: "credentials" | "file",
+    type: DataTypeEnum,
     error?: Error
 }
 function UploadingStepper({ uploadingProcessCount, type,error }: UploadStepperInterface) {
@@ -34,9 +35,9 @@ function UploadingStepper({ uploadingProcessCount, type,error }: UploadStepperIn
             </p>
             :
             <p className="text-sm">
-                {type === "credentials" ?
+                {type === DataTypeEnum.CREDENTIALS ?
                 messagesCredentials[uploadingProcessCount]
-                :
+                : type === DataTypeEnum.FILE &&
                 messagesFile[uploadingProcessCount]
             }
             </p>

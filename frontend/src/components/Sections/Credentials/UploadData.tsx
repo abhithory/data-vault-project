@@ -12,8 +12,9 @@ import { advanceEncryptFile } from '@/utils/FileEncryption';
 import { DataTypeEnum } from '@/interfaces/DataInterface';
 
 
+
 interface UploadDataInterface {
-    type: "Credentials" | "File"
+    type: DataTypeEnum
 }
 
 function UploadData(props: UploadDataInterface) {
@@ -44,10 +45,10 @@ function UploadData(props: UploadDataInterface) {
         if (!address) return;
         setUploadingCredential(true);
         setUploadingProcessCount(1);
-        if (props.type === "Credentials") {
+        if (props.type === DataTypeEnum.CREDENTIALS) {
             const dataJsonFile = new Blob([JSON.stringify(credentialsData)], { type: "application/json" });
             encryptAndUploadData(dataJsonFile, DataTypeEnum.CREDENTIALS, credentialsData.credentialName);
-        } else if (props.type === "File") {
+        } else if (props.type === DataTypeEnum.FILE) {
 
         } else {
             setUploadingCredential(false);
@@ -91,7 +92,7 @@ function UploadData(props: UploadDataInterface) {
                     <h1 className="text-3xl text_primary_gradient_2">Upload Credentials</h1>
                     <CredentialsForm type="create" setCredentialsData={setCredentialsData} submitForm={uploadCredentails} credentialsData={credentialsData} uploadingCredential={uploadingCredential} />
                     <div className="mt-4">
-                        <UploadingStepper type='credentials' uploadingProcessCount={uploadingProcessCount} error={error} />
+                        <UploadingStepper type={props.type} uploadingProcessCount={uploadingProcessCount} error={error} />
                     </div>
                 </div>
             </PopUpModel>
