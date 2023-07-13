@@ -2,6 +2,7 @@ import CryptoJS from "crypto-js"
 import JSZip from "jszip"
 
 import saveAs from "file-saver"
+import { DataTypeEnum } from "@/interfaces/DataInterface"
 
 
 function generateRandomKey(): string {
@@ -10,8 +11,9 @@ function generateRandomKey(): string {
 
 
 // For Encrypting & Decrypting file 
-export async function advanceEncryptFile(file: Blob):Promise<{key:string,encryptedFile:Blob}> {
-    const zipedFile = await zipFile([file as File], (file as File).name) as Blob
+export async function advanceEncryptFile(file: Blob, dataType: DataTypeEnum):Promise<{key:string,encryptedFile:Blob}> {
+    let fileToEncrypt = file;
+    fileToEncrypt = await zipFile(file as File) as Blob
 
     return new Promise((resolve, error) => {
         const reader = new FileReader()
@@ -25,7 +27,7 @@ export async function advanceEncryptFile(file: Blob):Promise<{key:string,encrypt
                 encryptedFile: new File([encryptedFile],"encryptedfile")
             })
         }
-        reader.readAsArrayBuffer(zipedFile);
+        reader.readAsArrayBuffer(fileToEncrypt);
     })
 }
 
@@ -44,7 +46,7 @@ function convertWordArrayToUint8Array(wordArray: CryptoJS.lib.WordArray) {
 }
 
 
-export function decryptFile(data: Blob, key: string): Promise<Blob> {
+export function decryptFile(data: Blob, key: string,dataType: DataTypeEnum): Promise<Blob> {
     return new Promise((resolve) => {
         const reader = new FileReader()
         reader.onload = () => {
@@ -57,13 +59,9 @@ export function decryptFile(data: Blob, key: string): Promise<Blob> {
 }
 
   
-export function zipFile(files: File[],folderName: string) {
-    if (files.length === 0 || folderName === "") return false
+export function zipFile(file: File) {
     const zip = new JSZip()
-    const folder = zip.folder(folderName)!
-    files.forEach(file => {
-      folder.file(folderName, file as any)
-    })
+    zip.file(file.name,file)
     return zip.generateAsync({ type: "blob" })
 }
 

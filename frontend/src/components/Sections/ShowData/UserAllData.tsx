@@ -43,6 +43,7 @@ function UserAllData(props: UploadDataInterface) {
       const _res = await fetch(_fullURL);
       const encryptedFile = await _res.blob();
       const decryptedFile: Blob = await decryptFile(encryptedFile, dataArray[n].decryptKey);
+      downloadFile(decryptedFile,"new.json");      
       if (props.type === DataTypeEnum.CREDENTIALS) {
         const formData: CredentialsFormData = JSON.parse(await decryptedFile.text())
         setCredentialsData(formData)
@@ -51,9 +52,10 @@ function UserAllData(props: UploadDataInterface) {
         downloadFile(decryptedFile, dataArray[n].dataName + ".zip")
       }
     } catch (error) {
+      console.log("showDecryptedData", error);
       
     }
-    setIsDownloading(true);
+    setIsDownloading(false);
   }
 
   async function handleDecryptData(n: number) {

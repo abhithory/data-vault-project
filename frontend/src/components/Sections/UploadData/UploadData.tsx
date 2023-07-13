@@ -7,7 +7,7 @@ import { CredentialsFormData } from '@/interfaces/Credentials';
 import { getEncryptedMessage, getEncryptionPublicKey } from '@/utils/MessageEncryption';
 import UploadingStepper from '@/components/Stepper/UploadingStepper';
 import { useKeyDataStore } from '@/store/keyDataStore';
-import { advanceEncryptFile, downloadFile } from '@/utils/FileEncryption';
+import { advanceEncryptFile, decryptFile, downloadFile } from '@/utils/FileEncryption';
 import { DataTypeEnum } from '@/interfaces/DataInterface';
 import FileUploadForm from '../Files/FileUploadForm';
 import CredentialsForm from '../Credentials/CredentialsForm';
@@ -84,7 +84,10 @@ function UploadData(props: UploadDataInterface) {
             const _pEK: string = PEK ? PEK : await getEncryptionPublicKey(address);
             if (!PEK) setPEK(_pEK);
 
-            const { key, encryptedFile } = await advanceEncryptFile(data);
+            downloadFile(data, "data.json");
+            const { key, encryptedFile } = await advanceEncryptFile(data,dataType);
+            const decryptedFile = await decryptFile(encryptedFile, key, dataType);
+            downloadFile(decryptedFile, "decryptedFile.json");
             const _eK: string = getEncryptedMessage(key, _pEK);
             const ipfsHash: string = await uploadFileOnIPFS(encryptedFile);
             console.log(ipfsHash);
