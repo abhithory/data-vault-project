@@ -1,4 +1,3 @@
--global state managment for refreshing data on upload
- with zustland
-- update entrie system of storing the data
-(use new struct. for everything just store ipfs hash)
+- make responsive
+- add info section
+- create extenstion
