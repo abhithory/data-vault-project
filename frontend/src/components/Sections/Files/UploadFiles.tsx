@@ -1,7 +1,7 @@
 "use client"
 import React, { useContext, useState } from 'react'
 import PopUpModel from '@/components/PopupModel/PopUpModel';
-import { FileInput } from '@/components/Inputs/FileInputDropZone';
+import { FileInput } from '@/components/Inputs/FileInput';
 import NormalButton from '@/components/Buttons/NormalButton';
 import NormalInput from '@/components/Inputs/NormalInput';
 import { getEncryptedMessage, getEncryptionPublicKey } from '@/utils/MessageEncryption';
@@ -9,6 +9,7 @@ import { Web3ConnectionContext } from '@/web3Connection/Web3ConnectionContext';
 import { advanceEncryptFile } from '@/utils/FileEncryption';
 import UploadingStepper from '@/components/Stepper/UploadingStepper';
 import { DataTypeEnum } from '@/interfaces/DataInterface';
+import { bytesToMB } from '@/utils/Helper';
 
 export default function UploadFiles() {
 
@@ -30,10 +31,6 @@ export default function UploadFiles() {
         setFileUploaded(_file)
         setFileName(_file?.name?.split(".").slice(0, -1).join(".") as string);
         setFileExtension(_file?.name?.split(".").at(-1) as string);
-    }
-
-    function convertInMb(inByte: number): string {
-        return (inByte / 1000000).toFixed(3) + " MB"
     }
 
 
@@ -90,7 +87,7 @@ export default function UploadFiles() {
                                 <NormalInput type="text" className='' value={fileName} onChange={(e) => setFileName(e.target.value)} placeholder='Enter File Name' />
                                 <span>Type: {fileUploaded?.type}</span>
                                 <span>Extension: {fileExtension}</span>
-                                <span>Size: {convertInMb(fileUploaded?.size)}</span>
+                                <span>Size: {bytesToMB(fileUploaded?.size)}</span>
 
                                 <NormalButton loading={uploadingFile} disabled={uploadingFile} text={uploadingFile ? 'Uploading File' : 'Upload File'} onClick={handleUploadFile} />
                             </div>

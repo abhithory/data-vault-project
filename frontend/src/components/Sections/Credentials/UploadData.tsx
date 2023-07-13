@@ -27,6 +27,12 @@ function UploadData(props: UploadDataInterface) {
 
 
 
+
+    const [isUploadingData, setIsUploadingData] = useState<boolean>(false);
+    const [uploadingProcessCount, setUploadingProcessCount] = useState<number>(0);
+    const [error, setError] = useState<Error>();
+
+    // for credentials
     const [credentialsData, setCredentialsData] = useState<CredentialsFormData>({
         credentialName: "",
         websiteurl: "",
@@ -34,27 +40,41 @@ function UploadData(props: UploadDataInterface) {
         password: ""
     })
 
-    const [uploadingCredential, setUploadingCredential] = useState<boolean>(false);
-    const [uploadingProcessCount, setUploadingProcessCount] = useState<number>(0);
-    const [error, setError] = useState<Error>();
+    // for files
+    const [fileName, setFileName] = useState<string>("");
+    const [fileExtension, setFileExtension] = useState<string>("")
+    const [selectedFile, setSelectedFile] = useState<File>();
+
+
+    // 
+
+    async function handleSelectFile(e: React.ChangeEvent<HTMLInputElement>) {
+        if (!e.target.files) return
+        let _file: File = e.target.files[0];
+        setFileName(_file?.name?.split(".").slice(0, -1).join(".") as string);
+        setFileExtension(_file?.name?.split(".").at(-1) as string);
+        setSelectedFile(_file)
+    }
 
 
 
 
-    async function uploadCredentails(e: React.ChangeEvent<HTMLFormElement>) {
-        e.preventDefault();
+
+    async function handleUploadData() {
         if (!address) return;
-        setUploadingCredential(true);
+        setIsUploadingData(true);
         setUploadingProcessCount(1);
         if (props.type === DataTypeEnum.CREDENTIALS) {
             const dataJsonFile = new Blob([JSON.stringify(credentialsData)], { type: "application/json" });
-            encryptAndUploadData(dataJsonFile, DataTypeEnum.CREDENTIALS, credentialsData.credentialName);
-        } else if (props.type === DataTypeEnum.FILE) {
-
+            await encryptAndUploadData(dataJsonFile, DataTypeEnum.CREDENTIALS, credentialsData.credentialName);
+        } else if (props.type === DataTypeEnum.FILE && selectedFile) {
+            let fileUploadName: string = fileName + "." + fileExtension;
+            await encryptAndUploadData(selectedFile, DataTypeEnum.FILE, fileUploadName);
         } else {
-            setUploadingCredential(false);
+            setIsUploadingData(false);
             setUploadingProcessCount(0);
         }
+
     }
     async function encryptAndUploadData(data: File | Blob, dataType: DataTypeEnum, dataName: string) {
         try {
@@ -79,17 +99,17 @@ function UploadData(props: UploadDataInterface) {
             setUploadingProcessCount(-1);
             setError(error as Error);
         }
-        setUploadingCredential(false);
+        setIsUploadingData(false);
     }
     return (
         <>
             <span onClick={() => setIsOpen(true)}>
                 <button className="btn_primary_1">
-                    Upload 
+                    Upload
                     {props.type === DataTypeEnum.CREDENTIALS ?
-                    "Credentials"
-                    : props.type === DataTypeEnum.FILE &&
-                    "File"
+                        "Credentials"
+                        : props.type === DataTypeEnum.FILE &&
+                        "File"
                     }
                 </button>
             </span>
@@ -97,9 +117,26 @@ function UploadData(props: UploadDataInterface) {
                 <div className="text-center">
                     <h1 className="text-3xl text_primary_gradient_2">Upload Credentials</h1>
                     {props.type === DataTypeEnum.CREDENTIALS ?
-                    <CredentialsForm type="create" setCredentialsData={setCredentialsData} submitForm={uploadCredentails} credentialsData={credentialsData} uploadingCredential={uploadingCredential} />
-                    : props.type === DataTypeEnum.FILE &&
-                        <FileUploadForm />
+                        <CredentialsForm
+                            type="create"
+                            setCredentialsData={setCredentialsData}
+                            submitForm={(e) => {
+                                e.preventDefault()
+                                handleUploadData()
+                            }}
+                            credentialsData={credentialsData}
+                            uploadingCredential={isUploadingData}
+                        />
+                        : props.type === DataTypeEnum.FILE &&
+                        <FileUploadForm
+                            fileName={fileName}
+                            fileExtension={fileExtension}
+                            setFileName={setFileName}
+                            isUploadingFile={isUploadingData}
+                            selectedFile={selectedFile}
+                            handleSelectFile={handleSelectFile}
+                            handleUploadFile={handleUploadData}
+                        />
                     }
 
 
