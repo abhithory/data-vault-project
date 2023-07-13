@@ -1,6 +1,5 @@
 "use client"
 import React, { useContext, useEffect, useState } from 'react'
-import CredentialListItem from './CredentialListItem';
 import PopUpModel from '@/components/PopupModel/PopUpModel';
 import CredentialsForm from './CredentialsForm';
 import { Web3ConnectionContext } from '@/web3Connection/Web3ConnectionContext';
@@ -9,6 +8,7 @@ import SimpleLoader from '@/components/Loader/loader';
 import { DataExtendedInterface, DataStructInterface, DataTypeEnum } from '@/interfaces/DataInterface';
 import { CredentialsFormData } from '@/interfaces/Credentials';
 import { useDataStore } from '@/store/dataStore';
+import DataItem from './DataItem';
 
 
 interface UploadDataInterface {
@@ -25,39 +25,35 @@ function UserAllData(props: UploadDataInterface) {
 
 
   const [showDataModel, setShowDataModel] = useState<boolean>(false);
-  const [dataIndex, setDataIndex] = useState<number>(0);
+
+  const [isDownloading, setIsDownloading] = useState<boolean>(false);
 
 
   // for crednetials
   const [credentialsData, setCredentialsData] = useState<CredentialsFormData>({
-    credentialName:"",
+    credentialName: "",
     websiteurl: "",
     userid: "",
     password: ""
   });
 
 
-  // const [uploadingCredential, setUploadingCredential] = useState<boolean>(false);
-  // const [uploadingProcessCount, setUploadingProcessCount] = useState<number>(0);
+  function showDecryptedData(n: number) {
+    setIsDownloading(true);
+    if (props.type === DataTypeEnum.CREDENTIALS) {
 
-  function openDataModel(n: number) {
-    setDataIndex(n)
+      setShowDataModel(true)
+    }
     // setCredentialsData
-    setShowDataModel(true)
   }
 
-  async function DecryptCredentials(n: number) {
+  async function handleDecryptData(n: number) {
     if (!address) return
     const _decryptedKey = await decryptMessage(dataArray[n].decryptKey, address);
     if (_decryptedKey) {
       setDecryptKey(dataArray[n].id, _decryptedKey)
     }
   }
-
-
-  async function updateCredentails() {
-  }
-
 
   function formatTime(secs: number) {
     return (new Date(secs * 1000)).toString();
@@ -68,7 +64,17 @@ function UserAllData(props: UploadDataInterface) {
         {dataArray &&
           dataArray.map((file: DataExtendedInterface, key: number) => {
             return (
-              <CredentialListItem key={key} index={key} id={file.id} openDataModel={openDataModel} name={file.name} decryptedStatus={file.decryptedStatus} DecryptData={DecryptCredentials} time={formatTime(file.uploadTime)} />
+              <DataItem
+                key={key}
+                index={key}
+                type={props.type}
+                id={file.id}
+                showDecryptedData={showDecryptedData}
+                name={file.name}
+                decryptedStatus={file.decryptedStatus}
+                handleDecryptData={handleDecryptData}
+                time={formatTime(file.uploadTime)}
+                isDownloading={isDownloading} />
             )
           })}
       </div>
@@ -82,12 +88,11 @@ function UserAllData(props: UploadDataInterface) {
       <PopUpModel isOpen={showDataModel} closeModal={() => setShowDataModel(false)}>
         <div className="text-center">
           <h1 className="text-3xl text_primary_gradient_2">Your Credentials</h1>
-          <CredentialsForm type="update" setCredentialsData={setCredentialsData} submitForm={updateCredentails} credentialsData={credentialsData} />
-          {/* <div className="mt-4">
-            {uploadingCredential &&
-              <CredentialsUploadStepper uploadingProcessCount={uploadingProcessCount} />
-            }
-          </div> */}
+          <CredentialsForm
+            type="update"
+            setCredentialsData={() => { }}
+            submitForm={() => { }}
+            credentialsData={credentialsData} />
         </div>
       </PopUpModel>
 

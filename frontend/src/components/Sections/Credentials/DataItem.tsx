@@ -1,3 +1,4 @@
+import NormalButton from '@/components/Buttons/NormalButton'
 import { DataTypeEnum } from '@/interfaces/DataInterface'
 import React from 'react'
 import { FaCreditCard } from 'react-icons/fa'
@@ -8,6 +9,7 @@ interface CredentialWithFunctionInterface {
     id: string,
     name: string,
     time: string,
+    isDownloading: boolean,
     decryptedStatus: boolean,
     showDecryptedData: (index: number) => void,
     handleDecryptData: (index: number) => void
@@ -17,6 +19,7 @@ function DataItem({
     index,
     name,
     time,
+    isDownloading,
     decryptedStatus,
     showDecryptedData,
     handleDecryptData
@@ -29,13 +32,18 @@ function DataItem({
                 <h1 className='text-lg'>{name}</h1>
                 <h1 className='text-sm'>{time}</h1>
                 {decryptedStatus ?
-                    <button onClick={() => showDecryptedData(index)} className="btn_primary_1 text-sm px-4 py-2">
-                        Show Credentials
-                    </button>
+                    <NormalButton 
+                    onClick={() => showDecryptedData(index)}  
+                    className="btn_primary_1 text-sm px-4 py-2" 
+                    text={type === DataTypeEnum.CREDENTIALS?"Check Credentials": type === DataTypeEnum.FILE ? "Download File": ""}
+                    loading={isDownloading}
+                    />                        
                     :
-                    <button onClick={() => handleDecryptData(index)} className="btn_primary_2 text-sm px-4 py-2">
-                        Decrypt Credentials
-                    </button>
+                    <NormalButton 
+                    onClick={() => handleDecryptData(index)} 
+                    className="btn_primary_2 text-sm px-4 py-2" 
+                    text={type === DataTypeEnum.CREDENTIALS?"Decrypt Credentials": type === DataTypeEnum.FILE ? "Decrypt File": ""}
+                    />
                 }
             </div>
         </div>
