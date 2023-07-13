@@ -1,10 +1,11 @@
 "use client";
 
-import React, { createContext } from 'react';
+import React, { createContext, useMemo, useState } from 'react';
 import {
-    useAddress, useSigner, useStorage
+    useAddress, useSDK, useSigner, useStorage
 } from '@thirdweb-dev/react';
 import { Contract, Signer, ethers } from 'ethers';
+import { CredentialStruct, FileStructInterface } from '@/interfaces/SmartContract';
 import { DataVaultContractAddress } from './networkDetails';
 
 import DataVaultJson from './DataVault.json'
@@ -18,6 +19,12 @@ interface ContextProps {
     getFileUrlFromIpfsHash: (ipfsHash: string) => Promise<string | null>,
     addDataOfUser: (data: DataStructInterface) => Promise<boolean>,
     getAllDataOfUser: () => Promise<DataStructInterface[] | null>,
+    // addFileOfUser: (file: FileStructInterface) => Promise<boolean>,
+    // addScreatInfoOfUser: (info: FileStructInterface) => Promise<boolean>,
+    // addCredentialOfUser: (credentials: CredentialStruct) => Promise<boolean>,
+    // getAllFilesOfUser: () => Promise<FileStructInterface[] | null>,
+    // getAllScreatInfoOfUser: () => Promise<FileStructInterface[] | null>,
+    // getAllCredentialsOfUser: () => Promise<CredentialStruct[] | null>,
 }
 
 export const Web3ConnectionContext = createContext<ContextProps>({
@@ -28,6 +35,12 @@ export const Web3ConnectionContext = createContext<ContextProps>({
     getFileUrlFromIpfsHash: async () => "",
     addDataOfUser: async () => false,
     getAllDataOfUser: async () => [],
+    // addFileOfUser: async () => false,
+    // addScreatInfoOfUser: async () => false,
+    // addCredentialOfUser: async () => false,
+    // getAllFilesOfUser: async () => [],
+    // getAllScreatInfoOfUser: async () => [],
+    // getAllCredentialsOfUser: async () => [],
 });
 
 const Web3ConnectionWrapper = ({ children }: any) => {
@@ -76,10 +89,10 @@ const Web3ConnectionWrapper = ({ children }: any) => {
         }
     }
 
-    async function addDataOfUser(file: DataStructInterface): Promise<boolean> {
+    async function addFileOfUser(file: FileStructInterface): Promise<boolean> {
         try {
             const _contract = getContract();
-            const _tx = await _contract.addData(file);
+            const _tx = await _contract.addFileOfUser(file);
             _tx.wait();
             return true;
         } catch (error) {
@@ -88,30 +101,78 @@ const Web3ConnectionWrapper = ({ children }: any) => {
         }
     }
 
-
-    async function  getAllDataOfUser(): Promise<DataStructInterface[] | null> {
+    async function addScreatInfoOfUser(info: FileStructInterface): Promise<boolean> {
         try {
             const _contract = getContract();
-            const _data = await _contract.getAllData();
+            const _tx = await _contract.addScreatInfoOfUser(info);
+            _tx.wait();
+            return true;
+        } catch (error) {
+            console.log("addScreatInfoOfUser error", error);
+            return false
+        }
+    }
+
+    async function addCredentialOfUser(credentials: CredentialStruct): Promise<boolean> {
+        try {
+            const _contract = getContract();
+
+            const _tx = await _contract.addCredentialOfUser(credentials);
+            _tx.wait();
+            return true;
+        } catch (error) {
+            console.log("addCredentialOfUser error", error);
+            return false
+        }
+    }
+
+    async function getAllFilesOfUser(): Promise<FileStructInterface[] | null> {
+        try {
+            const _contract = getContract();
+            const _data = await _contract.getAllFilesOfUser();
             return _data;
         } catch (error) {
-            console.log("getAllDataOfUser error", error);
+            console.log("getAllFilesOfUser error", error);
+            return null
+        }
+    }
+
+    async function getAllScreatInfoOfUser(): Promise<FileStructInterface[] | null> {
+        try {
+            const _contract = getContract();
+            const _data = await _contract.getAllScreatInfoOfUser({ from: address });
+            return _data;
+        } catch (error) {
+            console.log("getAllScreatInfoOfUser error", error);
             return null
         }
     }
 
 
+    async function getAllCredentialsOfUser(): Promise<CredentialStruct[] | null> {
+        try {
+            const _contract = getContract();
+            const _data = await _contract?.getAllCredentialsOfUser();
+            return _data;
+        } catch (error) {
+            console.log("getAllCredentialsOfUser error", error);
+            return null
+        }
+    }
 
     return (
         <Web3ConnectionContext.Provider value={{
             address,
             signer,
+            addFileOfUser,
+            addScreatInfoOfUser,
+            addCredentialOfUser,
+            getAllFilesOfUser,
+            getAllScreatInfoOfUser,
+            getAllCredentialsOfUser,
             uploadFileOnIPFS,
             getJsonFromIpfsHash,
-            getFileUrlFromIpfsHash,
-            addDataOfUser,
-            getAllDataOfUser
-                           
+            getFileUrlFromIpfsHash
         }}
         >
             {children}

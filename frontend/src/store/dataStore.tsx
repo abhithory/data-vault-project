@@ -41,7 +41,7 @@ const store: StateCreator<dataStoreInterface> = (set) => ({
 
             return {
                 ...store,
-                allData:updatedData
+                allData: updatedData
             }
         })
     },
