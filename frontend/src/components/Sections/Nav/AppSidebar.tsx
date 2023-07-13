@@ -1,5 +1,5 @@
 "use client"
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import Image from 'next/image'
 import { usePathname, useRouter } from 'next/navigation';
 
@@ -7,12 +7,39 @@ import { RiLockPasswordLine } from "react-icons/ri";
 import { PiFiles, PiInfinityThin, PiInfo, PiInfoBold } from "react-icons/pi";
 import { ConnectWallet } from '@thirdweb-dev/react';
 import { FaInfo } from 'react-icons/fa';
+import { useDataStore } from '@/store/dataStore';
+import {Web3ConnectionContext} from '@/web3Connection/Web3ConnectionContext';
+import { DataStructInterface } from '@/interfaces/DataInterface';
 
 
 
 function AppSidebar() {
     const  router = useRouter();
     const pathname = usePathname();
+
+    const { address, getAllDataOfUser } = useContext(Web3ConnectionContext);
+
+    const [setDataToStore, setLoadingStatus] = useDataStore((store)=> [store.setData, store.setLoadingStatus]);
+  
+
+    async function loadAllData() {
+      if (!address) return
+      setLoadingStatus(true)
+
+      console.log("loading data form smart contract");
+      
+      const _allCredentials: DataStructInterface[] | null = await getAllDataOfUser();
+      console.log("loading",_allCredentials?.length);
+      if (_allCredentials) {
+        setDataToStore(_allCredentials)
+      }
+      setLoadingStatus(false)
+    }
+  
+    useEffect(() => {
+      loadAllData()
+    }, [address])
+   
 
 
   return (

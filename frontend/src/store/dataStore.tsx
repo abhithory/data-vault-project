@@ -6,7 +6,9 @@ import { v4 as uuidv4 } from 'uuid';
 
 interface dataStoreInterface {
     allData: DataExtendedInterface[];
+    loadingStatus: boolean;
     setData: (dataArray: DataStructInterface[]) => void;
+    setLoadingStatus: (status: boolean) => void;
     pushData: (dataArray: DataStructInterface[]) => void;
     addData: (data: DataStructInterface) => void;
     setDecryptKey: (id: string, key: string) => void;
@@ -14,6 +16,7 @@ interface dataStoreInterface {
 
 const store: StateCreator<dataStoreInterface> = (set) => ({
     allData: [],
+    loadingStatus: false,
     setData: (dataArray: DataStructInterface[]) => {
         set((store) => {
             const extendedData: DataExtendedInterface[] = dataArray.map(((item: DataStructInterface) => {
@@ -23,11 +26,14 @@ const store: StateCreator<dataStoreInterface> = (set) => ({
             return {
                 ...store,
                 allData: extendedData,
+                loadingStatus: false,
             }
         })
     },
+    setLoadingStatus: (status: boolean) => {
+        set((store)=>({...store, loadingStatus: status}))
+    },
     pushData: (dataArray: DataStructInterface[]) => {
-
         set((store) => {
             const extendedData: DataExtendedInterface[] = dataArray.map(((item: DataStructInterface) => {
                 return { ...item, decryptedStatus: false, id: uuidv4() }

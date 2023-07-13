@@ -33,24 +33,6 @@ function AllCredentialsList() {
   // const [uploadingCredential, setUploadingCredential] = useState<boolean>(false);
   // const [uploadingProcessCount, setUploadingProcessCount] = useState<number>(0);
 
-  async function loadAllData() {
-    if (!address) return
-    setIsLoading(true)
-    
-    const _allCredentials: DataStructInterface[] | null = await getAllDataOfUser();
-    console.log("loading",_allCredentials?.length);
-    if (_allCredentials) {
-      setDataToStore(_allCredentials)
-    }
-    setIsLoading(false)
-  }
-
-  useEffect(() => {
-    loadAllData()
-  }, [address])
- 
-
-
   function openCredentialModel(n: number) {
     setModelIndex(n)
     // setCredentialsData
