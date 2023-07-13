@@ -1,7 +1,7 @@
 import {encrypt} from '@metamask/eth-sig-util'
 
 
-export async function getEncryptionPublicKey(publicWalletAdr:string): Promise<string | null> {
+export async function getEncryptionPublicKey(publicWalletAdr:string): Promise<string> {
     try {
         
         const _key: string = await (window.ethereum as any).request({
@@ -10,7 +10,7 @@ export async function getEncryptionPublicKey(publicWalletAdr:string): Promise<st
         });
         return _key
     } catch (error) {
-        return null
+        throw error
     }
 }
 
@@ -23,7 +23,7 @@ export function getEncryptedMessage(msg:string,key:string): string{
     return JSON.stringify(encryptedObj)
 }
 
-export async function decryptMessage(encryptedMsg: string, publicWalletAdr:string): Promise<string | null> {
+export async function decryptMessage(encryptedMsg: string, publicWalletAdr:string): Promise<string> {
     try {
         
         const data = await (window.ethereum as any).request({
@@ -32,6 +32,6 @@ export async function decryptMessage(encryptedMsg: string, publicWalletAdr:strin
         });
         return data
     } catch (error) {
-     return null   
+     throw error
     }
 }

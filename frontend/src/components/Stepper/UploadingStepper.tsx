@@ -3,9 +3,10 @@ import React from 'react'
 
 interface UploadStepperInterface{
     uploadingProcessCount: number,
-    type: "credentials" | "file"
+    type: "credentials" | "file",
+    error?: Error
 }
-function UploadingStepper({ uploadingProcessCount, type }: UploadStepperInterface) {
+function UploadingStepper({ uploadingProcessCount, type,error }: UploadStepperInterface) {
     const messagesCredentials: {
         [index: number]: string
     } = {
@@ -27,6 +28,11 @@ function UploadingStepper({ uploadingProcessCount, type }: UploadStepperInterfac
 
     return (
         <div className="">
+            {uploadingProcessCount === -1?
+            <p className="text-sm text-red-500">
+                Error: {error?.message}
+            </p>
+            :
             <p className="text-sm">
                 {type === "credentials" ?
                 messagesCredentials[uploadingProcessCount]
@@ -34,6 +40,7 @@ function UploadingStepper({ uploadingProcessCount, type }: UploadStepperInterfac
                 messagesFile[uploadingProcessCount]
             }
             </p>
+            }
         </div>
     )
 }

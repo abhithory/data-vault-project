@@ -14,11 +14,11 @@ import { useDataStore } from '@/store/dataStore';
 interface ContextProps {
     address: string | undefined,
     signer: any,
-    uploadFileOnIPFS: (file: File | Blob | {}) => Promise<string | null>,
-    getJsonFromIpfsHash: (ipfsHash: string) => Promise<{} | null>,
-    getFileUrlFromIpfsHash: (ipfsHash: string) => Promise<string | null>,
+    uploadFileOnIPFS: (file: File | Blob | {}) => Promise<string>,
+    getJsonFromIpfsHash: (ipfsHash: string) => Promise<{}>,
+    getFileUrlFromIpfsHash: (ipfsHash: string) => Promise<string>,
     addDataOfUser: (data: DataStructInterface) => Promise<boolean>,
-    getAllDataOfUser: () => Promise<DataStructInterface[] | null>,
+    getAllDataOfUser: () => Promise<DataStructInterface[]>,
 }
 
 export const Web3ConnectionContext = createContext<ContextProps>({
@@ -43,36 +43,35 @@ const Web3ConnectionWrapper = ({ children }: any) => {
         return DataVaultContract;
     }
 
-    async function uploadFileOnIPFS(file: File | Blob | {}): Promise<string | null> {
+    async function uploadFileOnIPFS(file: File | Blob | {}): Promise<string> {
         try {
             const _url = await storage?.upload(file);
-            if (!_url) return null;
+            if (!_url) throw Error("Not able to upload on ipfs.");
             return _url;
         } catch (error) {
             console.log("uploadFileOnIPFS: ", error);
-            return null
+            throw error
         }
     }
-    async function getJsonFromIpfsHash(ipfsHash: string): Promise<{} | null> {
+    async function getJsonFromIpfsHash(ipfsHash: string): Promise<{}> {
         try {
             const _data = await storage?.downloadJSON(ipfsHash);
-            if (!_data) return null;
-            console.log(_data);
+            if (!_data) throw Error("Not able to download the json on ipfs.");
             return _data;
         } catch (error) {
             console.log("getJsonFromIpfsHash: ", error);
-            return null
+            throw error
         }
     }
 
-    async function getFileUrlFromIpfsHash(ipfsHash: string): Promise<string | null> {
+    async function getFileUrlFromIpfsHash(ipfsHash: string): Promise<string> {
         try {
             const _url = await storage?.download(ipfsHash);
-            if (!_url) return null;
+            if (!_url) throw Error("Not able to get the URK from ipfs.");
             return _url.url;
         } catch (error) {
             console.log("getFileUrlFromIpfsHash: ", error);
-            return null
+            throw error
         }
     }
 
@@ -85,12 +84,12 @@ const Web3ConnectionWrapper = ({ children }: any) => {
             return true;
         } catch (error) {
             console.log("addFileOfUser error", error);
-            return false
+            throw error
         }
     }
 
 
-    async function  getAllDataOfUser(): Promise<DataStructInterface[] | null> {
+    async function  getAllDataOfUser(): Promise<DataStructInterface[]> {
         try {
             const _contract = getContract();
             const _data = await _contract.getAllData();
@@ -98,7 +97,7 @@ const Web3ConnectionWrapper = ({ children }: any) => {
             return _data;
         } catch (error) {
             console.log("getAllDataOfUser error", error);
-            return null
+            throw error
         }
     }
 

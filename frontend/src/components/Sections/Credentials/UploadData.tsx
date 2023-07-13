@@ -12,12 +12,17 @@ import { advanceEncryptFile } from '@/utils/FileEncryption';
 import { DataTypeEnum } from '@/interfaces/DataInterface';
 
 
-function UploadCredentails() {
+interface UploadDataInterface {
+    type: "Credentials" | "File"
+}
+
+function UploadData(props: UploadDataInterface) {
 
     const { address, addDataOfUser, uploadFileOnIPFS } = useContext(Web3ConnectionContext);
+    const [PEK, setPEK] = useKeyDataStore((store) => [store.PEK, store.setPEK]);
+
     const [isOpen, setIsOpen] = useState(false);
 
-    const [PEK, setPEK] = useKeyDataStore((store) => [store.PEK, store.setPEK]);
 
 
     const [credentialsData, setCredentialsData] = useState<CredentialsFormData>({
@@ -26,48 +31,56 @@ function UploadCredentails() {
         userid: "",
         password: ""
     })
+
     const [uploadingCredential, setUploadingCredential] = useState<boolean>(false);
     const [uploadingProcessCount, setUploadingProcessCount] = useState<number>(0);
+    const [error, setError] = useState<Error>();
+
 
 
 
     async function uploadCredentails(e: React.ChangeEvent<HTMLFormElement>) {
         e.preventDefault();
-
         if (!address) return;
-        setUploadingCredential(true);
-        setUploadingProcessCount(1);
 
-        if (credentialsData.websiteurl && credentialsData.password && credentialsData.userid) {
-            const _pEK: string | null = PEK ? PEK : await getEncryptionPublicKey(address);
-            if (!_pEK) return
+        setUploadingProcessCount(1);
+        if (props.type === "Credentials") {
+            const dataJsonFile = new Blob([JSON.stringify(credentialsData)], { type: "application/json" });
+            encryptAndUploadData(dataJsonFile, DataTypeEnum.CREDENTIALS,credentialsData.credentialName);
+        } else if (props.type) {
+
+        } {
+
+        }
+
+    }
+    async function encryptAndUploadData(data: File | Blob, dataType: DataTypeEnum, dataName: string) {
+
+        setUploadingCredential(true);
+
+        try {
+            if (!address) throw Error("Wallet not connected. ");
+            setUploadingProcessCount(2);
+            const _pEK: string = PEK ? PEK : await getEncryptionPublicKey(address);
             if (!PEK) setPEK(_pEK);
 
-            var dataJsonFile = new Blob([JSON.stringify(credentialsData)], {type: "application/json"});
-            const { key, encryptedFile } = await advanceEncryptFile(dataJsonFile);
+            const { key, encryptedFile } = await advanceEncryptFile(data);
             const _eK: string = getEncryptedMessage(key, _pEK);
             const ipfsHash: string | null = await uploadFileOnIPFS(encryptedFile);
-            if (!ipfsHash) return;
-            setUploadingProcessCount(2);
-
-            const added = await addDataOfUser({
-                dataType: DataTypeEnum.CREDENTIALS,
-                name: credentialsData.credentialName,
+            setUploadingProcessCount(3);
+            await addDataOfUser({
+                dataType,
+                name: dataName,
                 fileHash: ipfsHash,
                 decryptKey: _eK,
-                uploadTime: (new Date()).getTime()/1000
+                uploadTime: (new Date()).getTime() / 1000
             });
-            if (added) {
-                setUploadingProcessCount(3);
-            } else {
-                // show error
-            }
-
-        } else {
-            // show error
+            setUploadingProcessCount(4);
+        } catch (error: any) {
+            setUploadingProcessCount(-1);
+            setError(error as Error);
         }
         setUploadingCredential(false);
-
     }
     return (
         <>
@@ -81,7 +94,7 @@ function UploadCredentails() {
                     <h1 className="text-3xl text_primary_gradient_2">Upload Credentials</h1>
                     <CredentialsForm type="create" setCredentialsData={setCredentialsData} submitForm={uploadCredentails} credentialsData={credentialsData} uploadingCredential={uploadingCredential} />
                     <div className="mt-4">
-                        <UploadingStepper type='credentials' uploadingProcessCount={uploadingProcessCount} />
+                        <UploadingStepper type='credentials' uploadingProcessCount={uploadingProcessCount} error= {error}/>
                     </div>
                 </div>
             </PopUpModel>
@@ -89,4 +102,4 @@ function UploadCredentails() {
     )
 }
 
-export default UploadCredentails
+export default UploadData
