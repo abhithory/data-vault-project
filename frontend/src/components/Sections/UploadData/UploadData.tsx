@@ -7,7 +7,7 @@ import { CredentialsFormData } from '@/interfaces/Credentials';
 import { getEncryptedMessage, getEncryptionPublicKey } from '@/utils/MessageEncryption';
 import UploadingStepper from '@/components/Stepper/UploadingStepper';
 import { useKeyDataStore } from '@/store/keyDataStore';
-import { advanceEncryptFile } from '@/utils/FileEncryption';
+import { advanceEncryptFile, downloadFile } from '@/utils/FileEncryption';
 import { DataTypeEnum } from '@/interfaces/DataInterface';
 import FileUploadForm from '../Files/FileUploadForm';
 import CredentialsForm from '../Credentials/CredentialsForm';
@@ -66,6 +66,8 @@ function UploadData(props: UploadDataInterface) {
         setUploadingProcessCount(1);
         if (props.type === DataTypeEnum.CREDENTIALS) {
             const dataJsonFile = new Blob([JSON.stringify(credentialsData)], { type: "application/json" });
+
+            downloadFile(dataJsonFile, "test.json");
             await encryptAndUploadData(dataJsonFile, DataTypeEnum.CREDENTIALS, credentialsData.credentialName);
         } else if (props.type === DataTypeEnum.FILE && selectedFile) {
             let fileUploadName: string = fileName + "." + fileExtension;
@@ -85,7 +87,9 @@ function UploadData(props: UploadDataInterface) {
 
             const { key, encryptedFile } = await advanceEncryptFile(data);
             const _eK: string = getEncryptedMessage(key, _pEK);
-            const ipfsHash: string | null = await uploadFileOnIPFS(encryptedFile);
+            downloadFile(encryptedFile, "encryptedfile.json");
+            const ipfsHash: string = await uploadFileOnIPFS(encryptedFile);
+            console.log(ipfsHash);
             setUploadingProcessCount(3);
             await addDataOfUser({
                 dataType,

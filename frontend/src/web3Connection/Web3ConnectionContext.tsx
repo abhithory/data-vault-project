@@ -78,7 +78,12 @@ const Web3ConnectionWrapper = ({ children }: any) => {
     async function addDataOfUser(file: DataStructInterface): Promise<boolean> {
         try {
             const _contract = getContract();
-            const _tx = await _contract.addData(file);
+            const _tx = await _contract.addData(
+                {dataType: file.dataType,
+                name: file.name,
+                fileHash: file.fileHash,
+                decryptKey: file.decryptKey}
+            );
             _tx.wait();
             addData(file);
             return true;
