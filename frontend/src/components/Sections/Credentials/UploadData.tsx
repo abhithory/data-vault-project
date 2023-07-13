@@ -42,22 +42,19 @@ function UploadData(props: UploadDataInterface) {
     async function uploadCredentails(e: React.ChangeEvent<HTMLFormElement>) {
         e.preventDefault();
         if (!address) return;
-
+        setUploadingCredential(true);
         setUploadingProcessCount(1);
         if (props.type === "Credentials") {
             const dataJsonFile = new Blob([JSON.stringify(credentialsData)], { type: "application/json" });
-            encryptAndUploadData(dataJsonFile, DataTypeEnum.CREDENTIALS,credentialsData.credentialName);
-        } else if (props.type) {
+            encryptAndUploadData(dataJsonFile, DataTypeEnum.CREDENTIALS, credentialsData.credentialName);
+        } else if (props.type === "File") {
 
-        } {
-
+        } else {
+            setUploadingCredential(false);
+            setUploadingProcessCount(0);
         }
-
     }
     async function encryptAndUploadData(data: File | Blob, dataType: DataTypeEnum, dataName: string) {
-
-        setUploadingCredential(true);
-
         try {
             if (!address) throw Error("Wallet not connected. ");
             setUploadingProcessCount(2);
@@ -94,7 +91,7 @@ function UploadData(props: UploadDataInterface) {
                     <h1 className="text-3xl text_primary_gradient_2">Upload Credentials</h1>
                     <CredentialsForm type="create" setCredentialsData={setCredentialsData} submitForm={uploadCredentails} credentialsData={credentialsData} uploadingCredential={uploadingCredential} />
                     <div className="mt-4">
-                        <UploadingStepper type='credentials' uploadingProcessCount={uploadingProcessCount} error= {error}/>
+                        <UploadingStepper type='credentials' uploadingProcessCount={uploadingProcessCount} error={error} />
                     </div>
                 </div>
             </PopUpModel>
