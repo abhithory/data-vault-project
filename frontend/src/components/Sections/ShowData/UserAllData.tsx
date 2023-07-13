@@ -8,7 +8,7 @@ import { DataExtendedInterface, DataStructInterface, DataTypeEnum } from '@/inte
 import { CredentialsFormData } from '@/interfaces/Credentials';
 import { useDataStore } from '@/store/dataStore';
 import DataItem from './DataItem';
-import { decryptFile, downloadFile } from '@/utils/FileEncryption';
+import { decryptFile, downloadFile, unZipAndGetData } from '@/utils/FileEncryption';
 import CredentialsForm from '../Credentials/CredentialsForm';
 
 
@@ -43,9 +43,8 @@ function UserAllData(props: UploadDataInterface) {
       const _res = await fetch(_fullURL);
       const encryptedFile = await _res.blob();
       const decryptedFile: Blob = await decryptFile(encryptedFile, dataArray[n].decryptKey);
-      downloadFile(decryptedFile,"new.json");      
       if (props.type === DataTypeEnum.CREDENTIALS) {
-        const formData: CredentialsFormData = JSON.parse(await decryptedFile.text())
+        const formData: CredentialsFormData = JSON.parse(await unZipAndGetData(decryptedFile as File));
         setCredentialsData(formData)
         setShowDataModel(true)
       } else if (props.type === DataTypeEnum.FILE) {

@@ -82,16 +82,7 @@ function UploadData(props: UploadDataInterface) {
             setUploadingProcessCount(2);
             const _pEK: string = PEK ? PEK : await getEncryptionPublicKey(address);
             if (!PEK) setPEK(_pEK);
-
-            downloadFile(data, "data.json");
             const { key, encryptedFile } = await advanceEncryptFile(data);
-            const decryptedFile = await decryptFile(encryptedFile, key);
-            const _data = await unZipAndGetData(decryptedFile as File);
-
-            console.log(JSON.parse(_data));
-            
-
-            return
             const _eK: string = getEncryptedMessage(key, _pEK);
             const ipfsHash: string = await uploadFileOnIPFS(encryptedFile);
             setUploadingProcessCount(3);

@@ -64,7 +64,7 @@ export function zipFile(file: File) {
     return zip.generateAsync({ type: "blob" })
 }
 
-export async function unZipAndGetData(file: File): Promise<String> {
+export async function unZipAndGetData(file: File): Promise<string> {
     try {
         const _unziped = await JSZip.loadAsync(file);
         const fileName = Object.keys(_unziped.files)[0]
