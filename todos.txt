@@ -1,3 +1,4 @@
+- add page loading animation
 - make responsive
 - add info section
 - create extenstion
