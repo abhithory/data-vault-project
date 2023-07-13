@@ -2,8 +2,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import FileListItem from './FileListItem'
 import { Web3ConnectionContext } from '@/web3Connection/Web3ConnectionContext';
-import { FileStructInterface } from '@/interfaces/SmartContract';
-import { FileExtendedDataInterface } from '@/interfaces/Files';
 import { decryptMessage } from '@/utils/MessageEncryption';
 import { decryptFile, downloadFile } from '@/utils/FileEncryption';
 import SimpleLoader from '@/components/Loader/loader';

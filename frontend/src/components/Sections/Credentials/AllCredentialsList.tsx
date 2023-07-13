@@ -11,21 +11,28 @@ import { CredentialsFormData } from '@/interfaces/Credentials';
 import { useDataStore } from '@/store/dataStore';
 
 
+interface UploadDataInterface {
+  type: DataTypeEnum
+}
 
-function AllCredentialsList() {
+function UserAllData(props: UploadDataInterface) {
+
   const { address, getAllDataOfUser } = useContext(Web3ConnectionContext);
 
-  const [allData, setDataToStore, setDecryptKey] = useDataStore((store)=> [store.allData,store.setData, store.setDecryptKey]);
-  const [allCredentials,] = useState<DataExtendedInterface[]>(allData.filter(data=>data.dataType===DataTypeEnum.CREDENTIALS));
-  // const [allCredentials, setAllCredentials] = useState<DataExtendedInterface[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [allData, setDataToStore, setDecryptKey, loadingStatus] = useDataStore((store) => [store.allData, store.setData, store.setDecryptKey, store.loadingStatus]);
 
-  const [showCredentialsModel, setShowCredentialsModel] = useState<boolean>(false);
-  const [modelIndex, setModelIndex] = useState<number>(0);
+  const [dataArray,] = useState<DataExtendedInterface[]>(allData.filter(data => data.dataType === props.type));
 
+
+  const [showDataModel, setShowDataModel] = useState<boolean>(false);
+  const [dataIndex, setDataIndex] = useState<number>(0);
+
+
+  // for crednetials
   const [credentialsData, setCredentialsData] = useState<CredentialsFormData>({
-    website: "",
-    usernameOrEmailOrPhone: "",
+    credentialName:"",
+    websiteurl: "",
+    userid: "",
     password: ""
   });
 
@@ -33,18 +40,18 @@ function AllCredentialsList() {
   // const [uploadingCredential, setUploadingCredential] = useState<boolean>(false);
   // const [uploadingProcessCount, setUploadingProcessCount] = useState<number>(0);
 
-  function openCredentialModel(n: number) {
-    setModelIndex(n)
+  function openDataModel(n: number) {
+    setDataIndex(n)
     // setCredentialsData
-    setShowCredentialsModel(true)
+    setShowDataModel(true)
   }
 
   async function DecryptCredentials(n: number) {
     if (!address) return
-      const _decryptedKey = await decryptMessage(allCredentials[n].decryptKey, address);
-      if (_decryptedKey) {
-        setDecryptKey(allCredentials[n].id,_decryptedKey)
-      }
+    const _decryptedKey = await decryptMessage(dataArray[n].decryptKey, address);
+    if (_decryptedKey) {
+      setDecryptKey(dataArray[n].id, _decryptedKey)
+    }
   }
 
 
@@ -52,27 +59,27 @@ function AllCredentialsList() {
   }
 
 
-  function formatTime(secs: number){
-    return (new Date(secs*1000)).toString();
+  function formatTime(secs: number) {
+    return (new Date(secs * 1000)).toString();
   }
   return (
     <>
       <div className="flex flex-wrap gap-4 justify-center">
-        {allCredentials &&
-          allCredentials.map((file: DataExtendedInterface, key: number) => {
+        {dataArray &&
+          dataArray.map((file: DataExtendedInterface, key: number) => {
             return (
-              <CredentialListItem key={key} index={key} id={file.id} openDataModel={openCredentialModel} name={file.name}  decryptedStatus={file.decryptedStatus} DecryptData={DecryptCredentials} time={formatTime(file.uploadTime)} />
+              <CredentialListItem key={key} index={key} id={file.id} openDataModel={openDataModel} name={file.name} decryptedStatus={file.decryptedStatus} DecryptData={DecryptCredentials} time={formatTime(file.uploadTime)} />
             )
           })}
       </div>
 
-      {isLoading &&
+      {loadingStatus &&
         <div className="flex_center w-full">
           <SimpleLoader className='w-12' />
         </div>
       }
 
-      <PopUpModel isOpen={showCredentialsModel} closeModal={() => setShowCredentialsModel(false)}>
+      <PopUpModel isOpen={showDataModel} closeModal={() => setShowDataModel(false)}>
         <div className="text-center">
           <h1 className="text-3xl text_primary_gradient_2">Your Credentials</h1>
           <CredentialsForm type="update" setCredentialsData={setCredentialsData} submitForm={updateCredentails} credentialsData={credentialsData} />
@@ -89,4 +96,4 @@ function AllCredentialsList() {
   )
 }
 
-export default AllCredentialsList;
+export default UserAllData;
