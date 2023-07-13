@@ -11,10 +11,9 @@ function generateRandomKey(): string {
 
 
 // For Encrypting & Decrypting file 
-export async function advanceEncryptFile(file: Blob, dataType: DataTypeEnum):Promise<{key:string,encryptedFile:Blob}> {
-    let fileToEncrypt = file;
-    fileToEncrypt = await zipFile(file as File) as Blob
-
+export async function advanceEncryptFile(file: Blob): Promise<{ key: string, encryptedFile: Blob }> {
+    const fileToEncrypt  = await zipFile(file as File) as Blob
+    
     return new Promise((resolve, error) => {
         const reader = new FileReader()
         reader.onload = () => {
@@ -23,8 +22,8 @@ export async function advanceEncryptFile(file: Blob, dataType: DataTypeEnum):Pro
             const encryptedFile = CryptoJS.AES.encrypt(_wArray, key).toString();
             // const file = new File([encryptedFile],"newfile.zip");
             resolve({
-                key:key,
-                encryptedFile: new File([encryptedFile],"encryptedfile")
+                key: key,
+                encryptedFile: new File([encryptedFile], "encryptedfile")
             })
         }
         reader.readAsArrayBuffer(fileToEncrypt);
@@ -46,27 +45,45 @@ function convertWordArrayToUint8Array(wordArray: CryptoJS.lib.WordArray) {
 }
 
 
-export function decryptFile(data: Blob, key: string,dataType: DataTypeEnum): Promise<Blob> {
+export function decryptFile(data: Blob, key: string): Promise<Blob> {
     return new Promise((resolve) => {
         const reader = new FileReader()
         reader.onload = () => {
             const decrypted = CryptoJS.AES.decrypt(reader.result as any, key)
-            const typedArray = convertWordArrayToUint8Array(decrypted)
-            resolve(new Blob([typedArray]))
+            const typedArray = convertWordArrayToUint8Array(decrypted);
+            resolve(new Blob([typedArray]));
         }
         reader.readAsText(data)
     })
 }
 
-  
+
 export function zipFile(file: File) {
     const zip = new JSZip()
-    zip.file(file.name,file)
+    zip.file(file.name, file)
     return zip.generateAsync({ type: "blob" })
 }
 
-export function downloadFile(file: File | Blob, fileName: string): boolean {
+export async function unZipAndGetData(file: File): Promise<String> {
+    try {
+        const _unziped = await JSZip.loadAsync(file);
+        const fileName = Object.keys(_unziped.files)[0]
+        const fileData = await _unziped.files[fileName].async('string');
+        return fileData
+    } catch (error) {
+        throw error        
+    }
     
+
+    //     Object.keys(zip.files).forEach(function (filename) {
+    //         zip.files[filename].async('string').then(function (fileData) {
+    //             console.log(fileData) // These are your file contents      
+    //         })
+    //     })
+    // })
+}
+
+export function downloadFile(file: File | Blob, fileName: string): boolean {
     try {
         saveAs(file, fileName);
         return true

@@ -7,7 +7,7 @@ import { CredentialsFormData } from '@/interfaces/Credentials';
 import { getEncryptedMessage, getEncryptionPublicKey } from '@/utils/MessageEncryption';
 import UploadingStepper from '@/components/Stepper/UploadingStepper';
 import { useKeyDataStore } from '@/store/keyDataStore';
-import { advanceEncryptFile, decryptFile, downloadFile } from '@/utils/FileEncryption';
+import { advanceEncryptFile, decryptFile, downloadFile, unZipAndGetData } from '@/utils/FileEncryption';
 import { DataTypeEnum } from '@/interfaces/DataInterface';
 import FileUploadForm from '../Files/FileUploadForm';
 import CredentialsForm from '../Credentials/CredentialsForm';
@@ -65,8 +65,7 @@ function UploadData(props: UploadDataInterface) {
         setIsUploadingData(true);
         setUploadingProcessCount(1);
         if (props.type === DataTypeEnum.CREDENTIALS) {
-            const dataJsonFile = new Blob([JSON.stringify(credentialsData)], { type: "application/json" });
-
+            const dataJsonFile = new File([JSON.stringify(credentialsData)],credentialsData.credentialName+".json");
             await encryptAndUploadData(dataJsonFile, DataTypeEnum.CREDENTIALS, credentialsData.credentialName);
         } else if (props.type === DataTypeEnum.FILE && selectedFile) {
             let fileUploadName: string = fileName + "." + fileExtension;
@@ -85,12 +84,16 @@ function UploadData(props: UploadDataInterface) {
             if (!PEK) setPEK(_pEK);
 
             downloadFile(data, "data.json");
-            const { key, encryptedFile } = await advanceEncryptFile(data,dataType);
-            const decryptedFile = await decryptFile(encryptedFile, key, dataType);
-            downloadFile(decryptedFile, "decryptedFile.json");
+            const { key, encryptedFile } = await advanceEncryptFile(data);
+            const decryptedFile = await decryptFile(encryptedFile, key);
+            const _data = await unZipAndGetData(decryptedFile as File);
+
+            console.log(JSON.parse(_data));
+            
+
+            return
             const _eK: string = getEncryptedMessage(key, _pEK);
             const ipfsHash: string = await uploadFileOnIPFS(encryptedFile);
-            console.log(ipfsHash);
             setUploadingProcessCount(3);
             console.log((new Date()).getTime());
             
