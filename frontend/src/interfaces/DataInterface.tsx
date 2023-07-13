@@ -16,9 +16,11 @@ export interface DataStructInterface{
 }
 
 export interface DataExtendedInterface{
+    id: string;
     dataType: DataTypeEnum;
     name: string;
     fileHash: string;
-    decryptKey: string;
+    decryptKey: string;    
+    decryptedStatus: boolean;
     uploadTime: number;
 }

@@ -1,32 +1,52 @@
-import { CredentialsExtendedDataInterface } from '@/interfaces/Credentials';
-import { FileExtendedDataInterface } from '@/interfaces/Files';
+import { DataExtendedInterface } from '@/interfaces/DataInterface';
 import { StateCreator, create } from 'zustand';
 
 interface dataStoreInterface {
-    allCredentials: CredentialsExtendedDataInterface[];
-    setCredentials: (credentials: CredentialsExtendedDataInterface[]) => void;
-    addCredentials: (credentials: CredentialsExtendedDataInterface) => void;
-    // allFiles: FileExtendedDataInterface[];
-    // setFiles: (files: FileExtendedDataInterface[]) => void;
-    // addFiles: (file: FileExtendedDataInterface[]) => void;
+    allData: DataExtendedInterface[];
+    setData: (dataArray: DataExtendedInterface[]) => void;
+    pushData: (dataArray: DataExtendedInterface[]) => void;
+    addData: (data: DataExtendedInterface) => void;
+    setDecryptKey: (id: string, key: string) => void;
 }
 
 const store: StateCreator<dataStoreInterface> = (set) => ({
-    allCredentials: [],
-    allFiles: [],
-    setCredentials: (credentials: CredentialsExtendedDataInterface[]) => {
+    allData: [],
+    setData: (dataArray: DataExtendedInterface[]) => {
         set((store) => ({
             ...store,
-            allCredentials: credentials,
+            allData: dataArray,
         }))
     },
-    addCredentials: (credentials: CredentialsExtendedDataInterface) => {
+    pushData: (dataArray: DataExtendedInterface[]) => {
         set((store) => ({
             ...store,
-            allCredentials: [...store.allCredentials,credentials]
+            allData: [...store.allData,...dataArray],
         }))
     },
+    addData: (data: DataExtendedInterface) => {
+        set((store) => ({
+            ...store,
+            allData: [...store.allData, data]
+        }))
+    },
+    setDecryptKey: (id: string, key:string) => {
+        set((store) => {
+            const updatedData = store.allData.map((data)=>{
+                if (data.id === id) {
+                    data.decryptKey = key;
+                    data.decryptedStatus = true;
+                }
+                return data;
+            })
+
+            return {
+                ...store,
+                allData:updatedData
+            }
+        })
+    },
+
 
 })
 
-export const useKeyDataStore = create(store)
+export const useDataStore = create(store)
