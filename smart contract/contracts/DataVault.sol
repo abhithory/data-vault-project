@@ -13,8 +13,8 @@ contract DataVault {
 
     struct DataStruct {
         DataType dataType;
-        string name;
-        string fileHash;
+        string dataName;
+        string dataHash;
         string decryptKey;
         uint256 uploadTime;
     }
@@ -24,6 +24,7 @@ contract DataVault {
 
 
     function addData(DataStruct memory _data) external{
+        _data.uploadTime = block.timestamp;
         _allDataOfUser[msg.sender].push(_data);
     }
     function userAllDataCount() public view returns (uint256) {
