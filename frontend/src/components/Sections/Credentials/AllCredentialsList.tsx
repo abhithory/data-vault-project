@@ -9,6 +9,7 @@ import { DataExtendedInterface, DataStructInterface, DataTypeEnum } from '@/inte
 import { CredentialsFormData } from '@/interfaces/Credentials';
 import { useDataStore } from '@/store/dataStore';
 import DataItem from './DataItem';
+import { decryptFile, downloadFile } from '@/utils/FileEncryption';
 
 
 interface UploadDataInterface {
@@ -17,7 +18,7 @@ interface UploadDataInterface {
 
 function UserAllData(props: UploadDataInterface) {
 
-  const { address, getAllDataOfUser } = useContext(Web3ConnectionContext);
+  const { address, getFileUrlFromIpfsHash } = useContext(Web3ConnectionContext);
 
   const [allData, setDataToStore, setDecryptKey, loadingStatus] = useDataStore((store) => [store.allData, store.setData, store.setDecryptKey, store.loadingStatus]);
 
@@ -38,13 +39,25 @@ function UserAllData(props: UploadDataInterface) {
   });
 
 
-  function showDecryptedData(n: number) {
-    setIsDownloading(true);
-    if (props.type === DataTypeEnum.CREDENTIALS) {
-
-      setShowDataModel(true)
+  async function showDecryptedData(n: number) {
+    try {
+      
+      setIsDownloading(true);
+      const _fullURL: string = await getFileUrlFromIpfsHash(dataArray[n].fileHash);
+      const _res = await fetch(_fullURL);
+      const encryptedFile = await _res.blob();
+      const decryptedFile: Blob = await decryptFile(encryptedFile, dataArray[n].decryptKey);
+      if (props.type === DataTypeEnum.CREDENTIALS) {
+        const formData: CredentialsFormData = JSON.parse(await decryptedFile.text())
+        setCredentialsData(formData)
+        setShowDataModel(true)
+      } else if (props.type === DataTypeEnum.FILE) {
+        downloadFile(decryptedFile, dataArray[n].name + ".zip")
+      }
+    } catch (error) {
+      
     }
-    // setCredentialsData
+    setIsDownloading(true);
   }
 
   async function handleDecryptData(n: number) {
