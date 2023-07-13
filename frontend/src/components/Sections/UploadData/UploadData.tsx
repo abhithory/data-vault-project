@@ -67,7 +67,6 @@ function UploadData(props: UploadDataInterface) {
         if (props.type === DataTypeEnum.CREDENTIALS) {
             const dataJsonFile = new Blob([JSON.stringify(credentialsData)], { type: "application/json" });
 
-            downloadFile(dataJsonFile, "test.json");
             await encryptAndUploadData(dataJsonFile, DataTypeEnum.CREDENTIALS, credentialsData.credentialName);
         } else if (props.type === DataTypeEnum.FILE && selectedFile) {
             let fileUploadName: string = fileName + "." + fileExtension;
@@ -87,10 +86,11 @@ function UploadData(props: UploadDataInterface) {
 
             const { key, encryptedFile } = await advanceEncryptFile(data);
             const _eK: string = getEncryptedMessage(key, _pEK);
-            downloadFile(encryptedFile, "encryptedfile.json");
             const ipfsHash: string = await uploadFileOnIPFS(encryptedFile);
             console.log(ipfsHash);
             setUploadingProcessCount(3);
+            console.log((new Date()).getTime());
+            
             await addDataOfUser({
                 dataType,
                 dataName,
