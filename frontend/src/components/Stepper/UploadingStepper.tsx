@@ -13,8 +13,9 @@ function UploadingStepper({ uploadingProcessCount, type,error }: UploadStepperIn
     } = {
         0: "Enter your Credentials and upload",
         1: "We are encriptioing your Credentials to make it secure. Please Confirm.",
-        2: "Please Confirm the transaction with Wallet and wait for some time. We are adding your encrypted credentials in smart contract.",
-        3: "Credentials Added Seccefully."
+        2: "We Are Uploading your Encrypted File To IPFS. Please Wait...",
+        3: "Please Confirm the transaction with Wallet and wait for some time. We are adding your encrypted credentials in smart contract.",
+        4: "Credentials Added Seccefully."
     }
 
     const messagesFile: {
