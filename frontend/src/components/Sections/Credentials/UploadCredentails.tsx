@@ -7,26 +7,28 @@ import { CredentialsFormData } from '@/interfaces/Credentials';
 import CredentialsForm from './CredentialsForm';
 import { getEncryptedMessage, getEncryptionPublicKey } from '@/utils/MessageEncryption';
 import UploadingStepper from '@/components/Stepper/UploadingStepper';
-import { useDataRefreshStore } from '@/store/dataRefresh';
 import { useKeyDataStore } from '@/store/keyDataStore';
+import { advanceEncryptFile } from '@/utils/FileEncryption';
+import { DataTypeEnum } from '@/interfaces/DataInterface';
 
 
 function UploadCredentails() {
 
-    const { address, addCredentialOfUser } = useContext(Web3ConnectionContext);
+    const { address, addDataOfUser, uploadFileOnIPFS } = useContext(Web3ConnectionContext);
     const [isOpen, setIsOpen] = useState(false);
 
+    const [PEK, setPEK] = useKeyDataStore((store) => [store.PEK, store.setPEK]);
+
+
     const [credentialsData, setCredentialsData] = useState<CredentialsFormData>({
-        website: "",
-        usernameOrEmailOrPhone: "",
+        credentialName: "",
+        websiteurl: "",
+        userid: "",
         password: ""
     })
     const [uploadingCredential, setUploadingCredential] = useState<boolean>(false);
     const [uploadingProcessCount, setUploadingProcessCount] = useState<number>(0);
 
-    const changeCredentialsState = useDataRefreshStore((store) => store.changeCredentialsState);
-    const PEK = useKeyDataStore((store)=> store.PEK);
-    const setPEK = useKeyDataStore((store)=> store.setPEK);
 
 
     async function uploadCredentails(e: React.ChangeEvent<HTMLFormElement>) {
@@ -36,17 +38,27 @@ function UploadCredentails() {
         setUploadingCredential(true);
         setUploadingProcessCount(1);
 
-        if (credentialsData.website && credentialsData.password && credentialsData.usernameOrEmailOrPhone) {
-            const _pEK: string | null = PEK? PEK: await getEncryptionPublicKey(address);
+        if (credentialsData.websiteurl && credentialsData.password && credentialsData.userid) {
+            const _pEK: string | null = PEK ? PEK : await getEncryptionPublicKey(address);
             if (!_pEK) return
             if (!PEK) setPEK(_pEK);
 
-            const _eP: string = getEncryptedMessage(credentialsData.password, _pEK);
+            var dataJsonFile = new Blob([JSON.stringify(credentialsData)], {type: "application/json"});
+            const { key, encryptedFile } = await advanceEncryptFile(dataJsonFile);
+            const _eK: string = getEncryptedMessage(key, _pEK);
+            const ipfsHash: string | null = await uploadFileOnIPFS(encryptedFile);
+            if (!ipfsHash) return;
             setUploadingProcessCount(2);
-            const added = await addCredentialOfUser({ ...credentialsData, password: _eP });
+
+            const added = await addDataOfUser({
+                dataType: DataTypeEnum.CREDENTIALS,
+                name: credentialsData.credentialName,
+                fileHash: ipfsHash,
+                decryptKey: _eK,
+                uploadTime: (new Date()).getTime()/1000
+            });
             if (added) {
                 setUploadingProcessCount(3);
-                changeCredentialsState(true);
             } else {
                 // show error
             }

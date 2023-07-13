@@ -1,6 +1,7 @@
 export interface CredentialsFormData{
-    website:string;
-    usernameOrEmailOrPhone: string;
+    credentialName:string;
+    websiteurl:string;
+    userid: string; // email/phone/username
     password: string;
 }
 

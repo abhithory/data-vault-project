@@ -8,10 +8,11 @@ import { getEncryptedMessage, getEncryptionPublicKey } from '@/utils/MessageEncr
 import { Web3ConnectionContext } from '@/web3Connection/Web3ConnectionContext';
 import { advanceEncryptFile } from '@/utils/FileEncryption';
 import UploadingStepper from '@/components/Stepper/UploadingStepper';
+import { DataTypeEnum } from '@/interfaces/DataInterface';
 
 export default function UploadFiles() {
 
-    const { address, uploadFileOnIPFS, addFileOfUser } = useContext(Web3ConnectionContext);
+    const { address, uploadFileOnIPFS, addDataOfUser } = useContext(Web3ConnectionContext);
     const [isOpen, setIsOpen] = useState(false);
 
     const [uploadingFile, setUploadingFile] = useState<boolean>(false);
@@ -54,7 +55,7 @@ export default function UploadFiles() {
             const fileIPFSHash: string | null = await uploadFileOnIPFS(encryptedFile);
             if (!fileIPFSHash) return;
             setUploadingProcessCount(3)
-            const added = await addFileOfUser({ fileName: fileUploadName, fileHash: fileIPFSHash, decryptKey: decryptKey });
+            const added = await addDataOfUser({ dataType: DataTypeEnum.FILE,name: fileUploadName, fileHash: fileIPFSHash, decryptKey: decryptKey, uploadTime: (new Date()).getTime()/1000 });
 
             if (added) {
                 setUploadingProcessCount(4)

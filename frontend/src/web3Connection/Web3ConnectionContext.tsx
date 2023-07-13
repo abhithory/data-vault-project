@@ -9,11 +9,12 @@ import { DataVaultContractAddress } from './networkDetails';
 
 import DataVaultJson from './DataVault.json'
 import { DataStructInterface } from '@/interfaces/DataInterface';
+import { useDataStore } from '@/store/dataStore';
 
 interface ContextProps {
     address: string | undefined,
     signer: any,
-    uploadFileOnIPFS: (file: File | Blob) => Promise<string | null>,
+    uploadFileOnIPFS: (file: File | Blob | {}) => Promise<string | null>,
     getJsonFromIpfsHash: (ipfsHash: string) => Promise<{} | null>,
     getFileUrlFromIpfsHash: (ipfsHash: string) => Promise<string | null>,
     addDataOfUser: (data: DataStructInterface) => Promise<boolean>,
@@ -35,15 +36,14 @@ const Web3ConnectionWrapper = ({ children }: any) => {
     const storage = useStorage();
     const signer = useSigner();
 
+    const [setData,addData] = useDataStore((store)=> [store.setData,store.addData])
+
     function getContract(): Contract {
         const DataVaultContract = new ethers.Contract(DataVaultContractAddress, DataVaultJson.abi, signer);
         return DataVaultContract;
     }
 
-
-
-
-    async function uploadFileOnIPFS(file: File | Blob): Promise<string | null> {
+    async function uploadFileOnIPFS(file: File | Blob | {}): Promise<string | null> {
         try {
             const _url = await storage?.upload(file);
             if (!_url) return null;
@@ -81,6 +81,7 @@ const Web3ConnectionWrapper = ({ children }: any) => {
             const _contract = getContract();
             const _tx = await _contract.addData(file);
             _tx.wait();
+            addData(file);
             return true;
         } catch (error) {
             console.log("addFileOfUser error", error);
@@ -93,6 +94,7 @@ const Web3ConnectionWrapper = ({ children }: any) => {
         try {
             const _contract = getContract();
             const _data = await _contract.getAllData();
+            setData(_data);
             return _data;
         } catch (error) {
             console.log("getAllDataOfUser error", error);
