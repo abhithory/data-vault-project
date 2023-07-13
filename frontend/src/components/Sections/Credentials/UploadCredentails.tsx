@@ -8,6 +8,7 @@ import CredentialsForm from './CredentialsForm';
 import { getEncryptedMessage, getEncryptionPublicKey } from '@/utils/MessageEncryption';
 import UploadingStepper from '@/components/Stepper/UploadingStepper';
 import { useDataRefreshStore } from '@/store/dataRefresh';
+import { useKeyDataStore } from '@/store/keyDataStore';
 
 
 function UploadCredentails() {
@@ -24,6 +25,8 @@ function UploadCredentails() {
     const [uploadingProcessCount, setUploadingProcessCount] = useState<number>(0);
 
     const changeCredentialsState = useDataRefreshStore((store) => store.changeCredentialsState);
+    const PEK = useKeyDataStore((store)=> store.PEK);
+    const setPEK = useKeyDataStore((store)=> store.setPEK);
 
 
     async function uploadCredentails(e: React.ChangeEvent<HTMLFormElement>) {
@@ -34,8 +37,10 @@ function UploadCredentails() {
         setUploadingProcessCount(1);
 
         if (credentialsData.website && credentialsData.password && credentialsData.usernameOrEmailOrPhone) {
-            const _pEK: string | null = await getEncryptionPublicKey(address);
+            const _pEK: string | null = PEK? PEK: await getEncryptionPublicKey(address);
             if (!_pEK) return
+            if (!PEK) setPEK(_pEK);
+
             const _eP: string = getEncryptedMessage(credentialsData.password, _pEK);
             setUploadingProcessCount(2);
             const added = await addCredentialOfUser({ ...credentialsData, password: _eP });
