@@ -9,21 +9,15 @@ export enum DataTypeEnum {
 
 export interface DataStructInterface {
     dataType: DataTypeEnum;
-    name: string;
-    fileHash: string;
+    dataName: string;
+    dataHash: string;
     decryptKey: string;
     uploadTime: number;
 }
 
-export interface DataExtendedInterface {
+export interface DataExtendedInterface extends DataStructInterface {
     id: string;
-    dataType: DataTypeEnum;
-    name: string;
-    fileHash: string;
-    // decryptedData?: DecryptedCredentialsDataInterface | string,
-    decryptKey: string;
     decryptedStatus: boolean;
-    uploadTime: number;
 }
 
 export interface DecryptedCredentialsDataInterface {
