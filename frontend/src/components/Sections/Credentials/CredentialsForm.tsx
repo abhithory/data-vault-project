@@ -1,5 +1,4 @@
 import NormalButton from '@/components/Buttons/NormalButton';
-import StyleButton1 from '@/components/Buttons/StyleButton1';
 import NormalInput from '@/components/Inputs/NormalInput';
 import { CredentialsFormData } from '@/interfaces/Credentials';
 import React from 'react'

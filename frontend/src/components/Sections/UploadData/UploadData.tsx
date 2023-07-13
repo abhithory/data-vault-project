@@ -4,13 +4,13 @@ import PopUpModel from '@/components/PopupModel/PopUpModel';
 import { Web3ConnectionContext } from '@/web3Connection/Web3ConnectionContext'
 import React, { useContext, useState } from 'react'
 import { CredentialsFormData } from '@/interfaces/Credentials';
-import CredentialsForm from './CredentialsForm';
 import { getEncryptedMessage, getEncryptionPublicKey } from '@/utils/MessageEncryption';
 import UploadingStepper from '@/components/Stepper/UploadingStepper';
 import { useKeyDataStore } from '@/store/keyDataStore';
 import { advanceEncryptFile } from '@/utils/FileEncryption';
 import { DataTypeEnum } from '@/interfaces/DataInterface';
 import FileUploadForm from '../Files/FileUploadForm';
+import CredentialsForm from '../Credentials/CredentialsForm';
 
 
 

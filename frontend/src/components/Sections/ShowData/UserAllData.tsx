@@ -1,7 +1,6 @@
 "use client"
 import React, { useContext, useEffect, useState } from 'react'
 import PopUpModel from '@/components/PopupModel/PopUpModel';
-import CredentialsForm from './CredentialsForm';
 import { Web3ConnectionContext } from '@/web3Connection/Web3ConnectionContext';
 import { decryptMessage } from '@/utils/MessageEncryption';
 import SimpleLoader from '@/components/Loader/loader';
@@ -10,6 +9,7 @@ import { CredentialsFormData } from '@/interfaces/Credentials';
 import { useDataStore } from '@/store/dataStore';
 import DataItem from './DataItem';
 import { decryptFile, downloadFile } from '@/utils/FileEncryption';
+import CredentialsForm from '../Credentials/CredentialsForm';
 
 
 interface UploadDataInterface {
