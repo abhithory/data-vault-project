@@ -3,19 +3,21 @@ import React, { useContext, useEffect, useState } from 'react'
 import CredentialListItem from './CredentialListItem';
 import PopUpModel from '@/components/PopupModel/PopUpModel';
 import CredentialsForm from './CredentialsForm';
-import { CredentialsExtendedDataInterface, CredentialsFormData } from '@/interfaces/Credentials';
 import { Web3ConnectionContext } from '@/web3Connection/Web3ConnectionContext';
-import { CredentialStruct } from '@/interfaces/SmartContract';
 import { decryptMessage } from '@/utils/MessageEncryption';
 import SimpleLoader from '@/components/Loader/loader';
-import { useDataRefreshStore } from '@/store/dataRefresh';
+import { DataExtendedInterface, DataStructInterface, DataTypeEnum } from '@/interfaces/DataInterface';
+import { CredentialsFormData } from '@/interfaces/Credentials';
+import { useDataStore } from '@/store/dataStore';
 
 
 
 function AllCredentialsList() {
-  const { address, getAllCredentialsOfUser } = useContext(Web3ConnectionContext);
+  const { address, getAllDataOfUser } = useContext(Web3ConnectionContext);
 
-  const [allCredentials, setAllCredentials] = useState<CredentialsExtendedDataInterface[]>([]);
+  const [allData, setDataToStore, setDecryptKey] = useDataStore((store)=> [store.allData,store.setData, store.setDecryptKey]);
+  const [allCredentials,] = useState<DataExtendedInterface[]>(allData.filter(data=>data.dataType===DataTypeEnum.CREDENTIALS));
+  // const [allCredentials, setAllCredentials] = useState<DataExtendedInterface[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const [showCredentialsModel, setShowCredentialsModel] = useState<boolean>(false);
@@ -27,8 +29,6 @@ function AllCredentialsList() {
     password: ""
   });
 
-  const refreshCredentials = useDataRefreshStore((store)=>store.refreshCredentials);
-  const changeCredentialsState = useDataRefreshStore((store)=>store.changeCredentialsState);
 
   // const [uploadingCredential, setUploadingCredential] = useState<boolean>(false);
   // const [uploadingProcessCount, setUploadingProcessCount] = useState<number>(0);
@@ -37,31 +37,21 @@ function AllCredentialsList() {
     if (!address) return
     setIsLoading(true)
     
-    const _allCredentials: CredentialStruct[] | null = await getAllCredentialsOfUser();
+    const _allCredentials: DataStructInterface[] | null = await getAllDataOfUser();
     console.log("loading",_allCredentials?.length);
     if (_allCredentials) {
-      const extendedFiles: CredentialsExtendedDataInterface[] = _allCredentials.map(((item: CredentialStruct) => {
-        return { ...item, decryptedStatus: false }
+      const extendedFiles: DataExtendedInterface[] = _allCredentials.map(((item: DataStructInterface) => {
+        return { ...item, decryptedStatus: false, id: "a" }
       }))
-      setAllCredentials(extendedFiles)
+      setDataToStore(extendedFiles)
     }
     setIsLoading(false)
-    // changeCredentialsState(false);
   }
 
   useEffect(() => {
     loadAllCredentials()
   }, [address])
-  
-  useEffect(() => {
-    console.log("refreshCredentials",refreshCredentials);
-    
-    if (refreshCredentials) {        
-        loadAllCredentials();
-    }
-  }, [refreshCredentials])
-  
-
+ 
 
 
   function openCredentialModel(n: number) {
@@ -71,32 +61,34 @@ function AllCredentialsList() {
 
   async function DecryptCredentials(n: number) {
     if (!address) return
-      const _decryptedMsg = await decryptMessage(allCredentials[n].password, address);
-      if (_decryptedMsg) {
-        setAllCredentials((prev) => {
-          prev[n] = { ...prev[n], password: _decryptedMsg, decryptedStatus: true }
-          return [...prev]
-        })
+      const _decryptedKey = await decryptMessage(allCredentials[n].decryptKey, address);
+      if (_decryptedKey) {
+        setDecryptKey(allCredentials[n].id,_decryptedKey)
       }
   }
 
 
   async function updateCredentails() {
   }
+
+
+  function formatTime(secs: number){
+    return (new Date(secs*1000)).toString();
+  }
   return (
     <>
       <div className="flex flex-wrap gap-4 justify-center">
         {allCredentials &&
-          allCredentials.map((file: CredentialsExtendedDataInterface, key: number) => {
+          allCredentials.map((file: DataExtendedInterface, key: number) => {
             return (
-              <CredentialListItem key={key} index={key} openCredentialModel={openCredentialModel} website={file.website} usernameOrEmailOrPhone={file.usernameOrEmailOrPhone} password={file.password} decryptedStatus={file.decryptedStatus} DecryptCredentials={DecryptCredentials} />
+              <CredentialListItem key={key} index={key} id={file.id} openDataModel={openCredentialModel} name={file.name}  decryptedStatus={file.decryptedStatus} DecryptData={DecryptCredentials} time={formatTime(file.uploadTime)} />
             )
           })}
       </div>
 
       {isLoading &&
         <div className="flex_center w-full">
-          <SimpleLoader className='w-12 ' />
+          <SimpleLoader className='w-12' />
         </div>
       }
 

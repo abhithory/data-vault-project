@@ -1,4 +1,4 @@
-import { DataExtendedInterface } from '@/interfaces/DataInterface';
+import { DataExtendedInterface, DataTypeEnum } from '@/interfaces/DataInterface';
 import { StateCreator, create } from 'zustand';
 
 interface dataStoreInterface {

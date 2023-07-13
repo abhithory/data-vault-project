@@ -4,9 +4,9 @@ export interface CredentialsFormData{
     password: string;
 }
 
-export interface CredentialsExtendedDataInterface{
-    website:string;
-    usernameOrEmailOrPhone: string;
-    password: string;
-    decryptedStatus: boolean;
-}
+// export interface CredentialsExtendedDataInterface{
+//     website:string;
+//     usernameOrEmailOrPhone: string;
+//     password: string;
+//     decryptedStatus: boolean;
+// }
