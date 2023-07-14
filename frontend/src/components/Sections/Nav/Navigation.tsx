@@ -14,12 +14,13 @@ function Navigation() {
     return <></>
   }
   return (
-    <nav className="glassmorphism-bg w-full flex justify-between px-20 py-4 h-[12vh]">
-      <span onClick={() => router.push("/")} className=" cursor-pointer flex items-center justify-center gap-4 ml-8">
-        <Image
+    <nav className="glassmorphism-bg w-full flex justify-between  py-4 h-[12vh] xl:px-20 md:px-14 px-8">
+      <span onClick={() => router.push("/")} className=" cursor-pointer flex items-center justify-center gap-4 xl:ml-8 md:ml-4 ml-2">
+        <img
           src="/assests/logo.svg"
-          width={100}
-          height={100}
+          // width={100}
+          // height={100}
+          className='xl:w-24 md:w-16 w-14'
           alt="Picture of the author"
         />
         {/* <h1 className="text-2xl text-text-color ">Data Vault</h1> */}
