@@ -6,6 +6,7 @@
 * {
   padding: 0;
   margin: 0;
+  /* line-height: normal; */
 }
 
 .body {
@@ -100,6 +101,19 @@
 
 
   /* text gradient color ========= */
+
+  .text_big_heading_size{
+    @apply xl:text-9xl lg:text-8xl md:text-7xl text-[2.7rem]
+  }
+
+  
+  .text_heading_size{
+    @apply xl:text-6xl lg:text-5xl md:text-4xl text-3xl
+  }
+
+  .text_sub_heading_size{
+    @apply xl:text-3xl lg:text-3xl md:text-2xl text-xl
+  }
 
   .text_primary_gradient {
     @apply font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-primary via-primary to-secondary
