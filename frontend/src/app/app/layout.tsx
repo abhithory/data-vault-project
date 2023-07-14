@@ -3,6 +3,8 @@ import '@/style/globals.css'
 import Web3ConnectionWrapper from '@/web3Connection/Web3ConnectionContext'
 import AppNavigation from '@/components/Sections/Nav/AppNavigation'
 import AppSidebar from '@/components/Sections/Nav/AppSidebar'
+import AnimationProvider from '@/components/provider/AnimationProvider'
+import AnimationDivProvider from '@/components/provider/AnimationDivProvider'
 
 
 export default function RootLayout({
@@ -11,17 +13,19 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-        <ThirdWebProvider>
-          <Web3ConnectionWrapper>
+    <ThirdWebProvider>
+      <Web3ConnectionWrapper>
+        {/* <AppNavigation /> */}
+        <div className="flex">
+          <AppSidebar />
+          <div className="w-full max-h-screen overflow-x-hidden overflow-y-auto">
+            <AnimationDivProvider className="w-full h-full">
               {/* <AppNavigation /> */}
-              <div className="flex">
-                <AppSidebar />
-                <div className="w-full max-h-screen overflow-x-hidden overflow-y-auto">
-                    {/* <AppNavigation /> */}
-              {children} 
-                </div>
-              </div>
-          </Web3ConnectionWrapper>
-        </ThirdWebProvider>
+              {children}
+            </AnimationDivProvider>
+          </div>
+        </div>
+      </Web3ConnectionWrapper>
+    </ThirdWebProvider>
   )
 }

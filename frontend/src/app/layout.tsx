@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
-import ThirdWebProvider from '@/components/provider/ThirdWebProvider'
 import '@/style/globals.css'
-import Web3ConnectionWrapper from '@/web3Connection/Web3ConnectionContext'
 import Navigation from '@/components/Sections/Nav/Navigation'
+import AnimationProvider from '@/components/provider/AnimationProvider'
+
 
 
 export const metadata: Metadata = {
@@ -16,12 +16,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className='body bg_primary text-text-color'>
-              <img src="/assests/bg_gradient_1.png" alt="" className='bg_gradient_image'/>
-              <Navigation />
-              {children}
-              <img src="/assests/bg_gradient.png" alt="" className='bg_gradient_image_2'/>
-      </body>
+
+        <body className='body bg_primary text-text-color'>
+          <img src="/assests/bg_gradient_1.png" alt="" className='bg_gradient_image' />
+          <Navigation />
+      <AnimationProvider>
+          {children}
+      </AnimationProvider>
+          <img src="/assests/bg_gradient.png" alt="" className='bg_gradient_image_2' />
+        </body>
     </html>
   )
 }
