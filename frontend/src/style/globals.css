@@ -3,16 +3,16 @@
 @tailwind utilities;
 
 
-*{
+* {
   padding: 0;
   margin: 0;
 }
 
-.body{
+.body {
   width: 100vw;
   min-height: 100vh;
-  overflow:"hidden";
-  
+  overflow: "hidden";
+
 }
 
 .full-h-w {
@@ -20,33 +20,33 @@
   min-height: 100vh;
 }
 
-.wallet-connect-btn{
+.wallet-connect-btn {
   padding: 20px 40px !important;
 
 }
 
-.bg_gradient_image{
-  position:absolute;
+.bg_gradient_image {
+  position: absolute;
   top: 10%;
   left: 0%;
   width: 50vw;
   height: 50vh;
   /* background-position: 50% 10%; */
   background-repeat: no-repeat;
-  background-size:contain;
+  background-size: contain;
   z-index: -99;
   opacity: .6;
 }
 
-.bg_gradient_image_2{
-  position:absolute;
+.bg_gradient_image_2 {
+  position: absolute;
   bottom: 0%;
   right: 0%;
   width: 50vw;
   height: 50vh;
   /* background-position: 50% 10%; */
   background-repeat: no-repeat;
-  background-size:cover;
+  background-size: cover;
   z-index: -99;
   opacity: .2;
   /* border-radius: 40rem; */
@@ -56,99 +56,94 @@
 
 @layer base {
   .bg_primary{
-    @apply bg-primary-bg
-    /* @apply bg-gradient-to-r from-primary-bg via-blue-600 to-primary-bg */
+    @apply bg-primary-bg;
   }
-
-  .page_main{
+  .page_main {
     /* @apply h-full w-full min-h-[90vh] */
     @apply h-full w-full min-h-[88vh]
   }
+
   .flex_center {
     @apply flex justify-center items-center;
   }
-  
 
 
-  /* from-third to-primary  */
+
+  /* buttonsss */
+  .btn_primary_1 {
+    @apply text-text-color bg-primary hover:bg-primary-hover border border-primary rounded-xl  text-center inline-flex items-center transition-colors  
+    text-sm px-4 py-2 gap-1
+    md:text-base md:px-6 md:py-2.5 md:gap-1.5
+    xl:text-xl xl:px-8 xl:py-3 xl:gap-2;
+  }
+
+  .btn_primary_2 {
+    @apply text-text-color bg-transparent hover:border-primary-hover border-2 border-primary rounded-xl  text-center inline-flex items-center transition-colors
+    text-sm px-4 py-2 gap-1
+    md:text-base md:px-6 md:py-2.5 md:gap-1.5
+    xl:text-xl xl:px-8 xl:py-3 xl:gap-2;
+  }
+
+  .btn_sidebar {
+    @apply text-text-color bg-transparent hover:bg-primary-hover rounded-md text-base px-6 py-2 text-center inline-flex items-center gap-2 transition-colors w-full
+  }
+
+  .btn_sidebar_active {
+    @apply text-text-color bg-primary-hover rounded-md text-base px-6 py-2 text-center inline-flex items-center gap-2 transition-colors w-full
+  }
+
+
+  .btn_secondary_1 {
+    @apply text-text-color bg-secondary hover:bg-secondary-hover border-secondary border-2 rounded-xl text-xl px-8 py-3 text-center inline-flex items-center gap-2
+  }
+
+
+
+  /* text gradient color ========= */
+
+  .text_primary_gradient {
+    @apply font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-primary via-primary to-secondary
+  }
+
+  .text_primary_gradient_2 {
+    @apply font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-secondary via-primary to-primary
+  }
+
+
+  .text_highlight_gradient {
+    @apply font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-highlight to-orange-400
+  }
+
+  .input_1 {
+    @apply bg-primary-bg border border-primary text-text-color text-base rounded-lg block w-full p-2.5
+  }
+
+
+
+  /* gradient colors */
+
+  .primary_gradient {
+    @apply bg-gradient-to-r from-amber-500 via-primary to-yellow-500 bg-clip-text text-transparent;
+  }
+
+  .secondary_gradient {
+    @apply bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent;
+  }
+
+
+
+  /* backgounds */
+
   .glassmorphism-bg {
     /* @apply  shadow-[inset_10px_-50px_94px_0_rgb(199,199,199,0.2)] backdrop-blur; */
     @apply bg-primary-bg/40 shadow-lg backdrop-blur-lg;
   }
- 
 
 
-    .btn_primary_1 {
-      @apply text-text-color bg-primary hover:bg-primary-hover border border-primary rounded-xl text-xl px-8  py-3 text-center inline-flex items-center gap-2 transition-colors
-    }
-    .btn_primary_2 {
-      @apply text-text-color bg-transparent hover:border-primary-hover  border-2 border-primary rounded-xl text-xl px-8  py-3 text-center inline-flex items-center gap-2 transition-colors
-    }
 
-    .btn_sidebar {
-      @apply text-text-color bg-transparent hover:bg-primary-hover  rounded-md text-base px-6  py-2 text-center inline-flex items-center gap-2 transition-colors w-full
-    }
-
-    .btn_sidebar_active {
-      @apply text-text-color bg-primary-hover  rounded-md text-base px-6  py-2 text-center inline-flex items-center gap-2 transition-colors w-full
-    }
-
-
-    .btn_secondary_1 {
-      @apply text-text-color bg-secondary hover:bg-secondary-hover border-secondary border-2  rounded-xl text-xl px-8  py-3 text-center inline-flex items-center gap-2
-    }
-
-    .text_primary_gradient{
-      @apply font-extrabold text-transparent  bg-clip-text bg-gradient-to-r from-primary  via-primary to-secondary 
-    }
-    
-    .text_primary_gradient_2{
-      @apply font-extrabold text-transparent  bg-clip-text bg-gradient-to-r from-secondary  via-primary to-primary
-    }
-    
-
-    .text_highlight_gradient{
-      @apply font-extrabold text-transparent  bg-clip-text bg-gradient-to-r from-orange-400  via-highlight to-orange-400 
-    }
-
-    .input_1 {
-      @apply bg-primary-bg border border-primary text-text-color   text-base rounded-lg block w-full p-2.5
-    }
-
-    .primary_gradient {
-      @apply bg-gradient-to-r from-amber-500 via-primary to-yellow-500 bg-clip-text text-transparent;
-    }
-
-    .secondary_gradient {
-      @apply bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent;
-    }
-
-    .orange_gradient {
-      @apply bg-gradient-to-r from-amber-500 via-orange-600 to-yellow-500 bg-clip-text text-transparent;
-    }
-    
-    .green_gradient {
-      @apply bg-gradient-to-r from-green-400 to-green-500 bg-clip-text text-transparent;
-    }
-    
-    .blue_gradient {
-      @apply bg-gradient-to-r from-third to-primary bg-clip-text text-transparent;
-    }
- 
-    .glassmorphism-chessboard-bg {
-      @apply px-6 py-3 shadow-[inset_10px_-50px_94px_0_rgb(199,199,199,0.2)] rounded-xl;
-    }
-
-    .glassmorphism-box {
-      @apply rounded-xl border border-gray-200 bg-white/20 shadow-[inset_10px_-50px_94px_0_rgb(199,199,199,0.2)] backdrop-blur p-5;
-    }
-
-    .black_btn {
-      @apply rounded-full border border-black bg-black py-1.5 px-5 text-white transition-all hover:bg-white hover:text-black text-center text-sm  flex items-center justify-center;
-    }
-    
-    .outline_btn {
-      @apply rounded-full border border-black bg-transparent py-1.5 px-5 text-black transition-all hover:bg-black hover:text-white text-center text-sm flex items-center justify-center;
-    }
-    
+  .glassmorphism-box {
+    @apply rounded-xl border border-gray-200 bg-white/20  backdrop-blur p-5;
+    /* @apply rounded-xl border border-gray-200 bg-white/20 shadow-[inset_10px_-50px_94px_0_rgb(199, 199, 199, 0.2)] backdrop-blur p-5; */
   }
+
+}
