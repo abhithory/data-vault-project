@@ -1,9 +1,10 @@
 import React from 'react';
+import "./app.css"
 
 function App() {
   return (
-    <div>
-      this is from app
+    <div className='full-body'>
+      Hello word
     </div>
   );
 }
