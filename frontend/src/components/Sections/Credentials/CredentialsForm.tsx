@@ -19,7 +19,7 @@ function CredentialsForm({type,setCredentialsData, submitForm, credentialsData, 
                 <NormalInput type="password" id="pass" placeholder='Enter your password' value={credentialsData.password} onChange={(e)=>setCredentialsData({...credentialsData,password: e.target.value})} copy={type === "update"} required />
 
                 {type === "create" &&
-                <NormalButton className='btn_primary_1' type='submit' text={`${type.toLocaleUpperCase()} crdentials`} loading={uploadingCredential} />
+                <NormalButton className='btn_primary_1' type='submit' text={`${type.toLocaleUpperCase()} Credentials`} loading={uploadingCredential} />
                 }
             </form>
     )

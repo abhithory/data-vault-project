@@ -101,7 +101,7 @@ function UserAllData(props: UploadDataInterface) {
 
       <PopUpModel isOpen={showDataModel} closeModal={() => setShowDataModel(false)}>
         <div className="text-center">
-          <h1 className="text-3xl text_primary_gradient_2">Your Credentials</h1>
+          <h1 className="text_primary_gradient_2 text_sub_heading_size">Your Credentials</h1>
           <CredentialsForm
             type="update"
             setCredentialsData={() => { }}

@@ -116,7 +116,7 @@ function UploadData(props: UploadDataInterface) {
             </span>
             <PopUpModel isOpen={isOpen} closeModal={() => setIsOpen(false)}>
                 <div className="text-center">
-                    <h1 className="text-3xl text_primary_gradient_2">Upload Credentials</h1>
+                    <h1 className="text_sub_heading_size text_primary_gradient_2">Upload Credentials</h1>
                     {props.type === DataTypeEnum.CREDENTIALS ?
                         <CredentialsForm
                             type="create"

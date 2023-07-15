@@ -1,1 +1,1 @@
-export const DataVaultContractAddress = "0xac876e5812f213d25330EA1Fff5BE0d61e31E39a";
+export const DataVaultContractAddress = "0xC8d94535Ce66725b3c00E159416EbeF4d09cFfF7";
