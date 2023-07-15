@@ -1,5 +1,5 @@
 {
-    "name": "Datavault",
+    "name": "datavault",
     "description": "datavault description",
     "version": "1.0",
     "manifest_version": 3,
@@ -8,9 +8,9 @@
       "default_title": "Datavault"
     },
     "icons": {
-      "16": "logo192.png",
-      "48": "logo192.png",
-      "128": "logo192.png"
+      "16": "assets/logo/logo192.png",
+      "48": "assets/logo/logo192.png",
+      "128": "assets/logo/logo192.png"
     },
     "permissions": [
       "activeTab",
