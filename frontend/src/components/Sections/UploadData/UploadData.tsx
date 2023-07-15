@@ -11,6 +11,7 @@ import { advanceEncryptFile, decryptFile, downloadFile, unZipAndGetData } from '
 import { DataTypeEnum } from '@/interfaces/DataInterface';
 import FileUploadForm from '../Files/FileUploadForm';
 import CredentialsForm from '../Credentials/CredentialsForm';
+import { ConnectWallet } from '@thirdweb-dev/react';
 
 
 
@@ -56,10 +57,6 @@ function UploadData(props: UploadDataInterface) {
         setSelectedFile(_file)
     }
 
-
-
-
-
     async function handleUploadData() {
         if (!address) return;
         setIsUploadingData(true);
@@ -102,15 +99,21 @@ function UploadData(props: UploadDataInterface) {
         }
         setIsUploadingData(false);
     }
+
+    if (!address) {
+        return(
+            <ConnectWallet />
+        )
+    }
     return (
         <>
             <span onClick={() => setIsOpen(true)}>
                 <button className="btn_primary_1">
                     Upload
                     {props.type === DataTypeEnum.CREDENTIALS ?
-                        "Credentials"
+                        " Credentials"
                         : props.type === DataTypeEnum.FILE &&
-                        "File"
+                        " File"
                     }
                 </button>
             </span>

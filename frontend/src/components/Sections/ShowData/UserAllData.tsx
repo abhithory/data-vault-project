@@ -49,7 +49,7 @@ function UserAllData(props: UploadDataInterface) {
       }
     } catch (error) {
       console.log("showDecryptedData", error);
-      
+
     }
   }
 
@@ -63,19 +63,24 @@ function UserAllData(props: UploadDataInterface) {
 
 
   useEffect(() => {
-  const specificData = allData.filter(data => data.dataType === props.type);
-  if (specificData) {
-    setDataArray(specificData);
-  }
+    const specificData = allData.filter(data => data.dataType === props.type);
+    if (specificData) {
+      setDataArray(specificData);
+    }
   }, [allData])
-  
 
+  if (!address) {
+    return (
+      <div className="flex flex-wrap gap-4 justify-center">
+        <h1 className="text-sm">Please Connect Your Wallet</h1>
+      </div>)
+  }
 
   return (
     <>
-      <div className="flex flex-wrap gap-4 justify-center">
-        {dataArray &&
-          dataArray.map((file: DataExtendedInterface, key: number) => {
+      {dataArray &&
+        <div className="flex flex-wrap gap-4 justify-center">
+          {dataArray.map((file: DataExtendedInterface, key: number) => {
             return (
               <DataItem
                 key={key}
@@ -84,16 +89,19 @@ function UserAllData(props: UploadDataInterface) {
                 file={file}
                 showDecryptedData={showDecryptedData}
                 handleDecryptData={handleDecryptData}
-                />
+              />
             )
           })}
-      </div>
-
-      {loadingStatus &&
-        <div className="flex_center w-full">
-          <SimpleLoader className='w-12' />
         </div>
       }
+
+      <div className="flex_center w-full">
+        {loadingStatus ?
+          <SimpleLoader className='w-12' />
+          : dataArray.length < 1 &&
+          <h1 className="text-sm">You Don't have data. Please Upload Something</h1>
+        }
+      </div>
 
       <PopUpModel isOpen={showDataModel} closeModal={() => setShowDataModel(false)}>
         <div className="text-center">
