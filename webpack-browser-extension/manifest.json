@@ -1,0 +1,22 @@
+{
+  "name": "Datavault",
+  "description": "datavault description",
+  "version": "1.0",
+  "manifest_version": 3,
+  "action": {
+    "default_popup": "index.html",
+    "default_title": "Datavault"
+  },
+  "icons": {
+    "16": "logo192.png",
+    "48": "logo192.png",
+    "128": "logo192.png"
+  },
+  "permissions": [
+    "activeTab",
+    "tabs",
+    "webNavigation",
+    "storage"
+  ],
+  "optional_permissions": []
+}

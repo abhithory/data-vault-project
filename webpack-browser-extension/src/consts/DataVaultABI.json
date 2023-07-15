@@ -1,0 +1,132 @@
+[
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "string",
+            "name": "website",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "usernameOrEmailOrPhone",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "password",
+            "type": "string"
+          }
+        ],
+        "internalType": "struct DataVault.CredentialStruct",
+        "name": "_credentialData",
+        "type": "tuple"
+      }
+    ],
+    "name": "addCredentialOfUser",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "bool",
+            "name": "advanceEncryptionStatus",
+            "type": "bool"
+          },
+          {
+            "internalType": "string",
+            "name": "fileName",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "fileHash",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "decryptKey",
+            "type": "string"
+          }
+        ],
+        "internalType": "struct DataVault.FileStruct",
+        "name": "_fileData",
+        "type": "tuple"
+      }
+    ],
+    "name": "addFileOfUser",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getAllCredentialsOfUser",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "string",
+            "name": "website",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "usernameOrEmailOrPhone",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "password",
+            "type": "string"
+          }
+        ],
+        "internalType": "struct DataVault.CredentialStruct[]",
+        "name": "allCreds",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getAllFilesOfUser",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "bool",
+            "name": "advanceEncryptionStatus",
+            "type": "bool"
+          },
+          {
+            "internalType": "string",
+            "name": "fileName",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "fileHash",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "decryptKey",
+            "type": "string"
+          }
+        ],
+        "internalType": "struct DataVault.FileStruct[]",
+        "name": "allFiles",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]
