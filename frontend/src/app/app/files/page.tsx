@@ -10,7 +10,7 @@ function page() {
         <UploadData type={DataTypeEnum.FILE} />
       </section>
       <section className='mt-8'>
-        <h1 className='text_primary_gradient text-2xl mb-4 text-center'>All your Files</h1>
+        <h1 className='text_primary_gradient mb-4 text-center text_sub_heading_size'>All your Files</h1>
         <UserAllData type={DataTypeEnum.FILE} />
       </section>
     </main>

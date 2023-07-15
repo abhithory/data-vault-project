@@ -18,7 +18,7 @@ export default function RootLayout({
         {/* <AppNavigation /> */}
         <div className="flex">
           <AppSidebar />
-          <div className="w-full max-h-screen overflow-x-hidden overflow-y-auto">
+          <div className="w-full h-screen overflow-x-hidden overflow-y-auto">
             <AnimationDivProvider className="w-full h-full">
               {/* <AppNavigation /> */}
               {children}
