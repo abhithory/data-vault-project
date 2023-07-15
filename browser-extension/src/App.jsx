@@ -1,9 +1,9 @@
 import React from 'react';
-import "./app.css"
+import "./style/tailwind.css"
 
 function App() {
   return (
-    <div className='full-body'>
+    <div className='w-24 h-24 bg-black text-red-500'>
       Hello word
     </div>
   );
