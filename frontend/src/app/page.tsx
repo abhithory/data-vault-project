@@ -16,10 +16,23 @@ export default function Home() {
         <h1 className="md:mt-4  text_heading_size">with <span className='text_primary_gradient_2'>DataVault</span></h1>
         <p className='w-9/12 md:w-8/12 lg:w-7/12 xl:w-6/12 text-center mt-8'>DataVault is your secure and private solution for storing passwords and files on the blockchain. Our decentralized application (Dapp) combines encryption technology with the power of blockchain to ensure your data remains safe from unauthorized access.</p>
         <div className="flex_center gap-4 mt-14">
-        <button className="btn_primary_1" onClick={()=>{
-          router.push("/app")
-        }}>Launch dApp</button>
-        <button className="btn_primary_2">Learn More</button>
+          {/* <button className="btn_primary_1" onClick={() => {
+            router.push("/app")
+          }}>Launch dApp</button>
+          <button className="btn_primary_2">Learn More</button> */}
+
+          <div className="buttonNeon"
+            onClick={() => {
+              router.push("/app")
+            }}
+          >
+            <a href="#"> <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              Launch dApp
+            </a>
+          </div>
         </div>
       </section>
       {/* <section className="basis-1/2">

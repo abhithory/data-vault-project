@@ -79,7 +79,7 @@ function DrawerContent({ router, isMenuOpen, setIsMenuOpen,pathName }: { router:
             }} />
           </div>
         <div className="flex_center flex-col w-full gap-2">
-          <span onClick={() => router.push("/app")} className="flex_center cursor-pointer pt-2 mb-4">
+          <span onClick={() => router.push("/")} className="flex_center cursor-pointer pt-2 mb-4">
             <Image
               src="/assests/logo.svg"
               width={120}

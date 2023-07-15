@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import '@/style/globals.css'
+import '@/style/buttonStyle.css'
 import Navigation from '@/components/Sections/Nav/Navigation'
 import AnimationProvider from '@/components/provider/AnimationProvider'
 import TopLoadingBarProvider from '@/components/provider/TopLoadingBarProvider'
@@ -19,14 +20,16 @@ export default function RootLayout({
     <html lang="en">
 
         <body className='body bg_primary text-text-color'>
-          <img src="/assests/bg_gradient_1.png" alt="" className='bg_gradient_image' />
+        <video className="bg-video" src="assests/background.mp4" autoPlay loop muted plays-inline></video>
+
+          {/* <img src="/assests/bg_gradient_1.png" alt="" className='bg_gradient_image' /> */}
           <Navigation />
       {/* <TopLoadingBarProvider> */}
           <AnimationProvider>
             {children}
           </AnimationProvider>
       {/* </TopLoadingBarProvider> */}
-          <img src="/assests/bg_gradient.png" alt="" className='bg_gradient_image_2' />
+          {/* <img src="/assests/bg_gradient.png" alt="" className='bg_gradient_image_2' /> */}
         </body>
     </html>
   )
