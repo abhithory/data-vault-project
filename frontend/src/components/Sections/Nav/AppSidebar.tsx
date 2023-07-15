@@ -96,9 +96,9 @@ function DrawerContent({ router, isMenuOpen, setIsMenuOpen,pathName }: { router:
             <PiFiles />
             Files
           </button>
-          <button onClick={() => router.push("/app/screatinfo")} className={pathName === "/app/screatinfo" ? "btn_sidebar_active" : "btn_sidebar"}>
+          <button onClick={() => router.push("/app/secretinfo")} className={pathName === "/app/screatinfo" ? "btn_sidebar_active" : "btn_sidebar"}>
             <PiInfoBold />
-            Screat Info
+            Secret Info
           </button>
         </div>
       </div>
