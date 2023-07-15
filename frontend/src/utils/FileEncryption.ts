@@ -13,7 +13,6 @@ function generateRandomKey(): string {
 // For Encrypting & Decrypting file 
 export async function advanceEncryptFile(file: Blob): Promise<{ key: string, encryptedFile: Blob }> {
     const fileToEncrypt  = await zipFile(file as File) as Blob
-    downloadFile(fileToEncrypt,"file.zip")    
     return new Promise((resolve, error) => {
         const reader = new FileReader()
         reader.onload = () => {
@@ -74,13 +73,6 @@ export async function unZipAndGetData(file: File): Promise<string> {
         throw error        
     }
     
-
-    //     Object.keys(zip.files).forEach(function (filename) {
-    //         zip.files[filename].async('string').then(function (fileData) {
-    //             console.log(fileData) // These are your file contents      
-    //         })
-    //     })
-    // })
 }
 
 export function downloadFile(file: File | Blob, fileName: string): boolean {
