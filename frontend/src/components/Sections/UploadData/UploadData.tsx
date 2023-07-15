@@ -65,7 +65,7 @@ function UploadData(props: UploadDataInterface) {
         setIsUploadingData(true);
         setUploadingProcessCount(1);
         if (props.type === DataTypeEnum.CREDENTIALS) {
-            const dataJsonFile = new File([JSON.stringify(credentialsData)],credentialsData.credentialName+".json");
+            const dataJsonFile = new File([JSON.stringify(credentialsData)],"data.json");   
             await encryptAndUploadData(dataJsonFile, DataTypeEnum.CREDENTIALS, credentialsData.credentialName);
         } else if (props.type === DataTypeEnum.FILE && selectedFile) {
             let fileUploadName: string = fileName + "." + fileExtension;
