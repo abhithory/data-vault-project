@@ -1,10 +1,10 @@
 import React from 'react';
-import "./style/tailwind.css"
+import "./style/tailwind.css";
 
 function App() {
   return (
-    <div className='w-24 h-24 bg-black text-red-500'>
-      Hello word
+    <div className='app_container'>
+      
     </div>
   );
 }
