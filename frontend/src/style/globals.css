@@ -30,8 +30,10 @@
   position: absolute;
   right: 0;
   bottom: 0;
-  z-index: -1;
+  object-fit: cover;
+  z-index: -99;
 }
+
 @media (min-aspect-ratio: 16/9) {
   .bg-video{
       width: 100%;
@@ -43,7 +45,6 @@
       width: auto;
       height: 100%;
   }
-  
 }
 
 
@@ -56,7 +57,7 @@
   /* background-position: 50% 10%; */
   background-repeat: no-repeat;
   background-size: contain;
-  z-index: -99;
+  z-index: -98;
   opacity: .6;
 }
 
@@ -69,7 +70,7 @@
   /* background-position: 50% 10%; */
   background-repeat: no-repeat;
   background-size: cover;
-  z-index: -99;
+  z-index: -98;
   opacity: .2;
   /* border-radius: 40rem; */
 
