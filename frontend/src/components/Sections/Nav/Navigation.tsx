@@ -37,6 +37,10 @@ function Navigation() {
           </h1> */}
         <button className="btn_primary_2" onClick={() => {
           router.push("/app")
+        }}>Learn More</button>
+
+        <button className="btn_primary_2" onClick={() => {
+          router.push("/app")
         }}>Launch dApp</button>
 
       </span>
