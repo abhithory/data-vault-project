@@ -24,7 +24,6 @@ function UserAllData(props: UploadDataInterface) {
   const [dataArray, setDataArray] = useState<DataExtendedInterface[]>([]);
 
   const [showDataModel, setShowDataModel] = useState<boolean>(false);
-  const [isDownloading, setIsDownloading] = useState<boolean>(false);
 
   // for crednetials
   const [credentialsData, setCredentialsData] = useState<CredentialsFormData>({
@@ -37,8 +36,6 @@ function UserAllData(props: UploadDataInterface) {
 
   async function showDecryptedData(n: number) {
     try {
-      
-      setIsDownloading(true);
       const _fullURL: string = await getFileUrlFromIpfsHash(dataArray[n].dataHash);
       const _res = await fetch(_fullURL);
       const encryptedFile = await _res.blob();
@@ -54,7 +51,6 @@ function UserAllData(props: UploadDataInterface) {
       console.log("showDecryptedData", error);
       
     }
-    setIsDownloading(false);
   }
 
   async function handleDecryptData(n: number) {
@@ -88,7 +84,7 @@ function UserAllData(props: UploadDataInterface) {
                 file={file}
                 showDecryptedData={showDecryptedData}
                 handleDecryptData={handleDecryptData}
-                isDownloading={isDownloading} />
+                />
             )
           })}
       </div>
