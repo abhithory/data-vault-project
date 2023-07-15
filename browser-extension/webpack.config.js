@@ -3,8 +3,9 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require("copy-webpack-plugin");
 const tailwindcss = require('tailwindcss');
 const autoprefixer = require('autoprefixer');
+const webpack = require('webpack');
 
-
+const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
 
 
 module.exports = {
@@ -62,6 +63,11 @@ module.exports = {
       { from: "public/files" },
     ],
   }),
+  // new webpack.ProvidePlugin({
+  //   process: 'process/browser',
+  // }),
+  new NodePolyfillPlugin()
+
   ],
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
