@@ -108,7 +108,7 @@ height:600px; */
     }
 
     .input_1 {
-        @apply bg-primary-bg border border-primary text-text-color rounded-lg block w-full text-sm px-3 py-2.5 gap-1 md: text-base md:px-4 md:py-3 md:gap-1.5 xl:text-xl xl:px-6 xl:py-3 xl:gap-2;
+        @apply bg-primary-bg border border-primary text-text-color rounded-lg block w-full text-sm px-3 py-2.5 gap-1 md:text-base md:px-4 md:py-3 md:gap-1.5 xl:text-xl xl:px-6 xl:py-3 xl:gap-2;
     }
 
 
