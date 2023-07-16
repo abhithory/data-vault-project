@@ -40,7 +40,7 @@ function AllUserData(props:UploadDataInterface) {
     decryptKey: "string",
     uploadTime: (new Date()).getTime() / 1000,
     id: "string",
-    decryptedStatus: false,
+    decryptedStatus: true,
   }
   return (
     <div className='flex flex-wrap flex-col h-full w-full px-2 gap-1'>

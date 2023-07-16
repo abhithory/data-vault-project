@@ -45,9 +45,7 @@ function DataItem({
         }
     }
     return (
-        <div className="w-full">
-
-            <div className='flex_center border border-primary rounded-lg gap-2 glassmorphism-bg  cursor-pointer text-text-color'>
+            <div className='w-full flex items-center justify-around border border-primary rounded-lg gap-2 glassmorphism-bg  cursor-pointer text-text-color'>
 
                 {type === DataTypeEnum.CREDENTIALS ?
                     <RiLockPasswordFill className="text-2xl" />
@@ -82,7 +80,6 @@ function DataItem({
                     />
                 }
             </div>
-        </div>
     )
 }
 
