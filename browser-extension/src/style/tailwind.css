@@ -54,11 +54,14 @@ height:600px; */
 
     /* buttonsss */
     .btn_primary_1 {
-        @apply text-text-color bg-primary hover:bg-primary-hover border-2 border-primary rounded-xl text-center inline-flex items-center transition-colors text-sm px-4 py-2 gap-1 md:text-base md:px-6 md:py-2.5 md:gap-1.5 xl:text-xl xl:px-8 xl:py-3 xl:gap-2;
+        @apply text-text-color bg-primary hover:bg-primary-hover border-2 border-primary rounded-xl text-center inline-flex items-center transition-colors text-sm 
+        px-2 py-1 gap-1 md:text-[.8rem];
     }
 
     .btn_primary_2 {
-        @apply text-text-color bg-transparent hover:border-primary-hover border-2 border-primary rounded-xl text-center inline-flex items-center transition-colors text-sm px-4 py-2 gap-1 md:text-base md:px-6 md:py-2.5 md:gap-1.5 xl:text-xl xl:px-8 xl:py-3 xl:gap-2;
+        @apply text-text-color bg-transparent hover:border-primary-hover border-2 border-primary rounded-xl text-center inline-flex items-center transition-colors
+        px-2 py-1 gap-1 md:text-[.8rem];
+
     }
 
     .btn_sidebar {

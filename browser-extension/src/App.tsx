@@ -4,14 +4,20 @@ import { Web3ConnectionContext } from './Provider/Web3Provider';
 
 function App() {
 
-  const {address, connectMetamaskWallet} = useContext(Web3ConnectionContext);
+  const { address, connectMetamaskWallet } = useContext(Web3ConnectionContext);
   return (
     <div className='app_container'>
-      <h1 className='text-xl text-white'>address: {address}</h1>
+      <div className="flex justify-between items-center mx-4 py-2">
+        <img src="assets/logo.png" alt="logo" className='w-16' />
+        <button className={`${address ? "btn_primary_2" : "btn_primary_1" }`} onClick={connectMetamaskWallet} disabled={Boolean(address)}>
+          {address ?
+            address.substring(0,4)+"..."+address.substring(address.length - 4 , address.length)
+            :
+            "Connect Wallet"
+          }
+        </button>
+      </div>
 
-      <button className="btn_primary_1" onClick={connectMetamaskWallet}>
-        Connect Wallet
-      </button>
     </div>
   );
 }
