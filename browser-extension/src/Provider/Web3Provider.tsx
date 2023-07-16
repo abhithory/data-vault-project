@@ -1,22 +1,25 @@
 import React, { createContext, useState } from 'react';
 import createMetaMaskProvider from 'metamask-extension-provider';
+import { ethers } from 'ethers';
 
 
 declare global {
-    interface Window{
-      ethereum?:any
+    interface Window {
+        ethereum?: any
     }
-  }
-  
+}
+
 
 interface ContextProps {
     address: string | undefined,
     connectMetamaskWallet: () => void,
+    isConnectedPreviously: () => Promise<boolean>
 }
 
 export const Web3ConnectionContext = createContext<ContextProps>({
     address: '',
-    connectMetamaskWallet: () => {},
+    connectMetamaskWallet: () => { },
+    isConnectedPreviously: async () => false
 });
 
 
@@ -36,14 +39,14 @@ const Web3ConnectionWrapper = ({ children }: any) => {
         }
     }
 
-    const getAccounts = async (provider: any):Promise<[string,string | number, any ]> => {
-            const [address, chainId] = await Promise.all([
-                provider.request({
-                    method: 'eth_requestAccounts',
-                }),
-                provider.request({ method: 'eth_chainId' }),
-            ]);
-            return [address, chainId, provider];
+    const getAccounts = async (provider: any): Promise<[string, string | number, any]> => {
+        const [address, chainId] = await Promise.all([
+            provider.request({
+                method: 'eth_requestAccounts',
+            }),
+            provider.request({ method: 'eth_chainId' }),
+        ]);
+        return [address, chainId, provider];
     }
 
     const connectMetamaskWallet = async () => {
@@ -61,6 +64,18 @@ const Web3ConnectionWrapper = ({ children }: any) => {
         }
     }
 
+    const isConnectedPreviously = async (): Promise<boolean> => {
+        try {
+            const _provider = getProvider();
+            const provider = new ethers.providers.Web3Provider(_provider);
+            const signer =  provider.getSigner();        
+            const accounts = await signer.getAddress();            
+            return accounts ? true : false;
+        } catch (error) {
+            return false;
+        }
+    }
+
     const disconnectWallet = () => {
         try {
             setAddress("");
@@ -74,7 +89,8 @@ const Web3ConnectionWrapper = ({ children }: any) => {
     return (
         <Web3ConnectionContext.Provider value={{
             address,
-            connectMetamaskWallet
+            connectMetamaskWallet,
+            isConnectedPreviously
         }}
         >
             {children}

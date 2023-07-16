@@ -1,11 +1,24 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import "./style/tailwind.css";
 import { Web3ConnectionContext } from './Provider/Web3Provider';
 import AllUserData from './section/AllUserData';
+import { DataTypeEnum } from './interfaces/DataInterface';
 
 function App() {
 
-  const { address, connectMetamaskWallet } = useContext(Web3ConnectionContext);
+  const { address, connectMetamaskWallet, isConnectedPreviously } = useContext(Web3ConnectionContext);
+
+
+  useEffect(() => {
+    async function checkPreviouslyConnected(){
+      const isConnected = await isConnectedPreviously();      
+      if (isConnected) {
+        connectMetamaskWallet()
+      }
+    }
+
+    checkPreviouslyConnected()
+  },[])
   return (
     <div className='app_container'>
       <div className="flex justify-between items-center mx-4 py-2">
@@ -23,7 +36,7 @@ function App() {
       {address ?
           <>
           <h1 className="text_sub_heading_size text_primary_gradient">All Credentials</h1>
-          <AllUserData />
+          <AllUserData type={DataTypeEnum.CREDENTIALS} />
           </>
           :
           <h1 className="text_sub_heading_size text_primary_gradient">Please connect your wallet</h1>
