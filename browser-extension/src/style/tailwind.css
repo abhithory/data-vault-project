@@ -82,16 +82,16 @@ height:600px; */
     /* text gradient color ========= */
 
     .text_big_heading_size {
-        @apply xl: text-9xl lg:text-8xl md:text-7xl text-[2.7rem]
+        @apply xl:text-9xl lg:text-8xl md:text-7xl text-[2.7rem]
     }
 
 
     .text_heading_size {
-        @apply xl: text-6xl lg:text-5xl md:text-4xl text-3xl
+        @apply xl:text-6xl lg:text-5xl md:text-4xl text-3xl
     }
 
     .text_sub_heading_size {
-        @apply xl: text-3xl lg:text-3xl md:text-2xl text-xl
+        @apply xl:text-3xl lg:text-3xl md:text-2xl text-xl
     }
 
     .text_primary_gradient {
