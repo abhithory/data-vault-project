@@ -6,7 +6,7 @@ import { DataTypeEnum } from './interfaces/DataInterface';
 
 function App() {
 
-  const { address, connectMetamaskWallet, isConnectedPreviously } = useContext(Web3ConnectionContext);
+  const { address, connectMetamaskWallet, isConnectedPreviously, getAllDataOfUser } = useContext(Web3ConnectionContext);
 
 
   useEffect(() => {
@@ -18,7 +18,17 @@ function App() {
     }
 
     checkPreviouslyConnected()
-  },[])
+  },[]);
+
+  useEffect(() => {
+    async function loadData(){
+      // await getAllDataOfUser();
+    }
+    if (address) {
+      loadData()
+    }
+  },[address]);
+  
   return (
     <div className='app_container overflow-auto'>
       <div className="flex justify-between items-center mx-4 py-2">

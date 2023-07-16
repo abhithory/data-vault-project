@@ -26,5 +26,15 @@ export function getDateToStringFromSec(secs: number) {
     let month = months[d.getMonth()];
     let year = d.getFullYear();
     return  date + " " + month + " " + year;
-    return (new Date(secs * 1000)).toLocaleString();
 }
+
+
+export function ipfsHashToUrl(hash: string): string{
+    if (hash.startsWith("ipfs://")) {
+        const onlyHash = hash.substring(7,hash.length);
+        return `https://ipfs.thirdwebstorage.com/ipfs/${onlyHash}/encryptedfile`
+    } else {
+        throw Error("IPFS hash is not correct")
+    }
+}
+
