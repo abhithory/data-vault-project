@@ -5,6 +5,11 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontSize: {
+        sm: '0.7rem',
+        base: '0.8rem',
+        lg:'1rem'
+      },
       colors:{
         'primary':"#4D92FF", //pink-500
         'primary-hover':"#2372f1", //pink-500

@@ -43,7 +43,7 @@ function AllUserData(props:UploadDataInterface) {
     decryptedStatus: false,
   }
   return (
-    <div className='flex flex-wrap flex-col h-full w-full px-2'>
+    <div className='flex flex-wrap flex-col h-full w-full px-2 gap-1'>
        <DataItem
                 key={0}
                 index={0}

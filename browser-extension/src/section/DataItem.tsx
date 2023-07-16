@@ -48,30 +48,34 @@ function DataItem({
         <div className="w-full">
 
             <div className='flex_center border border-primary rounded-lg gap-2 glassmorphism-bg  cursor-pointer text-text-color'>
+
                 {type === DataTypeEnum.CREDENTIALS ?
                     <RiLockPasswordFill className="text-2xl" />
                     : type === DataTypeEnum.FILE &&
                     <PiFileLock className="text-2xl" />
                 }
 
-                <div className="flex_center">
-                    <h1 className='text-lg text-ellipsis overflow-hidden truncate'>{file.dataName}</h1>
-                </div>
-                <div className="text-center">
-                    <h1 className='text-sm'>{getDayTimeToStringFromSec(file.uploadTime)}</h1>
-                    <h1 className='text-sm'>{getDateToStringFromSec(file.uploadTime)}</h1>
+                <div className="flex_center flex-col w-max">
+
+                    <div className="flex_center">
+                        <h1 className='text-lg text-ellipsis overflow-hidden truncate'>{file.dataName}</h1>
+                    </div>
+                    <div className="text-center flex gap-1">
+                        <h1 className='text-sm'>{getDayTimeToStringFromSec(file.uploadTime)}</h1>
+                        <h1 className='text-sm'>{getDateToStringFromSec(file.uploadTime)}</h1>
+                    </div>
                 </div>
                 {file.decryptedStatus ?
                     <NormalButton
                         onClick={showData}
-                        className="btn_primary_1 text-sm px-4 py-2"
+                        className="btn_primary_1 my-2 mx-1"
                         text={type === DataTypeEnum.CREDENTIALS ? "Check Credentials" : type === DataTypeEnum.FILE ? "Download File" : ""}
                         loading={isDownloading}
                     />
                     :
                     <NormalButton
                         onClick={decryptData}
-                        className="btn_primary_2 text-sm px-4 py-2"
+                        className="btn_primary_2 my-2 mx-1"
                         text={type === DataTypeEnum.CREDENTIALS ? "Decrypt Credentials" : type === DataTypeEnum.FILE ? "Decrypt File" : ""}
                         loading={isDecrypting}
 

@@ -35,7 +35,7 @@ function App() {
         <div className="flex_center w-full flex-col mt-2">
       {address ?
           <>
-          <h1 className="text_sub_heading_size text_primary_gradient">All Credentials</h1>
+          <h1 className="text_sub_heading_size text_primary_gradient mb-2">All Credentials</h1>
           <AllUserData type={DataTypeEnum.CREDENTIALS} />
           </>
           :
