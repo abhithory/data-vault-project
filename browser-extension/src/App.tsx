@@ -20,7 +20,7 @@ function App() {
     checkPreviouslyConnected()
   },[])
   return (
-    <div className='app_container'>
+    <div className='app_container overflow-auto'>
       <div className="flex justify-between items-center mx-4 py-2">
         <img src="assets/logo.png" alt="logo" className='w-16' />
         <button className={`${address ? "btn_primary_2" : "btn_primary_1"}`} onClick={connectMetamaskWallet} disabled={Boolean(address)}>
@@ -32,7 +32,7 @@ function App() {
         </button>
       </div>
 
-        <div className="flex_center w-full flex-col mt-2">
+        <div className="flex_center w-full flex-col mt-2 ">
       {address ?
           <>
           <h1 className="text_sub_heading_size text_primary_gradient mb-2">All Credentials</h1>

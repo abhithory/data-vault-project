@@ -1,6 +1,9 @@
 import React, { createContext, useState } from 'react';
 import createMetaMaskProvider from 'metamask-extension-provider';
-import { ethers } from 'ethers';
+import { Contract, ethers } from 'ethers';
+import { DataVaultJson } from './DataVaultJson';
+import { DataStructInterface } from '../interfaces/DataInterface';
+import { setData } from '../store/LocalStore';
 
 
 declare global {
@@ -13,15 +16,19 @@ declare global {
 interface ContextProps {
     address: string | undefined,
     connectMetamaskWallet: () => void,
-    isConnectedPreviously: () => Promise<boolean>
+    isConnectedPreviously: () => Promise<boolean>,
+    getAllDataOfUser: () => Promise<DataStructInterface[]>,
 }
 
 export const Web3ConnectionContext = createContext<ContextProps>({
     address: '',
     connectMetamaskWallet: () => { },
-    isConnectedPreviously: async () => false
+    isConnectedPreviously: async () => false,
+    getAllDataOfUser: async () => [],
 });
 
+
+const DataVaultContractAddress = ""
 
 const Web3ConnectionWrapper = ({ children }: any) => {
 
@@ -86,11 +93,32 @@ const Web3ConnectionWrapper = ({ children }: any) => {
         }
     }
 
+    function getContract(): Contract {
+        const DataVaultContract = new ethers.Contract(DataVaultContractAddress, DataVaultJson.abi, ethereumProvider);
+        return DataVaultContract;
+    }
+
+
+    async function getAllDataOfUser(): Promise<DataStructInterface[]> {
+        try {
+            const _contract = getContract();
+            const _data = await _contract.getAllData();
+            setData(_data);
+            return _data;
+        } catch (error) {
+            console.log("getAllDataOfUser error", error);
+            throw error
+        }
+    }
+
+
+
     return (
         <Web3ConnectionContext.Provider value={{
             address,
             connectMetamaskWallet,
-            isConnectedPreviously
+            isConnectedPreviously,
+            getAllDataOfUser
         }}
         >
             {children}

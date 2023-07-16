@@ -5,7 +5,7 @@ interface UploadDataInterface {
   type: DataTypeEnum
 }
 
-function AllUserData(props:UploadDataInterface) {
+function AllUserData(props: UploadDataInterface) {
   async function showDecryptedData(n: number) {
     // try {
     //   const _fullURL: string = await getFileUrlFromIpfsHash(dataArray[n].dataHash);
@@ -33,7 +33,7 @@ function AllUserData(props:UploadDataInterface) {
     // }
   }
 
-  const fileData:DataExtendedInterface = {
+  const fileData: DataExtendedInterface = {
     dataName: "google.com",
     dataType: DataTypeEnum.CREDENTIALS,
     dataHash: "string",
@@ -44,30 +44,14 @@ function AllUserData(props:UploadDataInterface) {
   }
   return (
     <div className='flex flex-wrap flex-col h-full w-full px-2 gap-1'>
-       <DataItem
-                key={0}
-                index={0}
-                type={props.type}
-                file={fileData}
-                showDecryptedData={showDecryptedData}
-                handleDecryptData={handleDecryptData}
-              />
-                     <DataItem
-                key={0}
-                index={0}
-                type={props.type}
-                file={fileData}
-                showDecryptedData={showDecryptedData}
-                handleDecryptData={handleDecryptData}
-              />
-                     <DataItem
-                key={0}
-                index={0}
-                type={props.type}
-                file={fileData}
-                showDecryptedData={showDecryptedData}
-                handleDecryptData={handleDecryptData}
-              />
+      <DataItem
+        key={0}
+        index={0}
+        type={props.type}
+        file={fileData}
+        showDecryptedData={showDecryptedData}
+        handleDecryptData={handleDecryptData}
+      />
     </div>
   )
 }
