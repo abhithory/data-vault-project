@@ -3,7 +3,7 @@ import createMetaMaskProvider from 'metamask-extension-provider';
 import { Contract, ethers } from 'ethers';
 import { DataVaultJson } from './DataVaultJson';
 import { DataStructInterface } from '../interfaces/DataInterface';
-import { setData } from '../store/LocalStore';
+import { useDataStore } from '../store/dataStore';
 
 
 declare global {
@@ -35,6 +35,12 @@ const Web3ConnectionWrapper = ({ children }: any) => {
     const [chainId, setChainId] = useState<number | string>();
     const [address, setAddress] = useState("")
     const [ethereumProvider, setEthereumProvider] = useState<any>();
+
+
+    const [setData] = useDataStore((store) => [store.setData])
+
+
+
 
     const getProvider = () => {
         if (window.ethereum) {

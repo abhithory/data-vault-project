@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { DataExtendedInterface, DataStructInterface, DataTypeEnum } from '../interfaces/DataInterface'
 import { decryptFile, unZipAndGetData } from '../utils/FileEncryption';
 import { ipfsHashToUrl } from '../utils/Helper';
@@ -6,6 +6,7 @@ import DataItem from './DataItem'
 import { CredentialsFormData } from '../interfaces/Credentials';
 import { decryptMessage } from '../utils/MessageEncryption';
 import { Web3ConnectionContext } from '../Provider/Web3Provider';
+import { useDataStore } from '../store/dataStore';
 
 interface UploadDataInterface {
   type: DataTypeEnum
@@ -16,7 +17,7 @@ function AllUserData(props: UploadDataInterface) {
   const { address, connectMetamaskWallet, isConnectedPreviously, getAllDataOfUser } = useContext(Web3ConnectionContext);
 
 
-  // const [allData, setDecryptKey, loadingStatus] = useDataStore((store) => [store.allData, store.setDecryptKey, store.loadingStatus]);
+  const [allData, setDecryptKey, loadingStatus] = useDataStore((store) => [store.allData, store.setDecryptKey, store.loadingStatus]);
 
   const [dataArray, setDataArray] = useState<DataExtendedInterface[]>([]);
   const [showDataModel, setShowDataModel] = useState<boolean>(false);
@@ -28,9 +29,6 @@ function AllUserData(props: UploadDataInterface) {
     userid: "",
     password: ""
   });
-
-
-
   
   async function showDecryptedData(n: number) {
     try {
@@ -55,29 +53,44 @@ function AllUserData(props: UploadDataInterface) {
     if (!address) return
     const _decryptedKey = await decryptMessage(dataArray[n].decryptKey, address);
     if (_decryptedKey) {
-      // setDecryptKey(dataArray[n].id, _decryptedKey)
+      setDecryptKey(dataArray[n].id, _decryptedKey)
     }
   }
 
-  const fileData: DataExtendedInterface = {
-    dataName: "google.com",
-    dataType: DataTypeEnum.CREDENTIALS,
-    dataHash: "string",
-    decryptKey: "string",
-    uploadTime: (new Date()).getTime() / 1000,
-    id: "string",
-    decryptedStatus: true,
+
+
+  async function loadAllData(){
+    const fileData: DataExtendedInterface = {
+      dataName: "google.com",
+      dataType: DataTypeEnum.CREDENTIALS,
+      dataHash: "string",
+      decryptKey: "string",
+      uploadTime: (new Date()).getTime() / 1000,
+      id: "string",
+      decryptedStatus: true,
+    }
+
+    setDataArray([fileData,fileData,fileData,fileData,fileData])
   }
+
+
+  useEffect(() => {
+    if (address) {
+      loadAllData();
+    }
+  }, [address])
+  
+
   return (
     <div className='flex flex-wrap flex-col h-full w-full px-2 gap-1'>
-      <DataItem
+      {/* <DataItem
         key={0}
         index={0}
         type={props.type}
         file={fileData}
         showDecryptedData={showDecryptedData}
         handleDecryptData={handleDecryptData}
-      />
+      /> */}
     </div>
   )
 }
