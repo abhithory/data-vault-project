@@ -28,7 +28,7 @@ export const Web3ConnectionContext = createContext<ContextProps>({
 });
 
 
-const DataVaultContractAddress = ""
+const DataVaultContractAddress = "0x5536Da7119DAf4bBD01f01c770c6223F1CdfF6e0"
 
 const Web3ConnectionWrapper = ({ children }: any) => {
 
@@ -36,10 +36,7 @@ const Web3ConnectionWrapper = ({ children }: any) => {
     const [address, setAddress] = useState("")
     const [ethereumProvider, setEthereumProvider] = useState<any>();
 
-
     const [setData] = useDataStore((store) => [store.setData])
-
-
 
 
     const getProvider = () => {
@@ -69,8 +66,10 @@ const Web3ConnectionWrapper = ({ children }: any) => {
             if (address && chainId && provider) {
                 const account = address[0];
                 setEthereumProvider(provider)
-                setAddress(account);
                 setChainId(chainId);
+                setTimeout(() => {
+                    setAddress(account);
+                }, 0);
             }
         } catch (e) {
             console.log("error while connect", e);
@@ -81,8 +80,8 @@ const Web3ConnectionWrapper = ({ children }: any) => {
         try {
             const _provider = getProvider();
             const provider = new ethers.providers.Web3Provider(_provider);
-            const signer =  provider.getSigner();        
-            const accounts = await signer.getAddress();            
+            const signer = provider.getSigner();
+            const accounts = await signer.getAddress();
             return accounts ? true : false;
         } catch (error) {
             return false;
@@ -100,20 +99,22 @@ const Web3ConnectionWrapper = ({ children }: any) => {
     }
 
     function getContract(): Contract {
-        const DataVaultContract = new ethers.Contract(DataVaultContractAddress, DataVaultJson.abi, ethereumProvider);
+        const provider = new ethers.providers.Web3Provider(getProvider());
+        const signer = provider.getSigner();
+        const DataVaultContract = new ethers.Contract(DataVaultContractAddress, DataVaultJson.abi, signer);
         return DataVaultContract;
     }
 
 
     async function getAllDataOfUser(): Promise<DataStructInterface[]> {
         try {
-            const _contract = getContract();
-            const _data = await _contract.getAllData();
-            setData(_data);
-            return _data;
+        const _contract = getContract();
+        const _data = await _contract.getAllData();
+        setData(_data);
+        return _data;
         } catch (error) {
-            console.log("getAllDataOfUser error", error);
-            throw error
+        console.log("getAllDataOfUser error", error);
+        throw error
         }
     }
 
