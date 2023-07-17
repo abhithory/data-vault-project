@@ -32,7 +32,7 @@ export function getDateToStringFromSec(secs: number) {
 export function ipfsHashToUrl(hash: string): string{
     if (hash.startsWith("ipfs://")) {
         const onlyHash = hash.substring(7,hash.length);
-        return `https://ipfs.thirdwebstorage.com/ipfs/${onlyHash}/encryptedfile`
+        return `https://ipfs.thirdwebstorage.com/ipfs/${onlyHash}`
     } else {
         throw Error("IPFS hash is not correct")
     }

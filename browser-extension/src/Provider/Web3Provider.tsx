@@ -18,6 +18,7 @@ interface ContextProps {
     connectMetamaskWallet: () => void,
     isConnectedPreviously: () => Promise<boolean>,
     getAllDataOfUser: () => Promise<DataStructInterface[]>,
+    ethereumProvider: any
 }
 
 export const Web3ConnectionContext = createContext<ContextProps>({
@@ -25,6 +26,7 @@ export const Web3ConnectionContext = createContext<ContextProps>({
     connectMetamaskWallet: () => { },
     isConnectedPreviously: async () => false,
     getAllDataOfUser: async () => [],
+    ethereumProvider: ''
 });
 
 
@@ -99,7 +101,7 @@ const Web3ConnectionWrapper = ({ children }: any) => {
     }
 
     function getContract(): Contract {
-        const provider = new ethers.providers.Web3Provider(getProvider());
+        const provider = new ethers.providers.Web3Provider(ethereumProvider);
         const signer = provider.getSigner();
         const DataVaultContract = new ethers.Contract(DataVaultContractAddress, DataVaultJson.abi, signer);
         return DataVaultContract;
@@ -125,7 +127,8 @@ const Web3ConnectionWrapper = ({ children }: any) => {
             address,
             connectMetamaskWallet,
             isConnectedPreviously,
-            getAllDataOfUser
+            getAllDataOfUser,
+            ethereumProvider
         }}
         >
             {children}

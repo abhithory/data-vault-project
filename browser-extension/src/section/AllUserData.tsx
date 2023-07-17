@@ -17,7 +17,7 @@ interface UploadDataInterface {
 
 function AllUserData(props: UploadDataInterface) {
 
-  const { address } = useContext(Web3ConnectionContext);
+  const { address,ethereumProvider } = useContext(Web3ConnectionContext);
 
 
   const [allData, setDecryptKey, loadingStatus] = useDataStore((store) => [store.allData, store.setDecryptKey, store.loadingStatus]);
@@ -54,7 +54,13 @@ function AllUserData(props: UploadDataInterface) {
 
   async function handleDecryptData(n: number) {
     if (!address) return
-    const _decryptedKey = await decryptMessage(dataArray[n].decryptKey, address);
+
+    chrome.tabs.create({ url: chrome.extension.getURL('index.html') }, function(tab) {
+      console.log(tab);
+      
+    });
+
+    const _decryptedKey = await decryptMessage(ethereumProvider,dataArray[n].decryptKey, address);
     if (_decryptedKey) {
       setDecryptKey(dataArray[n].id, _decryptedKey)
     }
