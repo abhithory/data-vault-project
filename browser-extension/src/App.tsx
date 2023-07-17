@@ -3,11 +3,13 @@ import "./style/tailwind.css";
 import { Web3ConnectionContext } from './Provider/Web3Provider';
 import AllUserData from './section/AllUserData';
 import { DataTypeEnum } from './interfaces/DataInterface';
+import { useDataStore } from './store/dataStore';
 
 function App() {
 
   const { address, connectMetamaskWallet, isConnectedPreviously, getAllDataOfUser } = useContext(Web3ConnectionContext);
 
+  const [setLoading] = useDataStore((store) => [store.setLoadingStatus]);
 
   useEffect(() => {
     async function checkPreviouslyConnected(){
@@ -22,7 +24,9 @@ function App() {
 
   useEffect(() => {
     async function loadData(){
-      // await getAllDataOfUser();
+      setLoading(true);
+      await getAllDataOfUser();
+      setLoading(false);
     }
     if (address) {
       loadData()
@@ -30,7 +34,7 @@ function App() {
   },[address]);
   
   return (
-    <div className='app_container overflow-auto'>
+    <div className='app_container overflow-auto text-text-color'>
       <div className="flex justify-between items-center mx-4 py-2">
         <img src="assets/logo.png" alt="logo" className='w-16' />
         <button className={`${address ? "btn_primary_2" : "btn_primary_1"}`} onClick={connectMetamaskWallet} disabled={Boolean(address)}>

@@ -23,7 +23,7 @@ function AllUserData(props: UploadDataInterface) {
   const [allData, setDecryptKey, loadingStatus] = useDataStore((store) => [store.allData, store.setDecryptKey, store.loadingStatus]);
 
   const [dataArray, setDataArray] = useState<DataExtendedInterface[]>([]);
-  const [showDataModel, setShowDataModel] = useState<boolean>(true);
+  const [showDataModel, setShowDataModel] = useState<boolean>(false);
 
 
   const [credentialsData, setCredentialsData] = useState<CredentialsFormData>({
@@ -90,7 +90,7 @@ function AllUserData(props: UploadDataInterface) {
 
       <div className="flex_center w-full">
         {loadingStatus ?
-          <SimpleLoader className='w-12' />
+          <SimpleLoader className='w-6' />
           : dataArray.length < 1 &&
           <h1 className="text-sm">You Don't have data. Please Upload Something</h1>
         }
