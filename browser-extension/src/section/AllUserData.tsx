@@ -54,12 +54,6 @@ function AllUserData(props: UploadDataInterface) {
 
   async function handleDecryptData(n: number) {
     if (!address) return
-
-    chrome.tabs.create({ url: chrome.extension.getURL('index.html') }, function(tab) {
-      console.log(tab);
-      
-    });
-
     const _decryptedKey = await decryptMessage(ethereumProvider,dataArray[n].decryptKey, address);
     if (_decryptedKey) {
       setDecryptKey(dataArray[n].id, _decryptedKey)

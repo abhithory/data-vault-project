@@ -7,6 +7,9 @@
       "default_popup": "index.html",
       "default_title": "Datavault"
     },
+    "background": {
+      "service_worker": "background.js"
+    },
     "icons": {
       "16": "assets/logo/logo192.png",
       "48": "assets/logo/logo192.png",
