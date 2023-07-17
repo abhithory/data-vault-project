@@ -34,7 +34,7 @@ function NormalInput({ type, className, value, id, placeholder, onChange, copy =
                 {copied ?
                 <FaCheck className="text-primary" />
                 :
-                <FaCopy onClick={copyText} className="cursor-pointer" />
+                <FaCopy onClick={copyText} className="cursor-pointer text-text-color" />
                 }
             </span>
             }

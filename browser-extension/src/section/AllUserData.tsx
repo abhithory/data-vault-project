@@ -7,6 +7,9 @@ import { CredentialsFormData } from '../interfaces/Credentials';
 import { decryptMessage } from '../utils/MessageEncryption';
 import { Web3ConnectionContext } from '../Provider/Web3Provider';
 import { useDataStore } from '../store/dataStore';
+import SimpleLoader from '../components/Loader/loader';
+import PopUpModel from '../components/PopupModel/PopUpModel';
+import CredentialsForm from './Credentials/CredentialsForm';
 
 interface UploadDataInterface {
   type: DataTypeEnum
@@ -14,13 +17,13 @@ interface UploadDataInterface {
 
 function AllUserData(props: UploadDataInterface) {
 
-  const { address, connectMetamaskWallet, isConnectedPreviously, getAllDataOfUser } = useContext(Web3ConnectionContext);
+  const { address } = useContext(Web3ConnectionContext);
 
 
   const [allData, setDecryptKey, loadingStatus] = useDataStore((store) => [store.allData, store.setDecryptKey, store.loadingStatus]);
 
   const [dataArray, setDataArray] = useState<DataExtendedInterface[]>([]);
-  const [showDataModel, setShowDataModel] = useState<boolean>(false);
+  const [showDataModel, setShowDataModel] = useState<boolean>(true);
 
 
   const [credentialsData, setCredentialsData] = useState<CredentialsFormData>({
@@ -29,7 +32,7 @@ function AllUserData(props: UploadDataInterface) {
     userid: "",
     password: ""
   });
-  
+
   async function showDecryptedData(n: number) {
     try {
       const _fullURL: string = ipfsHashToUrl(dataArray[n].dataHash);
@@ -58,40 +61,52 @@ function AllUserData(props: UploadDataInterface) {
   }
 
 
-
-  async function loadAllData(){
-    const fileData: DataExtendedInterface = {
-      dataName: "google.com",
-      dataType: DataTypeEnum.CREDENTIALS,
-      dataHash: "string",
-      decryptKey: "string",
-      uploadTime: (new Date()).getTime() / 1000,
-      id: "string",
-      decryptedStatus: true,
-    }
-
-    setDataArray([fileData,fileData,fileData,fileData,fileData])
-  }
-
-
   useEffect(() => {
-    if (address) {
-      loadAllData();
+    const specificData = allData.filter(data => data.dataType === props.type);
+    if (specificData) {
+      setDataArray(specificData);
     }
-  }, [address])
-  
+  }, [allData])
 
   return (
-    <div className='flex flex-wrap flex-col h-full w-full px-2 gap-1'>
-      {/* <DataItem
-        key={0}
-        index={0}
-        type={props.type}
-        file={fileData}
-        showDecryptedData={showDecryptedData}
-        handleDecryptData={handleDecryptData}
-      /> */}
-    </div>
+
+    <>
+    {dataArray &&
+          <div className='flex flex-wrap flex-col h-full w-full px-2 gap-1'>
+          {dataArray.map((file: DataExtendedInterface, key: number) => {
+            return (
+              <DataItem
+                key={key}
+                index={key}
+                type={props.type}
+                file={file}
+                showDecryptedData={showDecryptedData}
+                handleDecryptData={handleDecryptData}
+              />
+            )
+          })}
+        </div>
+      }
+
+      <div className="flex_center w-full">
+        {loadingStatus ?
+          <SimpleLoader className='w-12' />
+          : dataArray.length < 1 &&
+          <h1 className="text-sm">You Don't have data. Please Upload Something</h1>
+        }
+      </div>
+
+      <PopUpModel isOpen={showDataModel} closeModal={() => setShowDataModel(false)}>
+        <div className="text-center">
+          <h1 className="text_primary_gradient_2 text_sub_heading_size">Your Credentials</h1>
+          <CredentialsForm
+            type="update"
+            setCredentialsData={() => { }}
+            submitForm={() => { }}
+            credentialsData={credentialsData} />
+        </div>
+      </PopUpModel>
+    </>
   )
 }
 
