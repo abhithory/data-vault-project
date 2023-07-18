@@ -46,7 +46,7 @@ export default function Home() {
         
       </section>
 
-      <section className="page_section flex_center flex-col ">
+      <section className="page_section flex_center flex-col">
 
         <Footer />
       </section>
