@@ -6,6 +6,8 @@ import { useRouter } from 'next/navigation';
 import GlowButton from '@/components/Buttons/GlowButton';
 import FeatureItem from '@/components/Sections/Features/FeatureItem';
 import FeatureSection from '@/components/Sections/Features/FeatureSection';
+import Footer from '@/components/Sections/Footer/Footer';
+import TechStackSection from '@/components/Sections/TechStack/TechStackSection';
 
 
 
@@ -34,7 +36,21 @@ export default function Home() {
 
             <FeatureSection />
         
+     </section>
+
+     <section className="page_section flex_center flex-col my-12">
+     <h1 className="text_primary_gradient text_heading_size">Our Tech Stack</h1>
+            <p className='w-10/12 md:w-8/12 text-center text-sm mb-12 mt-2'>We utilize cutting-edge technologies to deliver innovative solutions.</p>
+
+      <TechStackSection />
+        
       </section>
+
+      <section className="page_section flex_center flex-col ">
+
+        <Footer />
+      </section>
+
     </main>
   )
 }

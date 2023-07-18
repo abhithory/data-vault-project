@@ -34,11 +34,11 @@ function FeatureSection() {
             {
               icon: <FaCheckCircle className="text-3xl" />,
               heading: "Data Integrity",
-              text: "The immutable nature of the blockchain provides an extra layer of data integrity.",
+              text: "The immutable nature of the blockchain provides an extra layer of data integrity. Creating a transparent and auditable trail of modifications",
             },
           ];
     return (
-        <div className="flex flex-wrap items-stretch gap-4 justify-stretch">
+        <div className="flex flex-wrap items-stretch gap-4 justify-center ">
             {featuresData.map((feature: FeatureItemInterface,key)=> {
                 return (
 
