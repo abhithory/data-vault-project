@@ -57,7 +57,7 @@
   /* background-position: 50% 10%; */
   background-repeat: no-repeat;
   background-size: contain;
-  z-index: -98;
+  z-index: -100;
   opacity: .6;
 }
 
@@ -70,7 +70,7 @@
   /* background-position: 50% 10%; */
   background-repeat: no-repeat;
   background-size: cover;
-  z-index: -98;
+  z-index: -100;
   opacity: .2;
   /* border-radius: 40rem; */
 
@@ -84,6 +84,10 @@
   .page_main {
     /* @apply h-full w-full min-h-[90vh] */
     @apply h-full w-full min-h-[88vh]
+  }
+
+  .page_section {
+    @apply h-full w-full;
   }
 
   .flex_center {

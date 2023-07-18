@@ -4,14 +4,18 @@ import Image from 'next/image'
 import { ConnectWallet } from "@thirdweb-dev/react";
 import { useRouter } from 'next/navigation';
 import GlowButton from '@/components/Buttons/GlowButton';
+import FeatureItem from '@/components/Sections/Features/FeatureItem';
+import FeatureSection from '@/components/Sections/Features/FeatureSection';
 
 
 
 export default function Home() {
-  const router = useRouter()
+  const router = useRouter();
+
+
   return (
-    <main className="page_main flex_center">
-      <section className="flex_center flex-col text-center mb-16">
+    <main className="page_main flex_center flex-col">
+      <section className="flex_center page_main flex-col text-center h-full">
         <h1 className="text_highlight_gradient text_sub_heading_size">Credentials & Files</h1>
         <h1 className="text_primary_gradient text_big_heading_size">Protect Your Data</h1>
         <h1 className="md:mt-4  text_heading_size">with <span className='text_primary_gradient_2'>DataVault</span></h1>
@@ -24,9 +28,13 @@ export default function Home() {
             text='Launch dApp' />
         </div>
       </section>
-      {/* <section className="basis-1/2">
-        <Image src="/assests/logo.svg" width={500} height={500} alt='website' />
-      </section> */}
+      <section className="page_section flex_center flex-col py-8">
+            <h1 className="text_primary_gradient text_heading_size">Features</h1>
+            <p className='w-10/12 md:w-8/12 text-center text-sm mb-12 mt-4'>DataVault is a comprehensive data storage solution that prioritizes the security and privacy of your sensitive information. Here are some key features and benefits of DataVault:</p>
+
+            <FeatureSection />
+        
+      </section>
     </main>
   )
 }
