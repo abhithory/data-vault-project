@@ -17,7 +17,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang="en" style={{scrollBehavior:'smooth'}}>
 
         <body className='body bg_primary text-text-color overflow-x-hidden'>
         <video className="bg-video" src="assests/background.mp4" autoPlay loop muted plays-inline></video>

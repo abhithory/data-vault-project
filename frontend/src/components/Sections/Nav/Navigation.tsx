@@ -35,9 +35,7 @@ function Navigation() {
           <FaLandmark  className=''/>
           Marketplace
           </h1> */}
-        <button className="btn_primary_2" onClick={() => {
-          router.push("/app")
-        }}>Learn More</button>
+        <a href="#features-section" className="btn_primary_2">Learn More</a>
 
         <button className="btn_primary_2" onClick={() => {
           router.push("/app")
