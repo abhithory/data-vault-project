@@ -1,3 +1,0 @@
-- make responsive
-- add info section
-- create extenstion
