@@ -30,7 +30,7 @@ export const Web3ConnectionContext = createContext<ContextProps>({
 });
 
 
-const DataVaultContractAddress = "0x32D21AE2ec0eed13bBB4Cd898ee789C67b7eeCB7"
+const DataVaultContractAddress = "0x8ecb250Af829697EAb2966d6bBd70d932b4BCa2d"
 
 const Web3ConnectionWrapper = ({ children }: any) => {
 
