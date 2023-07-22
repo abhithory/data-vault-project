@@ -11,7 +11,8 @@ import { advanceEncryptFile, decryptFile, downloadFile, unZipAndGetData } from '
 import { DataTypeEnum } from '@/interfaces/DataInterface';
 import FileUploadForm from '../Files/FileUploadForm';
 import CredentialsForm from '../Credentials/CredentialsForm';
-import { ConnectWallet } from '@thirdweb-dev/react';
+import { ConnectWallet, useNetworkMismatch } from '@thirdweb-dev/react';
+import WalletButton from '@/components/Buttons/WalletButton';
 
 
 
@@ -100,9 +101,11 @@ function UploadData(props: UploadDataInterface) {
         setIsUploadingData(false);
     }
 
-    if (!address) {
+    const isMismatched = useNetworkMismatch();
+
+    if (!address || isMismatched) {
         return(
-            <ConnectWallet />
+            <WalletButton />
         )
     }
     return (

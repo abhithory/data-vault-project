@@ -5,6 +5,7 @@ import {
 
 import {  Mumbai, Polygon } from "@thirdweb-dev/chains";
 
+
 const Ganache = {
     chainId: 1337, // Chain ID of the network
     rpc: ['http://127.0.0.1:8545'],
@@ -22,10 +23,13 @@ const Ganache = {
 
 
 function ThirdWebProvider({ children }: any) {
+
+
     return (
         <ThirdwebProvider
-            activeChain="ganache"
-            supportedChains={[ Polygon, Mumbai, Ganache]}
+            activeChain="mumbai"
+            supportedChains={[Mumbai]}
+            // supportedChains={[ Polygon, Mumbai, Ganache]}
             dAppMeta={{
                 name: "Data Vault",
                 description: "data vault",

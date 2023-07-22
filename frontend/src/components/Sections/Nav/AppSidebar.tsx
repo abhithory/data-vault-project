@@ -11,6 +11,7 @@ import { FiMenu } from 'react-icons/fi';
 import { useDataStore } from '@/store/dataStore';
 import { Web3ConnectionContext } from '@/web3Connection/Web3ConnectionContext';
 import IconButton from '@/components/Buttons/IconButton';
+import WalletButton from '@/components/Buttons/WalletButton';
 
 
 
@@ -104,7 +105,7 @@ function DrawerContent({ router, isMenuOpen, setIsMenuOpen,pathName }: { router:
       </div>
 
       <span className='flex_center'>
-        <ConnectWallet className='text-sm' />
+        <WalletButton />
       </span>
 
     </div>
