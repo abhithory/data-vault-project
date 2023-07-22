@@ -1,7 +1,6 @@
 import ThirdWebProvider from '@/components/provider/ThirdWebProvider'
 import '@/style/globals.css'
 import Web3ConnectionWrapper from '@/web3Connection/Web3ConnectionContext'
-import AppNavigation from '@/components/Sections/Nav/AppNavigation'
 import AppSidebar from '@/components/Sections/Nav/AppSidebar'
 import AnimationProvider from '@/components/provider/AnimationProvider'
 import AnimationDivProvider from '@/components/provider/AnimationDivProvider'
