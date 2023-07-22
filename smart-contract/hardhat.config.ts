@@ -15,7 +15,7 @@ const config: HardhatUserConfig = {
       accounts: ["0x9a2698927295e87505cb94dc31fac99f3d5b3a9599a8d2ba3eaf94190efcff8d"]
   },
   mumbai: {
-    url: "https://rpc-mumbai.matic.today",
+    url: "https://polygon-mumbai.infura.io/v3/4458cf4d1689497b9a38b1d6bbf05e78",
     accounts: [process.env.POLYGON_MUMBAI_WALLET_KEY || ""]
   },
   // matic: {
