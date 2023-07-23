@@ -20,17 +20,17 @@ export default function RootLayout({
     <html lang="en" style={{scrollBehavior:'smooth'}}>
 
         <body className='body bg_primary text-text-color overflow-x-hidden'>
-        <video className="bg-video" src="assests/background.mp4" autoPlay loop muted plays-inline></video>
-          <img src="/assests/bg_gradient_1.png" alt="" className='bg_gradient_image' />
-          <img src="/assests/bg_gradient.png" alt="" className='bg_gradient_image_2' />
+        <video className="bg-video" src="assests/background.mp4" autoPlay loop muted></video>
+          {/* <img src="/assests/bg_gradient_1.png" alt="" className='bg_gradient_image' /> */}
+          {/* <img src="/assests/bg_gradient.png" alt="" className='bg_gradient_image_2' /> */}
 
           
           <Navigation />
-      {/* <TopLoadingBarProvider> */}
+      <TopLoadingBarProvider>
           <AnimationProvider>
             {children}
           </AnimationProvider>
-      {/* </TopLoadingBarProvider> */}
+      </TopLoadingBarProvider>
         </body>
     </html>
   )
