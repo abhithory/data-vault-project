@@ -9,14 +9,14 @@ function AnimationProvider({ children, className }: any) {
     const pathName = usePathname();
     return (
         <AnimatePresence>
-            {pathName.startsWith("/app") ?
+            {/* {pathName.startsWith("/app") ?
                 children
-                :
-                <AnimationDivProvider>
+                : */}
+                {/* <AnimationDivProvider> */}
                     {children}
 
-                </AnimationDivProvider>                
-            }
+                {/* </AnimationDivProvider>                
+            } */}
         </AnimatePresence>
     )
 }

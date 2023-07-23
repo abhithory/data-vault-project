@@ -4,7 +4,6 @@ import '@/style/buttonStyle.css'
 import Navigation from '@/components/Sections/Nav/Navigation'
 import AnimationProvider from '@/components/provider/AnimationProvider'
 import TopLoadingBarProvider from '@/components/provider/TopLoadingBarProvider'
-import { Suspense } from 'react'
 
 
 
@@ -29,12 +28,10 @@ export default function RootLayout({
           
           <Navigation />
       <TopLoadingBarProvider>
-      <Suspense fallback={<Loading />}>
           <AnimationProvider>
             {children}
           </AnimationProvider>
-      </Suspense>
-      </TopLoadingBarProvider>
+     </TopLoadingBarProvider>
         </body>
     </html>
   )
