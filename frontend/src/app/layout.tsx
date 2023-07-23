@@ -4,6 +4,7 @@ import '@/style/buttonStyle.css'
 import Navigation from '@/components/Sections/Nav/Navigation'
 import AnimationProvider from '@/components/provider/AnimationProvider'
 import TopLoadingBarProvider from '@/components/provider/TopLoadingBarProvider'
+import { Suspense } from 'react'
 
 
 
@@ -19,7 +20,9 @@ export default function RootLayout({
   return (
     <html lang="en" style={{scrollBehavior:'smooth'}}>
 
+
         <body className='body bg_primary text-text-color overflow-x-hidden'>
+      <Suspense fallback={<Loading />}>
         <video className="bg-video" src="assests/background.mp4" autoPlay loop muted></video>
           {/* <img src="/assests/bg_gradient_1.png" alt="" className='bg_gradient_image' /> */}
           {/* <img src="/assests/bg_gradient.png" alt="" className='bg_gradient_image_2' /> */}
@@ -31,7 +34,22 @@ export default function RootLayout({
             {children}
           </AnimationProvider>
       </TopLoadingBarProvider>
+      </Suspense>
         </body>
     </html>
+  )
+}
+
+
+function Loading() {
+  // You can add any UI inside Loading, including a Skeleton.
+  return (
+    <main className="page_main flex_center flex-col">
+    <section className="flex_center page_main flex-col text-center h-full">
+        <div className="flex">
+      <h1 className="text_primary_gradient text_sub_heading_size">Fallback Loading...</h1>
+        </div>
+    </section>
+  </main>
   )
 }
