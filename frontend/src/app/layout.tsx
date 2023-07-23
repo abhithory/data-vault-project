@@ -22,7 +22,6 @@ export default function RootLayout({
 
 
         <body className='body bg_primary text-text-color overflow-x-hidden'>
-      <Suspense fallback={<Loading />}>
         <video className="bg-video" src="assests/background.mp4" autoPlay loop muted></video>
           {/* <img src="/assests/bg_gradient_1.png" alt="" className='bg_gradient_image' /> */}
           {/* <img src="/assests/bg_gradient.png" alt="" className='bg_gradient_image_2' /> */}
@@ -30,11 +29,12 @@ export default function RootLayout({
           
           <Navigation />
       <TopLoadingBarProvider>
+      <Suspense fallback={<Loading />}>
           <AnimationProvider>
             {children}
           </AnimationProvider>
-      </TopLoadingBarProvider>
       </Suspense>
+      </TopLoadingBarProvider>
         </body>
     </html>
   )
