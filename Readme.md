@@ -4,12 +4,12 @@ DataVault is a decentralized application (Dapp) that allows users to securely st
 
 ## Project Overview
 
-### video
+### video Link: [https://www.youtube.com/watch?v=rDLmzbxeMsQ](https://www.youtube.com/watch?v=rDLmzbxeMsQ)
 
 ## Project Links
 
-- Frontend: [link]()
-- Smart contract: [linkk]()
+- Frontend: [https://data-vault-project.vercel.app/](https://data-vault-project.vercel.app/)
+- Smart contract: [https://mumbai.polygonscan.com/address/0x8ecb250Af829697EAb2966d6bBd70d932b4BCa2d](https://mumbai.polygonscan.com/address/0x8ecb250Af829697EAb2966d6bBd70d932b4BCa2d)
 
 
 ## Features
