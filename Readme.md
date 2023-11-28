@@ -37,6 +37,10 @@ DataVault was built using the following technologies:
 - Hardhat: For Ethereum smart contract development and testing.
 
 
+![Screenshot from 2023-11-28 03-04-51](https://github.com/abhithory/data-vault-project/assets/76877003/748f47b6-e077-4971-a9c8-eaa2efb68ec7)
+
+
+
 
 ### License
 
